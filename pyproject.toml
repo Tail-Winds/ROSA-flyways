@@ -1,0 +1,14 @@
+[project]
+name = "rosa-flyways"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "geomstats",
+    "ipykernel>=7.1.0",
+    "polars>=1.36.1",
+]
+
+[tool.uv.sources]
+geomstats = { git = "https://github.com/geomstats/geomstats.git" }
