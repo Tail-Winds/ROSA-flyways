@@ -1,44 +1,144 @@
 ---
 title: Projection Error
-date: 2026-03-23
+date: 2026-04-30
 format: html
+echo: false
+execute:
+  message: false
+  warning: false
 ---
 
+The purpose of this analysis is to evaluate location error introduced by different geospatial projections. The data used below are those stations where an animal of a given species was detected. Error will be evaluated by the deviation in calculated pairwise distances between stations along the geodesic (following the earth's curvature, the "truth") and in the plane of various projections. For this exercise, we compared the following projections:
+
+ - Universal Transverse Mercator (UTM) Zone 17
+ - UTM 18
+ - UTM 19
+ - pointwise auto-UTM selecting algorithm
+ - transverse Mercator at the median longitude
+ - Cassini at the median longitude (a transverse Mercator analog for the Plate Carrée)
+ - azimuthal equidistant projection at the median location
+ - oblique Mercator at the median location and the dominant aziumth calculated in the azimuthal equidistant projection
+
 ```{r}
+#| label: load
 # remotes::install_github("hypertidy/geographiclib")
 library(geographiclib)
 library(data.table)
 library(sf)
 library(ggplot2)
 library(patchwork)
-sb <- qs2::qs_read("../data/RAW/hud_detects.qs2") |>
-  as.data.table() |>
-  unique(by = c("long", "lat")) |>
-  _[, .(lon = long, lat = lat)]
-atl <- fread("../data/RAW/fixed_rounded_station_locations.csv") |>
-  unique(by = c("r.lon", "r.lat")) |>
-  _[, .(lon = r.lon, lat = r.lat)]
-st <- fread("../data/RAW/sandtigers.csv") |>
-  unique(by = c("Longitude", "Latitude")) |>
-  _[, .(lon = Longitude, lat = Latitude)]
+library(arrow)
+library(dplyr)
+library(gt)
+library(mapview)
+# sb <- qs2::qs_read("../data/RAW/hud_detects.qs2") |>
+#   as.data.table() |>
+#   unique(by = c("long", "lat")) |>
+#   _[, .(lon = long, lat = lat)]
+sb <- open_dataset("../data/RAW/combined_striped_bass.parquet") |>
+  filter(longitude != 0) |>
+  mutate(latitude = abs(latitude)) |>
+  distinct(longitude, latitude) |>
+  rename(lon = longitude, lat = latitude) |>
+  collect()
+atl <- open_dataset(
+  "../data/RAW/fixed_rounded_station_locations.csv",
+  format = "csv"
+) |>
+  distinct(r.lon, r.lat) |>
+  rename(lon = r.lon, lat = r.lat) |>
+  collect()
+st <- open_dataset("../data/RAW/sandtigers.csv", format = "csv") |>
+  distinct(Longitude, Latitude) |>
+  rename(lon = Longitude, lat = Latitude) |>
+  collect()
 
 locations <- list(sb = sb, atl = atl, st = st)
 ```
+## Per-species locations
 
+### Striped bass
+Striped bass have the smallest range of the three species we're investigating, ranging from southern Maine to the mouth of the Chesapeake.
 ```{r}
-truth <- lapply(locations, geodesic_distance_matrix)
-centers <- lapply(
-  locations,
-  \(.) {
-    .[, .(med_lon = median(lon, na.rm = T), med_lat = median(lat, na.rm = T))]
-  }
+#| label: striped-bass
+mapview::mapview(
+  st_as_sf(locations[[1]], coords = c("lon", "lat"), crs = 4326),
+  legend = F,
+  popup = F
 )
 ```
 
+### Atlantic sturgeon
+Atlantic sturgeon have the largest range, with detections from northern Maine to southern Florida.
 ```{r}
+#| label: sturgeon
+mapview::mapview(
+  st_as_sf(locations[[2]], coords = c("lon", "lat"), crs = 4326),
+  legend = F,
+  popup = F
+)
+```
+
+### Sand tiger shark
+Sand tiger sharks are somewhere in the middle, ranging from central Florida to the tip of Long Island.
+```{r}
+#| label: sand-tiger
+mapview::mapview(
+  st_as_sf(locations[[3]], coords = c("lon", "lat"), crs = 4326),
+  legend = F,
+  popup = F
+)
+```
+
+## Distances
+Sites ranged up to 966.4 km apart for striped bass, to 1823.5 km apart for sand tiger sharks, and to 2287.9 km apart for Atlantic sturgeon. The median location for Atlantic sturgeon and sand tiger sharks were similar and located near the mouth of the Delaware River, likely reflecting the dense array deployed by Delaware State University in the early 2010s. The median location for striped bass was around the middle coast of New Jersey, likely reflective of the dense array of Hudson River receivers deployed during that time.
+
+```{r}
+#| label: truth-and-centers
+truth <- lapply(locations, geodesic_distance_matrix)
+centers <- lapply(
+  locations,
+  \(x) {
+    summarize(
+      x,
+      med_lon = median(lon, na.rm = T),
+      med_lat = median(lat, na.rm = T)
+    )
+  }
+)
+
+truth_dists <- truth |> lapply(\(.) range(.[. != 0]))
+
+centers |>
+  rbindlist(idcol = 'spp') |>
+  st_as_sf(coords = c("med_lon", "med_lat"), crs = 4326) |>
+  mapview::mapview(legend = F)
+```
+
+
+```{r}
+#| label: proj-distances
 proj_dist <- function(stations, centers) {
+  aeqd <- azeq_fwd(stations, centers[[1]], centers[[2]])
+  pca_rot <- c(1e3, 0) %*% t(prcomp(aeqd[, 1:2])$rotation)
+  rot_angle <- atan2(pca_rot[1], pca_rot[2]) * 180 / pi
+
+  omerc_proj <- paste0(
+    "+proj=omerc +lonc=",
+    centers[[1]],
+    " +lat_0=",
+    centers[[2]],
+    " +gamma=",
+    rot_angle
+  )
+
+  om <- stations |>
+    st_as_sf(coords = c("lon", "lat"), crs = 4326) |>
+    st_transform(crs = omerc_proj) |>
+    st_coordinates()
+
   list(
-    aeqd = azeq_fwd(stations, centers[[1]], centers[[2]]) |>
+    aeqd = aeqd |>
       dist() |>
       as.matrix(),
     utm_auto = utmups_fwd(stations)[, 1:2] |>
@@ -56,6 +156,9 @@ proj_dist <- function(stations, centers) {
     tm = tm_exact_fwd(stations, centers[[1]]) |>
       dist() |>
       as.matrix(),
+    om = om |>
+      dist() |>
+      as.matrix(),
     cass = cassini_fwd(stations, centers[[1]], centers[[2]])[, 1:2] |>
       dist() |>
       as.matrix()
@@ -65,8 +168,19 @@ proj_dist <- function(stations, centers) {
 projected_distances <- mapply(proj_dist, locations, centers, SIMPLIFY = F)
 ```
 
+Projected distances ranged up to 970 km, 1845 km for sand tiger sharks, and 2297 km for Atlantic sturgeon. 
+
+## Errors
+::: {.callout-important collapse="true"}
+Errors from the pointwise auto-UTM selecting algorithm were greater than the circumference of the Earth, indicating that the distance was calculated by going the wrong way around the world. We do not report on these.
+:::
+
+Errors in projection ranged from 0 to just under 24 km. The azimuthal equidistant projection had the smallest root mean squared error (RMSE) across all species, followed by the Cassini, then the various Mercators. Striped bass tended to have the smallest projecton error, followed by sand tiger sharks, then Atlantic sturgeon. This likely reflects the different ranges of the fish -- projection error is often greater between distant locations.
 
 ```{r}
+#| label: errors 
+#| warning: false
+#| fig-cap: "Deviation from the geodesic distance"
 proj_errs <- function(dists, truth, species) {
   lapply(dists[[species]], \(.) {
     (. - truth[[species]])[lower.tri(truth[[species]])]
@@ -82,30 +196,54 @@ errors <- sapply(
 ) |>
   lapply(\(.) as.data.table(.) |> melt()) |>
   rbindlist(idcol = 'species')
+
+
+errors[
+  value != 0 & variable != "utm_auto",
+  .(
+    min = round(min(abs(value))),
+    median = round(median(abs(value))),
+    mean = round(mean(abs(value))),
+    max = round(max(abs(value))),
+    rmse = round(sqrt(mean(value^2, na.rm = T)))
+  ),
+  by = c("species", 'variable')
+] |>
+  gt::gt(groupname_col = "variable")
 ```
 
+A general rule of thumb in acoustic telemetry is a 500 meter range of detection. As we are unable to resolve differences in distance less than 500 meters, errors less than 500 meters are, for all intents and purposes, the same position.
 
+Across all species, AEQD caused the fewest detectable errors. At regional scales (striped bass), the correct Mercator projection can also be sufficient, but at coastal scales (Atlantic sturgeon) Mercator often leads to large deviations.
 
 ```{r}
-ggplot() +
-  geom_histogram(
-    data = errors[variable != "utm_auto"],
-    aes(x = abs(value), fill = variable),
-    position = 'dodge',
-    binwidth = 50
-  ) +
-  geom_vline(xintercept = 500) +
-  facet_wrap(~species, scales = "free", ncol = 1)
+#| label: error-summary
+#| fig-cap: "Number of projection errors greater than 500 meters"
+errors |>
+  _[, .(err = ifelse(value > 500, T, F), variable, species)] |>
+  # _[, .N, c('err', 'variable', 'species')] |>
+  _[variable != "utm_auto", ] |>
+  _[, .(
+    species = fcase(
+      species == "atl" , "Atlantic sturgeon" ,
+      species == "sb"  , "striped bass"      ,
+      species == "st"  , "sand tiger"
+    ),
+    err,
+    # N,
+    variable
+  )] |>
+  ggplot() +
+  geom_bar(aes(x = variable, fill = err), position = 'fill') +
+  facet_wrap(~species, scales = 'free') +
+  labs(fill = ">500m error", y = "Proportion of distances") +
+  theme_minimal() +
+  theme(
+    axis.title.x = element_blank(),
+    axis.text.x = element_text(angle = 45)
+  )
 ```
 
-Number greater than 500m distance (receiver detection range)
-```{r}
-errors[value > 500, .N, c('variable', 'species')]
-errors[, sqrt(mean(value^2, na.rm = T)), c('variable', 'species')]
-errors[,
-  .(min = min(value, na.rm = T), max = max(value, na.rm = T)),
-  c('variable', 'species')
-]
-```
 
-
+## Conclusion
+The choice of projection is not consequential for inference from acoustic telemetry data at regional scales (striped bass). When the scale of the species' movement expands to the coastal scale or across UTM zones, however, Mercator-based projections can lead to mislocation of >50% of acoustic telemetry positions. That the AEQD projection consistently performed well may be due to the coastal nature of the species investigated: while the animals are moving hundreds-to-thousands of kilometers along the coast, they are only moving, or we are only sampling, within tens of kilometers from shore. Further investigation should be done to see if the same results emerge when using technology that can record species with movement ecology that deviate from a dominant axis (PSAT-tagged tuna or sharks, for example). This, however, is beyond the scope of the current project.

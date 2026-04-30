@@ -4,10 +4,9 @@ project:
 book:
   title: "Flyway Assessment of Offshore Wind Farm Impacts on Migratory Fishes"
   author: "Michael O'Brien, Matthew Breece, Aaron Carlise, Dewayne Fox, Bradley Wetherbee, and David Secor"
-  date: Sys.Date()
   chapters:
     - index.qmd
-    - geodesic.qmd
+    # - geodesic.qmd
     - migration_north.qmd
     - projection_error.qmd
     - references.qmd

@@ -1,1 +1,12 @@
-Blah.
+---
+title: Welcome
+format: html
+date: last-modified
+---
+Welcome to the Git book for _Flyway Assessment of Offshore Wind Farm Impacts on Migratory Fishes_, a project funded by the [Responsible Offshore Science Alliance](https://www.rosascience.org).
+
+::: {.callout-warning}
+This book is undergoing rapid development and is not peer reviewed. Everything you read should be considered preliminary and subject to substantial change.
+:::
+
+![](fact_sheet.jpg)
