@@ -8,7 +8,7 @@
 
 <meta name="dcterms.date" content="2026-05-01">
 
-<title>4&nbsp; Initial GAM exploration – Flyway Assessment of Offshore Wind Farm Impacts on Migratory Fishes</title>
+<title>5&nbsp; Initial GAM exploration – Flyway Assessment of Offshore Wind Farm Impacts on Migratory Fishes</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -89,7 +89,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./dmsp.html" rel="next">
-<link href="./projection_error.html" rel="prev">
+<link href="./data_cleaning.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -169,7 +169,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./initial_gam.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Initial GAM exploration</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./initial_gam.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Initial GAM exploration</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -214,14 +214,20 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./data_cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data cleaning</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./initial_gam.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Initial GAM exploration</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Initial GAM exploration</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./dmsp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Management and Sharing Plan</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Data Management and Sharing Plan</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -240,12 +246,12 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#striped-bass-morone-saxatilis" id="toc-striped-bass-morone-saxatilis" class="nav-link active" data-scroll-target="#striped-bass-morone-saxatilis"><span class="header-section-number">4.1</span> Striped bass <em>Morone saxatilis</em></a>
+  <li><a href="#striped-bass-morone-saxatilis" id="toc-striped-bass-morone-saxatilis" class="nav-link active" data-scroll-target="#striped-bass-morone-saxatilis"><span class="header-section-number">5.1</span> Striped bass <em>Morone saxatilis</em></a>
   <ul class="collapse">
-  <li><a href="#initial-gam" id="toc-initial-gam" class="nav-link" data-scroll-target="#initial-gam"><span class="header-section-number">4.1.1</span> Initial GAM</a></li>
-  <li><a href="#model-evaluation" id="toc-model-evaluation" class="nav-link" data-scroll-target="#model-evaluation"><span class="header-section-number">4.1.2</span> Model evaluation</a></li>
+  <li><a href="#initial-gam" id="toc-initial-gam" class="nav-link" data-scroll-target="#initial-gam"><span class="header-section-number">5.1.1</span> Initial GAM</a></li>
+  <li><a href="#model-evaluation" id="toc-model-evaluation" class="nav-link" data-scroll-target="#model-evaluation"><span class="header-section-number">5.1.2</span> Model evaluation</a></li>
   </ul></li>
-  <li><a href="#sand-tiger-shark-carcharias-taurus" id="toc-sand-tiger-shark-carcharias-taurus" class="nav-link" data-scroll-target="#sand-tiger-shark-carcharias-taurus"><span class="header-section-number">4.2</span> Sand tiger shark <em>Carcharias taurus</em></a></li>
+  <li><a href="#sand-tiger-shark-carcharias-taurus" id="toc-sand-tiger-shark-carcharias-taurus" class="nav-link" data-scroll-target="#sand-tiger-shark-carcharias-taurus"><span class="header-section-number">5.2</span> Sand tiger shark <em>Carcharias taurus</em></a></li>
   </ul>
 </nav>
     </div>
@@ -254,7 +260,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Initial GAM exploration</span></h1>
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Initial GAM exploration</span></h1>
 </div>
 
 
@@ -289,8 +295,8 @@ window.Quarto = {
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<section id="striped-bass-morone-saxatilis" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="striped-bass-morone-saxatilis"><span class="header-section-number">4.1</span> Striped bass <em>Morone saxatilis</em></h2>
+<section id="striped-bass-morone-saxatilis" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="striped-bass-morone-saxatilis"><span class="header-section-number">5.1</span> Striped bass <em>Morone saxatilis</em></h2>
 <p>We first visualize the distribution of the median per-individual latitudes through time:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sb) <span class="sc">+</span></span>
@@ -430,10 +436,10 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<section id="initial-gam" class="level3" data-number="4.1.1">
-<h3 data-number="4.1.1" class="anchored" data-anchor-id="initial-gam"><span class="header-section-number">4.1.1</span> Initial GAM</h3>
-<section id="migration-vector" class="level4" data-number="4.1.1.1">
-<h4 data-number="4.1.1.1" class="anchored" data-anchor-id="migration-vector"><span class="header-section-number">4.1.1.1</span> Migration vector</h4>
+<section id="initial-gam" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="initial-gam"><span class="header-section-number">5.1.1</span> Initial GAM</h3>
+<section id="migration-vector" class="level4" data-number="5.1.1.1">
+<h4 data-number="5.1.1.1" class="anchored" data-anchor-id="migration-vector"><span class="header-section-number">5.1.1.1</span> Migration vector</h4>
 <p>For the initial GAM, we’ll treat both year and population as a random effect. We see a general trend of low values on the migration vector through the beginning of the year, a rapid increase after the 10th week, a slight reduction in rate in week 15-20, then another rapid increase through week 25. Posiiton then levels off through week 40, where it rapidly drops.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>model_data <span class="ot">&lt;-</span> sb_migration_north <span class="sc">|&gt;</span></span>
@@ -531,8 +537,8 @@ R-sq.(adj) =  0.913   Deviance explained = 91.3%
 </div>
 </div>
 </section>
-<section id="migration-front" class="level4" data-number="4.1.1.2">
-<h4 data-number="4.1.1.2" class="anchored" data-anchor-id="migration-front"><span class="header-section-number">4.1.1.2</span> Migration front</h4>
+<section id="migration-front" class="level4" data-number="5.1.1.2">
+<h4 data-number="5.1.1.2" class="anchored" data-anchor-id="migration-front"><span class="header-section-number">5.1.1.2</span> Migration front</h4>
 <p>We’ll do the same with the migration front (the deviation from the migration vector).</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>m1_mf <span class="ot">&lt;-</span> model_data <span class="sc">|&gt;</span></span>
@@ -632,8 +638,8 @@ R-sq.(adj) =  0.783   Deviance explained = 78.6%
 </div>
 </section>
 </section>
-<section id="model-evaluation" class="level3" data-number="4.1.2">
-<h3 data-number="4.1.2" class="anchored" data-anchor-id="model-evaluation"><span class="header-section-number">4.1.2</span> Model evaluation</h3>
+<section id="model-evaluation" class="level3" data-number="5.1.2">
+<h3 data-number="5.1.2" class="anchored" data-anchor-id="model-evaluation"><span class="header-section-number">5.1.2</span> Model evaluation</h3>
 <p>It should be noted, however, that the initial models are not performing well on the edges of the domain of the migration vector and migration front. This suggests that we need to refine the model to further to characterize these areas.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">appraise</span>(m1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -671,8 +677,8 @@ R-sq.(adj) =  0.783   Deviance explained = 78.6%
 </div>
 </section>
 </section>
-<section id="sand-tiger-shark-carcharias-taurus" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="sand-tiger-shark-carcharias-taurus"><span class="header-section-number">4.2</span> Sand tiger shark <em>Carcharias taurus</em></h2>
+<section id="sand-tiger-shark-carcharias-taurus" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="sand-tiger-shark-carcharias-taurus"><span class="header-section-number">5.2</span> Sand tiger shark <em>Carcharias taurus</em></h2>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
@@ -1088,13 +1094,13 @@ Secor, David H, Michael H P O’Brien, and Helen Bailey. 2025. <span>“The Flyw
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./projection_error.html" class="pagination-link" aria-label="Projection Error">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Projection Error</span></span>
+      <a href="./data_cleaning.html" class="pagination-link" aria-label="Data cleaning">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data cleaning</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./dmsp.html" class="pagination-link" aria-label="Data Management and Sharing Plan">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Management and Sharing Plan</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Data Management and Sharing Plan</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
