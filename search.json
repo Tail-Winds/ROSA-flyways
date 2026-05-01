@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Flyway Assessment of Offshore Wind Farm Impacts on Migratory Fishes",
     "section": "",
-    "text": "Welcome to the Git book for Flyway Assessment of Offshore Wind Farm Impacts on Migratory Fishes, a project funded by the Responsible Offshore Science Alliance. Scroll down to skim the fact sheet for the project or watch a presentation from analyst Mike O’Brien.\n\n\n\n\n\n\nWarning\n\n\n\nThis book is undergoing rapid development and is not peer reviewed. Everything you read should be considered preliminary and subject to substantial change.\n\n\n\n1 Fact Sheet\n\n\n\n2 Presentation",
+    "text": "Welcome to the Git book for Flyway Assessment of Offshore Wind Farm Impacts on Migratory Fishes, a project funded by the Responsible Offshore Science Alliance. Led by scientists in the TailWinds team at the University of Maryland Center for Environmental Science, the project aims to quantify “flyways” of marine fauna in such a way that they can be evaluated for changes resulting from impacts to their migratory corridors. Flyways is a collaborative project between investigators at the University of Delaware, the University of Rhode Island, Delaware State University, and the St. Mary’s College of Maryland; however, it is not possible without years of hard work by those who have tagged and detected fishes for over a decade.\nScroll down to skim the fact sheet for the project or watch a presentation from analyst Mike O’Brien.\n\n\n\n\n\n\nWarning\n\n\n\nThis book is undergoing rapid development and is not peer reviewed. Everything you read should be considered preliminary and subject to substantial change.\n\n\n\n1 Fact Sheet\n\n\n\n2 Presentation\n\n\n\n3 Special Thanks!\nA special thanks to those who have agreed to share data in fulfillment of this project:\n\nMatt Balazik (Virginia Commonwealth University)\nBen Gahagan (Massachusetts Division of Marine Fisheries)\nBill Hoffman (Massachusetts Division of Marine Fisheries)\nAshlee Horne (Maryland Department of Natural Resources)\nIan Park (Delaware Division of Fish and Wildlife)\nChuck Stence (Maryland Department of Natural Resources)",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Welcome</span>"
     ]
@@ -110,11 +110,21 @@
     ]
   },
   {
+    "objectID": "dmsp.html",
+    "href": "dmsp.html",
+    "title": "4  Data Management and Sharing Plan",
+    "section": "",
+    "text": "Our Data Management and Sharing Plan (DMSP) was created using the DMP Tool Atlantic Offshore Research (RWSC & ROSA) template produced by ROSA and the Regional Wildlife Science Collaborative.\nThe DMSP, referenced as Secor et al. (2026), can be viewed at the following URL: https://doi.org/10.48321/D10890EBF7.\n\n\n\n\nSecor, David H, Aaron B Carlisle, and Bradley M Wetherbee. 2026. Flyway Models and Metrics in the Assessment of OWF Impacts on Migratory Fishes. Data Management Plan. DMPTool. https://doi.org/10.48321/D10890EBF7.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Data Management and Sharing Plan</span>"
+    ]
+  },
+  {
     "objectID": "references.html",
     "href": "references.html",
     "title": "References",
     "section": "",
-    "text": "O’Brien, Michael H. P., and David H. Secor. 2021. “Influence of\nThermal Stratification and Storms on Acoustic Telemetry Detection\nEfficiency: A Year-Long Test in the US Southern Mid-Atlantic\nBight.” Animal Biotelemetry 9 (1): 8. https://doi.org/10.1186/s40317-021-00233-3.\n\n\nSecor, David H, Michael H P O’Brien, and Helen Bailey. 2025. “The\nFlyway Construct and Assessment of Offshore Wind Farm Impacts on\nMigratory Marine Fauna.” ICES Journal of Marine Science\n82 (3): fsae138. https://doi.org/10.1093/icesjms/fsae138.\n\n\nSnyder, John P. 1987. Map Projections: A Working Manual.\nProfessional Paper 1395. U.S. Government Printing Office.\n\n\nSnyder, John P. 1993. Flattening the Earth: Two Thousand Years of\nMap Projections. University of Chicago Press.",
+    "text": "O’Brien, Michael H. P., and David H. Secor. 2021. “Influence of\nThermal Stratification and Storms on Acoustic Telemetry Detection\nEfficiency: A Year-Long Test in the US Southern Mid-Atlantic\nBight.” Animal Biotelemetry 9 (1): 8. https://doi.org/10.1186/s40317-021-00233-3.\n\n\nSecor, David H, Aaron B Carlisle, and Bradley M Wetherbee. 2026.\nFlyway Models and Metrics in the\nAssessment of OWF Impacts on\nMigratory Fishes. Data Management Plan.\nDMPTool. https://doi.org/10.48321/D10890EBF7.\n\n\nSecor, David H, Michael H P O’Brien, and Helen Bailey. 2025. “The\nFlyway Construct and Assessment of Offshore Wind Farm Impacts on\nMigratory Marine Fauna.” ICES Journal of Marine Science\n82 (3): fsae138. https://doi.org/10.1093/icesjms/fsae138.\n\n\nSnyder, John P. 1987. Map Projections: A Working Manual.\nProfessional Paper 1395. U.S. Government Printing Office.\n\n\nSnyder, John P. 1993. Flattening the Earth: Two Thousand Years of\nMap Projections. University of Chicago Press.",
     "crumbs": [
       "References"
     ]
