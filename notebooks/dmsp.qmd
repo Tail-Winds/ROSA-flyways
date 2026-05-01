@@ -1,0 +1,8 @@
+---
+title: Data Management and Sharing Plan
+date: last-modified
+---
+
+Our Data Management and Sharing Plan (DMSP) was created using the [DMP Tool](https://dmptool.org) _Atlantic Offshore Research (RWSC & ROSA)_ template produced by ROSA and the [Regional Wildlife Science Collaborative](https://rwsc.org).
+
+The DMSP, referenced as @secor_flyway_2026, can be viewed at the following URL: <https://doi.org/10.48321/D10890EBF7>.

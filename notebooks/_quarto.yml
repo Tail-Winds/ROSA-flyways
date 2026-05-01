@@ -9,6 +9,7 @@ book:
     # - geodesic.qmd
     - migration_north.qmd
     - projection_error.qmd
+    - dmsp.qmd
     - references.qmd
 
 bibliography: references.bib

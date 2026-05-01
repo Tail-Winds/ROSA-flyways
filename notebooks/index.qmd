@@ -3,7 +3,9 @@ title: Welcome
 format: html
 date: last-modified
 ---
-Welcome to the Git book for _Flyway Assessment of Offshore Wind Farm Impacts on Migratory Fishes_, a project funded by the [Responsible Offshore Science Alliance](https://www.rosascience.org). Scroll down to skim the fact sheet for the project or watch a presentation from analyst Mike O'Brien.
+Welcome to the Git book for _Flyway Assessment of Offshore Wind Farm Impacts on Migratory Fishes_, a project funded by the [Responsible Offshore Science Alliance](https://www.rosascience.org). Led by scientists in the [TailWinds](https://tailwinds.umces.edu) team at the [University of Maryland Center for Environmental Science](https://www.umces.edu), the project aims to quantify "flyways" of marine fauna in such a way that they can be evaluated for changes resulting from impacts to their migratory corridors. _Flyways_ is a collaborative project between investigators at the University of Delaware, the University of Rhode Island, Delaware State University, and the St. Mary's College of Maryland; however, it is not possible without years of hard work by [those who have tagged and detected fishes for over a decade](#special-thanks). 
+
+Scroll down to skim the fact sheet for the project or watch a presentation from analyst Mike O'Brien.
 
 ::: {.callout-warning}
 This book is undergoing rapid development and is not peer reviewed. Everything you read should be considered preliminary and subject to substantial change.
@@ -14,3 +16,13 @@ This book is undergoing rapid development and is not peer reviewed. Everything y
 
 # Presentation
 {{< video  https://youtu.be/bUBgI-nKcWE start="703" >}}
+
+# Special Thanks!
+A special thanks to those who have agreed to share data in fulfillment of this project:
+
+- Matt Balazik (Virginia Commonwealth University)
+- Ben Gahagan (Massachusetts Division of Marine Fisheries)
+- Bill Hoffman (Massachusetts Division of Marine Fisheries)
+- Ashlee Horne (Maryland Department of Natural Resources)
+- Ian Park (Delaware Division of Fish and Wildlife)
+- Chuck Stence (Maryland Department of Natural Resources)
