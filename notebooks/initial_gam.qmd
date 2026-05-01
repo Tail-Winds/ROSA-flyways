@@ -191,7 +191,7 @@ Next we'll pull the populations apart and treat them as "by-variable smooths" (i
 #| label: gam-re-yr
 m2 <- model_data |>
   gam(
-    x ~ group + s(wk, by = group, k = 27) + s(yr_f, bs = "re"),
+    x ~ group + s(wk, by = group, k = 27, bs = "cc") + s(yr_f, bs = "re"),
     knots = list(wk = c(1, 53)),
     data = _,
     method = "REML"
