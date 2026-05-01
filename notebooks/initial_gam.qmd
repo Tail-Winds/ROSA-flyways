@@ -1,0 +1,252 @@
+---
+title: Initial GAM exploration
+date: last-modified
+execute:
+  message: false
+  warning: false
+---
+@secor2025 provided a simple generalized additive model (GAM) evaluated in R [@r_2026] for the analysis of marine fauna flyways. In the manuscript, the average latitude per individual, per week of a Hudson River population of striped bass _Morone saxatilis_, possibly the entire population of North Atlantic right whale _Eubalaena glacialis_, and several populations of northern gannet _Morus bassanus_ were regressed against date. We reproduce that analysis here for an expanded data set of striped bass locations which includes Potomac and Delaware populations as well as for tagged sand tiger sharks _Carcharias taurus_. We do not report on _Atlantic sturgeon_ here as the data set has not been fully-compiled as of 2026-04-30.
+
+We will use the following packages:
+
+```{r}
+#| label: libs
+library(arrow) # Data import
+library(dplyr) # Data manipulation
+library(sf) # Spatial
+library(ggplot2) # Data visualization
+library(mgcv) # GAM fitting
+library(gratia) # GAM visualization
+
+theme_set(theme_minimal())
+```
+
+## Striped bass _Morone saxatilis_
+
+```{r}
+#| label: sb-import
+#| echo: false
+sb <- open_dataset("../data/derived/striped_bass.parquet") |>
+  group_by(transmitter, year, wk, group) |>
+  summarize(
+    med_lon = median(longitude, na.rm = TRUE),
+    med_lat = median(latitude, na.rm = TRUE)
+  ) |>
+  collect()
+```
+
+We first visualize the distribution of the median per-individual latitudes through time:
+
+```{r}
+#| label: sb-plot
+#| fig-cap: "Weekly median latitude of striped bass. Colors represent putative populations; DE: Delaware, HR: Hudson River, PR: Potomac River."
+ggplot(sb) +
+  geom_point(aes(x = wk, y = med_lat, color = group), alpha = 0.4) +
+  facet_wrap(~year) +
+  labs(x = "Week of year", y = "Weekly median latitude") +
+  theme(axis.title = element_text(size = 12))
+```
+
+Following our projectiong selection procedure in the [Projection Error chapter](projection_error.qmd), we project the data into an azimuthal equidistant projection (AEQD) and rotate the data to "migration north". To project into AEQD, we first need a projection center. This will be the median receiver location.
+
+```{r}
+#| label: proj-center
+#| echo: false
+projection_center <- open_dataset("../data/derived/striped_bass.parquet") |>
+  filter(longitude != 0) |> # Idiosyncrasy of this data, will be changed.
+  mutate(latitude = abs(latitude)) |> # Idiosyncrasy of this data, will be changed.
+  distinct(latitude, longitude) |>
+  summarize(
+    lon0 = median(longitude, na.rm = TRUE),
+    lat0 = median(latitude, na.rm = TRUE)
+  ) |>
+  collect()
+
+projection_center
+```
+
+Create the [PROJ](https://proj.org/en/stable/index.html) string...
+```{r}
+#| label: proj-string
+proj_string <- paste0(
+  "+proj=aeqd +lon_0=",
+  projection_center$lon0,
+  " +lat_0=",
+  projection_center$lat0
+)
+
+proj_string
+```
+...and project the fish locations:
+
+```{r}
+#| label: sb-aeqd-plot
+sb_sf <- sb |>
+  st_as_sf(coords = c("med_lon", "med_lat"), crs = 4326) |>
+  st_transform(proj_string)
+
+ggplot(sb_sf) +
+  geom_sf() +
+  coord_sf(datum = proj_string)
+```
+
+We now conduct principle components analysis (PCA) on the major migration vector to find its angle from true north: the _migration azimuth_. 
+
+```{r}
+#| label: sb-azimuth
+migration_azimuth <- sb_sf |>
+  # Extract AEQD coordinates
+  st_coordinates() |>
+  # Run PCA
+  prcomp() |>
+  # Extract PCA loadings
+  _$rotation |>
+  # Transpose matrix
+  t() |>
+  # Find coordinates of a second location on the X axis.
+  # Here we use 1 km but it could be any value
+  (\(.) c(1e3, 0) %*% .)() |>
+  # Find the angle between true north and migration north
+  (\(.) atan2(.[1], .[2]) * 180 / pi)()
+
+# Measure clockwise from north
+migration_azimuth <- ifelse(
+  migration_azimuth < 0,
+  180 + migration_azimuth,
+  migration_azimuth
+)
+```
+
+So, the migration vector is rotated `{r} round(migration_azimuth)`$\degree$ from north. To rotate the data, we're going to lie to the program and say that the data are currently projected around the north pole, then add the migration azimuth to it.
+
+```{r}
+#| label: sb-rotate
+st_crs(sb_sf) <- "+proj=aeqd +lat_0=90 +lon_0=0"
+proj_rotated <- paste0("+proj=aeqd +lat_0=90 +lon_0=", migration_azimuth)
+
+sb_migration_north <- sb_sf |>
+  st_transform(proj_rotated) |>
+  # extract coordinates for modeling purposes
+  mutate(x = st_coordinates(geometry)[, 1], y = st_coordinates(geometry)[, 2])
+
+
+ggplot(sb_migration_north) +
+  geom_sf() +
+  coord_sf(datum = proj_rotated)
+```
+
+We can now visualize migration synchrony, the variance in the migration vector over time, and migration front, variance in excursion from the migration vector over time [@secor2025].
+
+```{r}
+#| label: sb-synchrony
+ggplot(sb_migration_north) +
+  geom_point(aes(x = wk, y = x, color = group), alpha = 0.4) +
+  facet_wrap(~year) +
+  labs(
+    title = "Migration synchrony",
+    x = "Week of year",
+    y = "Distance along the migration vector"
+  ) +
+  theme(axis.title = element_text(size = 12))
+```
+
+```{r}
+#| label: sb-front
+ggplot(sb_migration_north) +
+  geom_point(aes(x = wk, y = y, color = group), alpha = 0.4) +
+  facet_wrap(~year) +
+  labs(
+    title = "Migration front",
+    x = "Week of year",
+    y = "Distance across the migration vector"
+  ) +
+  theme(axis.title = element_text(size = 12))
+```
+
+### Initial GAM
+#### Migration vector
+
+For the initial GAM, we'll treat both year and population as a random effect. We see a general trend of low values on the migration vector through the beginning of the year, a rapid increase after the 10th week, a slight reduction in rate in week 15-20, then another rapid increase through week 25. Posiiton then levels off through week 40, where it rapidly drops.
+
+```{r}
+#| label: gam-all-re
+model_data <- sb_migration_north |>
+  mutate(group = factor(group), yr_f = factor(year))
+
+m1 <- model_data |>
+  gam(
+    x ~ s(wk, k = 27, bs = "cc") + s(yr_f, bs = "re") + s(group, bs = "re"),
+    knots = list(wk = c(1, 53)),
+    data = _,
+    method = "REML"
+  )
+
+summary(m1)
+draw(m1, select = "s(wk)", residuals = TRUE)
+```
+
+Next we'll pull the populations apart and treat them as "by-variable smooths" (i.e. one form of a GAM interaction) in the model. We see that the leveling-off of movement up the migration vector in weeks 15-20 is likely due to spawning. The Potomac River has a leveling-off earlier and lower on the vector, followed by Delaware a little higher and later, then Hudson higher and greater still. **These _destination habitats_ are one of the migration metrics we wish to quantify.**
+
+```{r}
+#| label: gam-re-yr
+m2 <- model_data |>
+  gam(
+    x ~ group + s(wk, by = group, k = 27) + s(yr_f, bs = "re"),
+    knots = list(wk = c(1, 53)),
+    data = _,
+    method = "REML"
+  )
+
+
+summary(m2)
+draw(m2, select = c("s(wk)"), partial_match = TRUE, residuals = TRUE)
+```
+
+#### Migration front
+
+We'll do the same with the migration front (the deviation from the migration vector).
+
+```{r}
+#| label: gam-front-all-re
+m1_mf <- model_data |>
+  gam(
+    y ~ s(wk, k = 53, bs = "cc") +
+      s(yr_f, bs = "re") +
+      s(group, bs = "re"),
+    knots = list(wk = c(1, 53)),
+    data = _,
+    method = "REML"
+  )
+
+summary(m1_mf)
+draw(m1_mf, select = "s(wk)", residuals = TRUE)
+```
+
+```{r}
+#| label: gam-front-re-yr
+m2_mf <- model_data |>
+  gam(
+    y ~ group +
+      s(wk, by = group, k = 53, bs = "cc") +
+      s(yr_f, bs = "re"),
+    knots = list(wk = c(1, 53)),
+    data = _,
+    method = "REML"
+  )
+
+summary(m2_mf)
+draw(m2_mf, select = "s(wk)", partial_match = TRUE, residuals = TRUE)
+```
+
+### Model evaluation
+It should be noted, however, that the initial models are not performing well on the edges of the domain of the migration vector and migration front. This suggests that we need to refine the model to further to characterize these areas.
+
+```{r}
+#| label: appraise
+appraise(m1)
+appraise(m2)
+appraise(m1_mf)
+appraise(m2_mf)
+```
+
+## Sand tiger shark _Carcharias taurus_

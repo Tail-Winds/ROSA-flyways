@@ -9,6 +9,8 @@ book:
     # - geodesic.qmd
     - migration_north.qmd
     - projection_error.qmd
+    - data_cleaning.qmd
+    - initial_gam.qmd
     - dmsp.qmd
     - references.qmd
 

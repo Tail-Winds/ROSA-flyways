@@ -1,0 +1,84 @@
+---
+title: Data cleaning
+author: Mike O'Brien
+date: last-modified
+execute:
+  message: false
+  warning: false
+---
+
+```{r}
+library(arrow)
+library(dplyr)
+library(ggplot2)
+```
+
+# Striped bass
+```{r}
+#| label: sb-import
+sb <- open_dataset("../data/RAW/combined_striped_bass.parquet") |>
+  filter(longitude != 0, !is.na(datetime)) |> # CHANGE THIS LATER!
+  mutate(latitude = abs(latitude), wk = week(datetime)) |>
+  group_by(transmitter, year, wk, group) |>
+  summarize(
+    med_lon = median(longitude, na.rm = TRUE),
+    med_lat = median(latitude, na.rm = TRUE)
+  ) |>
+  collect()
+```
+
+First visualize the distribution of the median per-individual latitudes through time:
+
+```{r}
+#| label: sb-plot
+#| fig-cap: "Weekly median latitude of striped bass. Colors represent putative populations; DE: Delaware, HR: Hudson River, PR: Potomac River."
+ggplot(sb) +
+  geom_point(aes(x = wk, y = med_lat, color = group), alpha = 0.4) +
+  facet_wrap(~year) +
+  labs(x = "Week of year", y = "Weekly median latitude") +
+  theme_minimal() +
+  theme(axis.title = element_text(size = 12))
+```
+
+It seems that we have resident striped bass from both the Delaware and Potomac River. Striped bass exhibit partial migration, where fish <80 cm remain resident in their natal estuary [@secor2020] (though our understanding of this is rapidly changing!). The projects providing the data for Delaware and Potomac fish purposefully tagged smaller, resident fish. As a first pass, we'll remove any fish that didn't move higher than 40.46 $\degree$ latitude (the latitude of Trenton, NJ).
+
+```{r}
+#| label: sb-import-migrants
+#| echo: false
+drop <- open_dataset("../data/RAW/combined_striped_bass.parquet") |>
+  filter(longitude != 0, !is.na(datetime)) |>
+  group_by(transmitter, year) |>
+  summarize(max_lat = max(latitude, na.rm = TRUE)) |>
+  filter(max_lat < 40.26) |>
+  select(transmitter, year) |>
+  collect()
+
+sb <- open_dataset("../data/RAW/combined_striped_bass.parquet") |>
+  anti_join(drop) |>
+  mutate(latitude = abs(latitude), wk = week(datetime)) |>
+  group_by(transmitter, year, wk, group) |>
+  summarize(
+    med_lon = median(longitude, na.rm = TRUE),
+    med_lat = median(latitude, na.rm = TRUE)
+  ) |>
+  collect()
+
+
+ggplot(sb) +
+  geom_point(aes(x = wk, y = med_lat, color = group), alpha = 0.4) +
+  facet_wrap(~year) +
+  labs(x = "Week of year", y = "Weekly median latitude") +
+  theme_minimal() +
+  theme(axis.title = element_text(size = 12))
+```
+
+Great, now we definitely have some migratory striped bass.
+
+
+```{r}
+#| eval: false
+open_dataset("data/RAW/combined_striped_bass.parquet") |>
+  anti_join(drop) |>
+  mutate(latitude = abs(latitude), wk = week(datetime)) |>
+  write_parquet("data/derived/striped_bass.parquet")
+```
