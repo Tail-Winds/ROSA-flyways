@@ -110,13 +110,33 @@
     ]
   },
   {
+    "objectID": "initial_gam.html",
+    "href": "initial_gam.html",
+    "title": "4  Initial GAM exploration",
+    "section": "",
+    "text": "4.1 Striped bass Morone saxatilis\nSecor et al. (2025) provided a simple generalized additive model (GAM) evaluated in R (R Core Team 2026) for the analysis of marine fauna flyways. In the manuscript, the average latitude per individual, per week of a Hudson River population of striped bass Morone saxatilis, possibly the entire population of North Atlantic right whale Eubalaena glacialis, and several populations of northern gannet Morus bassanus were regressed against date. We reproduce that analysis here for an expanded data set of striped bass locations which includes Potomac and Delaware populations as well as for tagged sand tiger sharks Carcharias taurus. We do not report on Atlantic sturgeon here as the data set has not been fully-compiled as of 2026-04-30.\nWe will use the following packages:\nWe first visualize the distribution of the median per-individual latitudes through time:\nggplot(sb) +\n  geom_point(aes(x = wk, y = med_lat, color = group), alpha = 0.4) +\n  facet_wrap(~year) +\n  labs(x = \"Week of year\", y = \"Weekly median latitude\") +\n  theme_minimal() +\n  theme(axis.title = element_text(size = 12))\n\n\n\n\nWeekly median latitude of striped bass. Colors represent putative populations; DE: Delaware, HR: Hudson River, PR: Potomac River.\nFollowing our projectiong selection procedure in the Projection Error chapter, we project the data into an azimuthal equidistant projection (AEQD) and rotate the data to “migration north”. To project into AEQD, we first need a projection center. This will be the median receiver location.\n# A tibble: 1 × 2\n   lon0  lat0\n  &lt;dbl&gt; &lt;dbl&gt;\n1 -74.2  40.0\nCreate the PROJ string…\nproj_string &lt;- paste0(\n  \"+proj=aeqd +lon_0=\",\n  projection_center$lon0,\n  \" +lat_0=\",\n  projection_center$lat0\n)\n\nproj_string\n\n[1] \"+proj=aeqd +lon_0=-74.159839739832 +lat_0=40.0307026396128\"\n…and project the fish locations:\nsb_sf &lt;- sb |&gt;\n  st_as_sf(coords = c(\"med_lon\", \"med_lat\"), crs = 4326) |&gt;\n  st_transform(proj_string)\n\nggplot(sb_sf) +\n  geom_sf() +\n  coord_sf(datum = proj_string)\nWe now conduct principle components analysis (PCA) on the major migration vector to find its angle from true north: the migration azimuth.\nmigration_azimuth &lt;- sb_sf |&gt;\n  # Extract AEQD coordinates\n  st_coordinates() |&gt;\n  # Run PCA\n  prcomp() |&gt;\n  # Extract PCA loadings\n  _$rotation |&gt;\n  # Transpose matrix\n  t() |&gt;\n  # Find coordinates of a second location on the X axis.\n  # Here we use 1 km but it could be any value\n  (\\(.) c(1e3, 0) %*% .)() |&gt;\n  # Find the angle between true north and migration north\n  (\\(.) atan2(.[1], .[2]) * 180 / pi)()\n\nmigration_azimuth\n\n[1] 46.83949\nSo, the migration vector is rotated 47\\(\\degree\\) from north. To rotate the data, we’re going to lie to the program and say that the data are currently projected around the north pole, then add the migration azimuth to it.\nst_crs(sb_sf) &lt;- \"+proj=aeqd +lat_0=90 +lon_0=0\"\nproj_rotated &lt;- paste0(\"+proj=aeqd +lat_0=90 +lon_0=\", migration_azimuth)\n\nsb_migration_north &lt;- sb_sf |&gt;\n  st_transform(proj_rotated) |&gt;\n  # extract coordinates for modeling purposes\n  mutate(x = st_coordinates(geometry)[, 1], y = st_coordinates(geometry)[, 2])\n\n\nggplot(sb_migration_north) +\n  geom_sf() +\n  coord_sf(datum = proj_rotated)\nWe can now visualize migration synchrony, the variance in the migration vector over time, and migration front, variance in excursion from the migration vector over time (Secor et al. 2025).\nggplot(sb_migration_north) +\n  geom_point(aes(x = wk, y = x, color = group), alpha = 0.4) +\n  facet_wrap(~year) +\n  labs(x = \"Week of year\", y = \"Distance along the migration vector\") +\n  theme_minimal() +\n  theme(axis.title = element_text(size = 12))\nI (Mike) find the migration front for striped bass to be incredibly interesting – this is where you can see differences in the migration ecology of striped bass due to spawning behaviors!\nggplot(sb_migration_north) +\n  geom_point(aes(x = wk, y = y, color = group), alpha = 0.4) +\n  facet_wrap(~year) +\n  labs(x = \"Week of year\", y = \"Distance across the migration vector\") +\n  theme_minimal() +\n  theme(axis.title = element_text(size = 12))",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Initial GAM exploration</span>"
+    ]
+  },
+  {
+    "objectID": "initial_gam.html#sand-tiger-shark-carcharias-taurus",
+    "href": "initial_gam.html#sand-tiger-shark-carcharias-taurus",
+    "title": "4  Initial GAM exploration",
+    "section": "4.2 Sand tiger shark Carcharias taurus",
+    "text": "4.2 Sand tiger shark Carcharias taurus\n\n\n\n\nR Core Team. 2026. R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing. https://www.R-project.org.\n\n\nSecor, David H, Michael H P O’Brien, and Helen Bailey. 2025. “The Flyway Construct and Assessment of Offshore Wind Farm Impacts on Migratory Marine Fauna.” ICES Journal of Marine Science 82 (3): fsae138. https://doi.org/10.1093/icesjms/fsae138.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Initial GAM exploration</span>"
+    ]
+  },
+  {
     "objectID": "dmsp.html",
     "href": "dmsp.html",
-    "title": "4  Data Management and Sharing Plan",
+    "title": "5  Data Management and Sharing Plan",
     "section": "",
     "text": "Our Data Management and Sharing Plan (DMSP) was created using the DMP Tool Atlantic Offshore Research (RWSC & ROSA) template produced by ROSA and the Regional Wildlife Science Collaborative.\nThe DMSP, referenced as Secor et al. (2026), can be viewed at the following URL: https://doi.org/10.48321/D10890EBF7.\n\n\n\n\nSecor, David H, Aaron B Carlisle, and Bradley M Wetherbee. 2026. Flyway Models and Metrics in the Assessment of OWF Impacts on Migratory Fishes. Data Management Plan. DMPTool. https://doi.org/10.48321/D10890EBF7.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Data Management and Sharing Plan</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Data Management and Sharing Plan</span>"
     ]
   },
   {
@@ -124,7 +144,7 @@
     "href": "references.html",
     "title": "References",
     "section": "",
-    "text": "O’Brien, Michael H. P., and David H. Secor. 2021. “Influence of\nThermal Stratification and Storms on Acoustic Telemetry Detection\nEfficiency: A Year-Long Test in the US Southern Mid-Atlantic\nBight.” Animal Biotelemetry 9 (1): 8. https://doi.org/10.1186/s40317-021-00233-3.\n\n\nSecor, David H, Aaron B Carlisle, and Bradley M Wetherbee. 2026.\nFlyway Models and Metrics in the\nAssessment of OWF Impacts on\nMigratory Fishes. Data Management Plan.\nDMPTool. https://doi.org/10.48321/D10890EBF7.\n\n\nSecor, David H, Michael H P O’Brien, and Helen Bailey. 2025. “The\nFlyway Construct and Assessment of Offshore Wind Farm Impacts on\nMigratory Marine Fauna.” ICES Journal of Marine Science\n82 (3): fsae138. https://doi.org/10.1093/icesjms/fsae138.\n\n\nSnyder, John P. 1987. Map Projections: A Working Manual.\nProfessional Paper 1395. U.S. Government Printing Office.\n\n\nSnyder, John P. 1993. Flattening the Earth: Two Thousand Years of\nMap Projections. University of Chicago Press.",
+    "text": "O’Brien, Michael H. P., and David H. Secor. 2021. “Influence of\nThermal Stratification and Storms on Acoustic Telemetry Detection\nEfficiency: A Year-Long Test in the US Southern Mid-Atlantic\nBight.” Animal Biotelemetry 9 (1): 8. https://doi.org/10.1186/s40317-021-00233-3.\n\n\nR Core Team. 2026. R: A Language and Environment for Statistical\nComputing. R Foundation for Statistical Computing. https://www.R-project.org.\n\n\nSecor, David H, Aaron B Carlisle, and Bradley M Wetherbee. 2026.\nFlyway Models and Metrics in the Assessment of OWF Impacts on\nMigratory Fishes. Data Management Plan. DMPTool. https://doi.org/10.48321/D10890EBF7.\n\n\nSecor, David H, Michael H P O’Brien, and Helen Bailey. 2025. “The\nFlyway Construct and Assessment of Offshore Wind Farm Impacts on\nMigratory Marine Fauna.” ICES Journal of Marine Science\n82 (3): fsae138. https://doi.org/10.1093/icesjms/fsae138.\n\n\nSnyder, John P. 1987. Map Projections: A Working Manual.\nProfessional Paper 1395. U.S. Government Printing Office.\n\n\nSnyder, John P. 1993. Flattening the Earth: Two Thousand Years of\nMap Projections. University of Chicago Press.",
     "crumbs": [
       "References"
     ]

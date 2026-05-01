@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-01-27">
+<meta name="dcterms.date" content="2026-05-01">
 
-<title>2&nbsp; Optimal Projections and Migration North – Flyway Assessment of Offshore Wind Farm Impacts on Migratory Fishes</title>
+<title>4&nbsp; Initial GAM exploration – Flyway Assessment of Offshore Wind Farm Impacts on Migratory Fishes</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,6 +23,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 /* CSS for citations */
 div.csl-bib-body { }
@@ -53,8 +88,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./projection_error.html" rel="next">
-<link href="./index.html" rel="prev">
+<link href="./dmsp.html" rel="next">
+<link href="./projection_error.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -134,7 +169,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./migration_north.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Optimal Projections and Migration North</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./initial_gam.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Initial GAM exploration</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -167,7 +202,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./migration_north.html" class="sidebar-item-text sidebar-link active">
+  <a href="./migration_north.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Optimal Projections and Migration North</span></span></a>
   </div>
 </li>
@@ -179,7 +214,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./initial_gam.html" class="sidebar-item-text sidebar-link">
+  <a href="./initial_gam.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Initial GAM exploration</span></span></a>
   </div>
 </li>
@@ -205,25 +240,8 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#step-1-calculate-an-optimal-point-of-tangency" id="toc-step-1-calculate-an-optimal-point-of-tangency" class="nav-link active" data-scroll-target="#step-1-calculate-an-optimal-point-of-tangency"><span class="header-section-number">2.1</span> Step 1: Calculate an optimal point of tangency</a>
-  <ul class="collapse">
-  <li><a href="#formulae" id="toc-formulae" class="nav-link" data-scroll-target="#formulae"><span class="header-section-number">2.1.1</span> Formulae</a></li>
-  <li><a href="#result" id="toc-result" class="nav-link" data-scroll-target="#result"><span class="header-section-number">2.1.2</span> Result</a></li>
-  </ul></li>
-  <li><a href="#step-2-project-geodetic-coordinates" id="toc-step-2-project-geodetic-coordinates" class="nav-link" data-scroll-target="#step-2-project-geodetic-coordinates"><span class="header-section-number">2.2</span> Step 2: Project geodetic coordinates</a>
-  <ul class="collapse">
-  <li><a href="#formulae-1" id="toc-formulae-1" class="nav-link" data-scroll-target="#formulae-1"><span class="header-section-number">2.2.1</span> Formulae</a></li>
-  <li><a href="#result-1" id="toc-result-1" class="nav-link" data-scroll-target="#result-1"><span class="header-section-number">2.2.2</span> Result</a></li>
-  </ul></li>
-  <li><a href="#step-3-conduct-pca-on-projected-coordinates" id="toc-step-3-conduct-pca-on-projected-coordinates" class="nav-link" data-scroll-target="#step-3-conduct-pca-on-projected-coordinates"><span class="header-section-number">2.3</span> Step 3: Conduct PCA on projected coordinates</a>
-  <ul class="collapse">
-  <li><a href="#result-2" id="toc-result-2" class="nav-link" data-scroll-target="#result-2"><span class="header-section-number">2.3.1</span> Result</a></li>
-  </ul></li>
-  <li><a href="#step-4-rotate-to-migration-north" id="toc-step-4-rotate-to-migration-north" class="nav-link" data-scroll-target="#step-4-rotate-to-migration-north"><span class="header-section-number">2.4</span> Step 4: Rotate to “Migration North”</a>
-  <ul class="collapse">
-  <li><a href="#formulae-2" id="toc-formulae-2" class="nav-link" data-scroll-target="#formulae-2"><span class="header-section-number">2.4.1</span> Formulae</a></li>
-  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">2.4.2</span> Results</a></li>
-  </ul></li>
+  <li><a href="#striped-bass-morone-saxatilis" id="toc-striped-bass-morone-saxatilis" class="nav-link active" data-scroll-target="#striped-bass-morone-saxatilis"><span class="header-section-number">4.1</span> Striped bass <em>Morone saxatilis</em></a></li>
+  <li><a href="#sand-tiger-shark-carcharias-taurus" id="toc-sand-tiger-shark-carcharias-taurus" class="nav-link" data-scroll-target="#sand-tiger-shark-carcharias-taurus"><span class="header-section-number">4.2</span> Sand tiger shark <em>Carcharias taurus</em></a></li>
   </ul>
 </nav>
     </div>
@@ -232,7 +250,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Optimal Projections and Migration North</span></h1>
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Initial GAM exploration</span></h1>
 </div>
 
 
@@ -243,7 +261,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 27, 2026</p>
+      <p class="date">May 1, 2026</p>
     </div>
   </div>
   
@@ -255,111 +273,163 @@ window.Quarto = {
 </header>
 
 
-<p>The first step of the flyway model is to rotate animal tracking data into a “migration north” frame of reference <span class="citation" data-cites="secor2025">(<a href="references.html#ref-secor2025" role="doc-biblioref">Secor et al. 2025</a>)</span>; we are actively researching different manners of identifying this dominant vector of migration. This report summarizes our initial investigation into the premise of modeling migration north using a tangent principal components analysis (tangent PCA). At a high level, this requires the following steps:</p>
-<ol type="1">
-<li>Calculate an optimal point of tangency to the Earth’s surface.</li>
-<li>Project geodetic animal coordinates (lat/lon) into a Cartesian plane (X/Y) defined by a plane tangent to the Earth at the optimal point of tangency.</li>
-<li>Find the synthetic axis of greatest variation, “Migration North” <span class="citation" data-cites="secor2025">(<a href="references.html#ref-secor2025" role="doc-biblioref">Secor et al. 2025</a>)</span>, via PCA.</li>
-<li>Rotate the data such that they are in reference to migration north using the eigenvectors of the PCA.</li>
-</ol>
-<section id="step-1-calculate-an-optimal-point-of-tangency" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="step-1-calculate-an-optimal-point-of-tangency"><span class="header-section-number">2.1</span> Step 1: Calculate an optimal point of tangency</h2>
-<p>Like all geometric manifolds, the Earth, being 3-dimensional and ellipsoid in shape, approximates 2-dimensional Euclidean space on small scales. This simplification can fall apart on the continental-to-hemispheric scale of migration, leading to a choice: treat location data as on an ellipsoidal manifold or project into lower-dimensional Euclidean space. As the math needed to calculate positions, directions, and areas on a manifold are far more complicated than that in Euclidean space, humans have historically chose the latter. Indeed, there are a multitude of map projections, the development of which has been an area of active research for millennia <span class="citation" data-cites="snyder1993">(<a href="references.html#ref-snyder1993" role="doc-biblioref">Snyder 1993</a>)</span>.</p>
-<p>Map projections can generally only maintain one of the following: distance, direction, or area. Some projections can maintain two, but only in reference to a single point. As such, this center of projection is critical – we use it to define the point at which we create our tangent plane.</p>
-<p>Usually, we could just find the point that minimizes the distance to all other points, perhaps as a mean or median. However the shortest path between two points on a manifold is not a straight line: a straight line will usually place the point within the manifold. The shortest path between two points on the Earth, the “great circle distance”, is a path along the surface: a geodesic.</p>
-<p>The geodesic mean or median takes into account the curvature of the Earth, and ensures that the location that minimizes the distance to other points is on the surface of the Earth. Even here, we treat the Earth as a sphere, which is untrue but closer to reality than a flat plane, and convert latitude and longitude (the angle between 0<span class="math inline">\(^\circ\)</span> and the location at the center of the Earth) to XYZ coordinates on a unit sphere.</p>
-<section id="formulae" class="level3" data-number="2.1.1">
-<h3 data-number="2.1.1" class="anchored" data-anchor-id="formulae"><span class="header-section-number">2.1.1</span> Formulae</h3>
-<ul>
-<li>Covert latitude and longitude (in radians) to spherical coordinates:</li>
-</ul>
-<p><span class="math display">\[\begin{align}
-x &amp;= cos(lat) * cos(lon) \\
-y &amp;= cos(lat) * sin(lon) \\
-z &amp;= sin(lat)
-\end{align}\]</span></p>
-<ul>
-<li>Calculate geodesic distance between the center of projection <span class="math inline">\((X_0, Y_0, Z_0)\)</span> and an animal location <span class="math inline">\((X_A, Y_A, Z_A)\)</span>:</li>
-</ul>
-<p><span class="math display">\[
-arccos(X_0X_A + Y_0Y_A + Z_0Z_A)
-\]</span></p>
-<ul>
-<li>Objective function: find the value of <span class="math inline">\((X_0, Y_0, Z_0)\)</span> that minimizes the median geodesic distance to all other points.</li>
-</ul>
+<p><span class="citation" data-cites="secor2025">Secor et al. (<a href="references.html#ref-secor2025" role="doc-biblioref">2025</a>)</span> provided a simple generalized additive model (GAM) evaluated in R <span class="citation" data-cites="r_2026">(<a href="references.html#ref-r_2026" role="doc-biblioref">R Core Team 2026</a>)</span> for the analysis of marine fauna flyways. In the manuscript, the average latitude per individual, per week of a Hudson River population of striped bass <em>Morone saxatilis</em>, possibly the entire population of North Atlantic right whale <em>Eubalaena glacialis</em>, and several populations of northern gannet <em>Morus bassanus</em> were regressed against date. We reproduce that analysis here for an expanded data set of striped bass locations which includes Potomac and Delaware populations as well as for tagged sand tiger sharks <em>Carcharias taurus</em>. We do not report on <em>Atlantic sturgeon</em> here as the data set has not been fully-compiled as of 2026-04-30.</p>
+<p>We will use the following packages:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(arrow) <span class="co"># Data import</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr) <span class="co"># Data manipulation</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf) <span class="co"># Spatial</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mgcv) <span class="co"># GAM fitting</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2) <span class="co"># Visualization</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="striped-bass-morone-saxatilis" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="striped-bass-morone-saxatilis"><span class="header-section-number">4.1</span> Striped bass <em>Morone saxatilis</em></h2>
+<p>We first visualize the distribution of the median per-individual latitudes through time:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sb) <span class="sc">+</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> wk, <span class="at">y =</span> med_lat, <span class="at">color =</span> group), <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>year) <span class="sc">+</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Week of year"</span>, <span class="at">y =</span> <span class="st">"Weekly median latitude"</span>) <span class="sc">+</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="initial_gam_files/figure-html/sb-plot-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Weekly median latitude of striped bass. Colors represent putative populations; DE: Delaware, HR: Hudson River, PR: Potomac River.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Following our projectiong selection procedure in the <a href="./projection_error.html">Projection Error chapter</a>, we project the data into an azimuthal equidistant projection (AEQD) and rotate the data to “migration north”. To project into AEQD, we first need a projection center. This will be the median receiver location.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+   lon0  lat0
+  &lt;dbl&gt; &lt;dbl&gt;
+1 -74.2  40.0</code></pre>
+</div>
+</div>
+<p>Create the <a href="https://proj.org/en/stable/index.html">PROJ</a> string…</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>proj_string <span class="ot">&lt;-</span> <span class="fu">paste0</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"+proj=aeqd +lon_0="</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  projection_center<span class="sc">$</span>lon0,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">" +lat_0="</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  projection_center<span class="sc">$</span>lat0</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>proj_string</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "+proj=aeqd +lon_0=-74.159839739832 +lat_0=40.0307026396128"</code></pre>
+</div>
+</div>
+<p>…and project the fish locations:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>sb_sf <span class="ot">&lt;-</span> sb <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"med_lon"</span>, <span class="st">"med_lat"</span>), <span class="at">crs =</span> <span class="dv">4326</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(proj_string)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sb_sf) <span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>() <span class="sc">+</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">datum =</span> proj_string)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="initial_gam_files/figure-html/sb-aeqd-plot-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We now conduct principle components analysis (PCA) on the major migration vector to find its angle from true north: the <em>migration azimuth</em>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>migration_azimuth <span class="ot">&lt;-</span> sb_sf <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extract AEQD coordinates</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_coordinates</span>() <span class="sc">|&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Run PCA</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prcomp</span>() <span class="sc">|&gt;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extract PCA loadings</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  _<span class="sc">$</span>rotation <span class="sc">|&gt;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Transpose matrix</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t</span>() <span class="sc">|&gt;</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Find coordinates of a second location on the X axis.</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Here we use 1 km but it could be any value</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  (\(.) <span class="fu">c</span>(<span class="fl">1e3</span>, <span class="dv">0</span>) <span class="sc">%*%</span> .)() <span class="sc">|&gt;</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Find the angle between true north and migration north</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  (\(.) <span class="fu">atan2</span>(.[<span class="dv">1</span>], .[<span class="dv">2</span>]) <span class="sc">*</span> <span class="dv">180</span> <span class="sc">/</span> pi)()</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>migration_azimuth</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 46.83949</code></pre>
+</div>
+</div>
+<p>So, the migration vector is rotated 47<span class="math inline">\(\degree\)</span> from north. To rotate the data, we’re going to lie to the program and say that the data are currently projected around the north pole, then add the migration azimuth to it.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(sb_sf) <span class="ot">&lt;-</span> <span class="st">"+proj=aeqd +lat_0=90 +lon_0=0"</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>proj_rotated <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"+proj=aeqd +lat_0=90 +lon_0="</span>, migration_azimuth)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>sb_migration_north <span class="ot">&lt;-</span> sb_sf <span class="sc">|&gt;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(proj_rotated) <span class="sc">|&gt;</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># extract coordinates for modeling purposes</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">x =</span> <span class="fu">st_coordinates</span>(geometry)[, <span class="dv">1</span>], <span class="at">y =</span> <span class="fu">st_coordinates</span>(geometry)[, <span class="dv">2</span>])</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sb_migration_north) <span class="sc">+</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>() <span class="sc">+</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">datum =</span> proj_rotated)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="initial_gam_files/figure-html/sb-rotate-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can now visualize migration synchrony, the variance in the migration vector over time, and migration front, variance in excursion from the migration vector over time <span class="citation" data-cites="secor2025">(<a href="references.html#ref-secor2025" role="doc-biblioref">Secor et al. 2025</a>)</span>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sb_migration_north) <span class="sc">+</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> wk, <span class="at">y =</span> x, <span class="at">color =</span> group), <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>year) <span class="sc">+</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Week of year"</span>, <span class="at">y =</span> <span class="st">"Distance along the migration vector"</span>) <span class="sc">+</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="initial_gam_files/figure-html/sb-synchrony-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>I (Mike) find the migration front for striped bass to be incredibly interesting – this is where you can see differences in the migration ecology of striped bass due to spawning behaviors!</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sb_migration_north) <span class="sc">+</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> wk, <span class="at">y =</span> y, <span class="at">color =</span> group), <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>year) <span class="sc">+</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Week of year"</span>, <span class="at">y =</span> <span class="st">"Distance across the migration vector"</span>) <span class="sc">+</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="initial_gam_files/figure-html/sb-front-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
-<section id="result" class="level3" data-number="2.1.2">
-<h3 data-number="2.1.2" class="anchored" data-anchor-id="result"><span class="header-section-number">2.1.2</span> Result</h3>
-<p>The Fréchet Mean, specified in the formulae above, of the UMCES-tagged striped bass data set (black points, below) used in <span class="citation" data-cites="secor2025">(<a href="references.html#ref-secor2025" role="doc-biblioref">Secor et al. 2025</a>)</span> was -73.04283<span class="math inline">\(^o\)</span> E, 40.32766<span class="math inline">\(^o\)</span> N (red point, below). A raw mean of unprojected Latitude-Longitude coordinates, i.e.&nbsp;treating geodetic coordinates as if they were Cartesian, was slightly more than 4.5 kilometers to the southeast at -72.99653<span class="math inline">\(^o\)</span> E, 40.30754<span class="math inline">\(^o\)</span> N (blue point, below). Given that the minimal resolution provided by telemetry receivers in the Mid-Atlantic Bight is c.&nbsp;500 meters <span class="citation" data-cites="obrien2021">(<a href="references.html#ref-obrien2021" role="doc-biblioref">O’Brien and Secor 2021</a>)</span> and the spatial range of detections is roughly 900 kilometers, there is some evidence to suggest that a geodesic mean may be unnecessary. We will continue to trial different metrics, however, as we hope to make this method applicable to species with greater migratory range.</p>
-<p><img src="images/paste-2.png" class="img-fluid"></p>
-</section>
-</section>
-<section id="step-2-project-geodetic-coordinates" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="step-2-project-geodetic-coordinates"><span class="header-section-number">2.2</span> Step 2: Project geodetic coordinates</h2>
-<p>After finding the projection center, we need to project the coordinates onto the tangent plane. There are many ways to do this, including the whole (very active!) field of manifold learning. Luckily, the millennia of map projections comes in handy here – all projections categorized as “azimuthal” are projections of coordinates onto a tangent plane. The orthographic projection projects points from the Earth to the tangent plane orthogonally (straight line); stereographic maps points along a line connecting the plane, the point, and the point opposite the center of projection; the gnomic (or gnomonic) does the same, but uses a line connecting the plane, the point, and the center of the Earth. There are many more, but the azimuthal equidistant projection, which we will use for the rest of this report, “unwraps” the Earth onto the tangent plane, such that angles and distances are maintained from the projection center <span class="citation" data-cites="snyder1987">(<a href="references.html#ref-snyder1987" role="doc-biblioref">Snyder 1987</a>)</span>. Note that angles and distances are only maintained <em>from the center of projection</em>, meaning that, in this sense, distances <em>along</em> the migration vector will be correct, but distance <em>from</em> the migration vector will not. This suggests that we should further investigate other methods of projection to confirm that this is the most applicable to the task of flyway modeling.</p>
-<section id="formulae-1" class="level3" data-number="2.2.1">
-<h3 data-number="2.2.1" class="anchored" data-anchor-id="formulae-1"><span class="header-section-number">2.2.1</span> Formulae</h3>
-<p>To project an animal’s latitude and longitude coordinate in radians (<span class="math inline">\(\phi\)</span>, <span class="math inline">\(\lambda\)</span>) from a given center of projection (<span class="math inline">\(\phi_1\)</span>, <span class="math inline">\(\lambda_0\)</span>), where <span class="math inline">\(c\)</span> is the angular distance from center and <span class="math inline">\(k'\)</span> is the scale factor<span class="citation" data-cites="snyder1987">(<a href="references.html#ref-snyder1987" role="doc-biblioref">Snyder 1987</a>)</span>:</p>
-<p><span class="math display">\[\begin{align}
-x &amp;= k'cos(\phi)sin(\lambda-\lambda_0) \\
-y &amp;= k'[cos(\phi_1)sin(\phi)-sin(\phi_1)cos(\phi)cos(\lambda-\lambda_0)] \\
-k' &amp;= c/sin(c) \\
-c &amp;= arccos(sin(\phi_1)sin(\phi) + cos(\phi_1)cos(\phi)cos(\lambda-\lambda_0))
-\end{align}\]</span></p>
-</section>
-<section id="result-1" class="level3" data-number="2.2.2">
-<h3 data-number="2.2.2" class="anchored" data-anchor-id="result-1"><span class="header-section-number">2.2.2</span> Result</h3>
-<p>See next section.</p>
-</section>
-</section>
-<section id="step-3-conduct-pca-on-projected-coordinates" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="step-3-conduct-pca-on-projected-coordinates"><span class="header-section-number">2.3</span> Step 3: Conduct PCA on projected coordinates</h2>
-<p>Principal Components Analysis is a dimensionality reduction technique which involves creating a set of synthetic, orthogonal axes in multidimensional space where each successive axis accounts for less and less variation. As the telemetry data are two-dimensional, we can have a maximum of two axes. In the flyway concept, we view the first axis, that which explains the most spatial variation, as a vector oriented according to “migration north”. The second axis, then, represents deviation from migration north: the “migration front” <span class="citation" data-cites="secor2025">(<a href="references.html#ref-secor2025" role="doc-biblioref">Secor et al. 2025</a>)</span>.</p>
-<section id="result-2" class="level3" data-number="2.3.1">
-<h3 data-number="2.3.1" class="anchored" data-anchor-id="result-2"><span class="header-section-number">2.3.1</span> Result</h3>
-<p>The tangent PCA of UMCES-tagged striped bass at the point of tangency calculated in Step 1 are shown below. The first axis, shown in red, reflects the fitted migration vector (first principal component, 88.2% of variance). The second axis, shown in orange, reflects the axis of the migration front (second principal component, 11.8% of variance). Note that the lines are curved: this reflects the fact that the vectors are geodesics – great-circle paths along the curved surface of the earth – rather than lines in Euclidean space.<br>
-<img src="images/paste-3.png" class="img-fluid"></p>
-</section>
-</section>
-<section id="step-4-rotate-to-migration-north" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="step-4-rotate-to-migration-north"><span class="header-section-number">2.4</span> Step 4: Rotate to “Migration North”</h2>
-<p>A property of the azimuthal equidistant projection (an exponential transformation onto a tangential plane) is that all distances and angles from the center of projection (point of tangency) are true. We need to calculate the angle between two vectors: a vector defined as connecting the center of projection and the north pole, and a vector defined as connecting the center of projection with any point on the first principal component. Given some distance <span class="math inline">\(D\)</span> along the first axis and the PCA eigenvectors <span class="math inline">\(V\)</span>, we can calculate the angle of the first principal component from north. For visualization purposes, we will project the coordinates into an oblique Mercator <span class="citation" data-cites="snyder1987">(<a href="references.html#ref-snyder1987" role="doc-biblioref">Snyder 1987</a>)</span> using the same center of projection and value of <span class="math inline">\(\gamma\)</span>.</p>
-<section id="formulae-2" class="level3" data-number="2.4.1">
-<h3 data-number="2.4.1" class="anchored" data-anchor-id="formulae-2"><span class="header-section-number">2.4.1</span> Formulae</h3>
-<section id="angle-of-rotation" class="level4" data-number="2.4.1.1">
-<h4 data-number="2.4.1.1" class="anchored" data-anchor-id="angle-of-rotation"><span class="header-section-number">2.4.1.1</span> Angle of Rotation</h4>
-<p><span class="math display">\[\begin{align}
-a &amp;= \begin{bmatrix} D &amp; 0 \end{bmatrix} \\
-b &amp;= aV^T \\
-\gamma &amp;= arctan(b_1 / b_2)
-\end{align}\]</span></p>
-</section>
-<section id="oblique-mercator" class="level4" data-number="2.4.1.2">
-<h4 data-number="2.4.1.2" class="anchored" data-anchor-id="oblique-mercator"><span class="header-section-number">2.4.1.2</span> Oblique Mercator</h4>
-<p>The formulas for the oblique Mercator on an ellipsoid are complicated and beyond the scope of this report. We refer interested parties to equations 9-11 through 9-14 and 9-35 through 9-39 in <span class="citation" data-cites="snyder1987">(<a href="references.html#ref-snyder1987" role="doc-biblioref">Snyder 1987</a>)</span>. Projection can be easily conducted using the <a href="https://proj.org">PROJ software library</a> using the string <code>+proj=omerc +gamma=-37.8845 +lonc=-73.04283 +lat_0=40.32766</code></p>
-</section>
-</section>
-<section id="results" class="level3" data-number="2.4.2">
-<h3 data-number="2.4.2" class="anchored" data-anchor-id="results"><span class="header-section-number">2.4.2</span> Results</h3>
-<p>The locations of UMCES-tagged striped bass rotated into migration north are shown below. Black points are receivers which detected striped bass, the red point is the point of tangency in the tangent PCA, and the red line is migration north (the first principal component).</p>
-<p><img src="images/paste-4.png" class="img-fluid"></p>
+<section id="sand-tiger-shark-carcharias-taurus" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="sand-tiger-shark-carcharias-taurus"><span class="header-section-number">4.2</span> Sand tiger shark <em>Carcharias taurus</em></h2>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
-<div id="ref-obrien2021" class="csl-entry" role="listitem">
-O’Brien, Michael H. P., and David H. Secor. 2021. <span>“Influence of Thermal Stratification and Storms on Acoustic Telemetry Detection Efficiency: A Year-Long Test in the US Southern Mid-Atlantic Bight.”</span> <em>Animal Biotelemetry</em> 9 (1): 8. <a href="https://doi.org/10.1186/s40317-021-00233-3">https://doi.org/10.1186/s40317-021-00233-3</a>.
+<div id="ref-r_2026" class="csl-entry" role="listitem">
+R Core Team. 2026. <em>R: A Language and Environment for Statistical Computing</em>. R Foundation for Statistical Computing. <a href="https://www.R-project.org">https://www.R-project.org</a>.
 </div>
 <div id="ref-secor2025" class="csl-entry" role="listitem">
 Secor, David H, Michael H P O’Brien, and Helen Bailey. 2025. <span>“The Flyway Construct and Assessment of Offshore Wind Farm Impacts on Migratory Marine Fauna.”</span> <em>ICES Journal of Marine Science</em> 82 (3): fsae138. <a href="https://doi.org/10.1093/icesjms/fsae138">https://doi.org/10.1093/icesjms/fsae138</a>.
 </div>
-<div id="ref-snyder1987" class="csl-entry" role="listitem">
-Snyder, John P. 1987. <em>Map Projections: A Working Manual</em>. Professional Paper 1395. U.S. Government Printing Office.
 </div>
-<div id="ref-snyder1993" class="csl-entry" role="listitem">
-Snyder, John P. 1993. <em>Flattening the Earth: Two Thousand Years of Map Projections</em>. University of Chicago Press.
-</div>
-</div>
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -765,13 +835,13 @@ Snyder, John P. 1993. <em>Flattening the Earth: Two Thousand Years of Map Projec
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link" aria-label="Welcome">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Welcome</span></span>
+      <a href="./projection_error.html" class="pagination-link" aria-label="Projection Error">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Projection Error</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./projection_error.html" class="pagination-link" aria-label="Projection Error">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Projection Error</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./dmsp.html" class="pagination-link" aria-label="Data Management and Sharing Plan">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Management and Sharing Plan</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
