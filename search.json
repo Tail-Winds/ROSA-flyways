@@ -16,6 +16,7 @@
     "section": "",
     "text": "2.1 Step 1: Calculate an optimal point of tangency\nThe first step of the flyway model is to rotate animal tracking data into a “migration north” frame of reference (Secor et al. 2025); we are actively researching different manners of identifying this dominant vector of migration. This report summarizes our initial investigation into the premise of modeling migration north using a tangent principal components analysis (tangent PCA). At a high level, this requires the following steps:\nLike all geometric manifolds, the Earth, being 3-dimensional and ellipsoid in shape, approximates 2-dimensional Euclidean space on small scales. This simplification can fall apart on the continental-to-hemispheric scale of migration, leading to a choice: treat location data as on an ellipsoidal manifold or project into lower-dimensional Euclidean space. As the math needed to calculate positions, directions, and areas on a manifold are far more complicated than that in Euclidean space, humans have historically chose the latter. Indeed, there are a multitude of map projections, the development of which has been an area of active research for millennia (Snyder 1993).\nMap projections can generally only maintain one of the following: distance, direction, or area. Some projections can maintain two, but only in reference to a single point. As such, this center of projection is critical – we use it to define the point at which we create our tangent plane.\nUsually, we could just find the point that minimizes the distance to all other points, perhaps as a mean or median. However the shortest path between two points on a manifold is not a straight line: a straight line will usually place the point within the manifold. The shortest path between two points on the Earth, the “great circle distance”, is a path along the surface: a geodesic.\nThe geodesic mean or median takes into account the curvature of the Earth, and ensures that the location that minimizes the distance to other points is on the surface of the Earth. Even here, we treat the Earth as a sphere, which is untrue but closer to reality than a flat plane, and convert latitude and longitude (the angle between 0\\(^\\circ\\) and the location at the center of the Earth) to XYZ coordinates on a unit sphere.",
     "crumbs": [
+      "Geographic projection",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Optimal Projections and Migration North</span>"
     ]
   },
@@ -26,6 +27,7 @@
     "section": "",
     "text": "2.1.1 Formulae\n\nCovert latitude and longitude (in radians) to spherical coordinates:\n\n\\[\\begin{align}\nx &= cos(lat) * cos(lon) \\\\\ny &= cos(lat) * sin(lon) \\\\\nz &= sin(lat)\n\\end{align}\\]\n\nCalculate geodesic distance between the center of projection \\((X_0, Y_0, Z_0)\\) and an animal location \\((X_A, Y_A, Z_A)\\):\n\n\\[\narccos(X_0X_A + Y_0Y_A + Z_0Z_A)\n\\]\n\nObjective function: find the value of \\((X_0, Y_0, Z_0)\\) that minimizes the median geodesic distance to all other points.\n\n\n\n2.1.2 Result\nThe Fréchet Mean, specified in the formulae above, of the UMCES-tagged striped bass data set (black points, below) used in (Secor et al. 2025) was -73.04283\\(^o\\) E, 40.32766\\(^o\\) N (red point, below). A raw mean of unprojected Latitude-Longitude coordinates, i.e. treating geodetic coordinates as if they were Cartesian, was slightly more than 4.5 kilometers to the southeast at -72.99653\\(^o\\) E, 40.30754\\(^o\\) N (blue point, below). Given that the minimal resolution provided by telemetry receivers in the Mid-Atlantic Bight is c. 500 meters (O’Brien and Secor 2021) and the spatial range of detections is roughly 900 kilometers, there is some evidence to suggest that a geodesic mean may be unnecessary. We will continue to trial different metrics, however, as we hope to make this method applicable to species with greater migratory range.",
     "crumbs": [
+      "Geographic projection",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Optimal Projections and Migration North</span>"
     ]
   },
@@ -36,6 +38,7 @@
     "section": "2.2 Step 2: Project geodetic coordinates",
     "text": "2.2 Step 2: Project geodetic coordinates\nAfter finding the projection center, we need to project the coordinates onto the tangent plane. There are many ways to do this, including the whole (very active!) field of manifold learning. Luckily, the millennia of map projections comes in handy here – all projections categorized as “azimuthal” are projections of coordinates onto a tangent plane. The orthographic projection projects points from the Earth to the tangent plane orthogonally (straight line); stereographic maps points along a line connecting the plane, the point, and the point opposite the center of projection; the gnomic (or gnomonic) does the same, but uses a line connecting the plane, the point, and the center of the Earth. There are many more, but the azimuthal equidistant projection, which we will use for the rest of this report, “unwraps” the Earth onto the tangent plane, such that angles and distances are maintained from the projection center (Snyder 1987). Note that angles and distances are only maintained from the center of projection, meaning that, in this sense, distances along the migration vector will be correct, but distance from the migration vector will not. This suggests that we should further investigate other methods of projection to confirm that this is the most applicable to the task of flyway modeling.\n\n2.2.1 Formulae\nTo project an animal’s latitude and longitude coordinate in radians (\\(\\phi\\), \\(\\lambda\\)) from a given center of projection (\\(\\phi_1\\), \\(\\lambda_0\\)), where \\(c\\) is the angular distance from center and \\(k'\\) is the scale factor(Snyder 1987):\n\\[\\begin{align}\nx &= k'cos(\\phi)sin(\\lambda-\\lambda_0) \\\\\ny &= k'[cos(\\phi_1)sin(\\phi)-sin(\\phi_1)cos(\\phi)cos(\\lambda-\\lambda_0)] \\\\\nk' &= c/sin(c) \\\\\nc &= arccos(sin(\\phi_1)sin(\\phi) + cos(\\phi_1)cos(\\phi)cos(\\lambda-\\lambda_0))\n\\end{align}\\]\n\n\n2.2.2 Result\nSee next section.",
     "crumbs": [
+      "Geographic projection",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Optimal Projections and Migration North</span>"
     ]
   },
@@ -46,6 +49,7 @@
     "section": "2.3 Step 3: Conduct PCA on projected coordinates",
     "text": "2.3 Step 3: Conduct PCA on projected coordinates\nPrincipal Components Analysis is a dimensionality reduction technique which involves creating a set of synthetic, orthogonal axes in multidimensional space where each successive axis accounts for less and less variation. As the telemetry data are two-dimensional, we can have a maximum of two axes. In the flyway concept, we view the first axis, that which explains the most spatial variation, as a vector oriented according to “migration north”. The second axis, then, represents deviation from migration north: the “migration front” (Secor et al. 2025).\n\n2.3.1 Result\nThe tangent PCA of UMCES-tagged striped bass at the point of tangency calculated in Step 1 are shown below. The first axis, shown in red, reflects the fitted migration vector (first principal component, 88.2% of variance). The second axis, shown in orange, reflects the axis of the migration front (second principal component, 11.8% of variance). Note that the lines are curved: this reflects the fact that the vectors are geodesics – great-circle paths along the curved surface of the earth – rather than lines in Euclidean space.",
     "crumbs": [
+      "Geographic projection",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Optimal Projections and Migration North</span>"
     ]
   },
@@ -56,6 +60,7 @@
     "section": "2.4 Step 4: Rotate to “Migration North”",
     "text": "2.4 Step 4: Rotate to “Migration North”\nA property of the azimuthal equidistant projection (an exponential transformation onto a tangential plane) is that all distances and angles from the center of projection (point of tangency) are true. We need to calculate the angle between two vectors: a vector defined as connecting the center of projection and the north pole, and a vector defined as connecting the center of projection with any point on the first principal component. Given some distance \\(D\\) along the first axis and the PCA eigenvectors \\(V\\), we can calculate the angle of the first principal component from north. For visualization purposes, we will project the coordinates into an oblique Mercator (Snyder 1987) using the same center of projection and value of \\(\\gamma\\).\n\n2.4.1 Formulae\n\n2.4.1.1 Angle of Rotation\n\\[\\begin{align}\na &= \\begin{bmatrix} D & 0 \\end{bmatrix} \\\\\nb &= aV^T \\\\\n\\gamma &= arctan(b_1 / b_2)\n\\end{align}\\]\n\n\n2.4.1.2 Oblique Mercator\nThe formulas for the oblique Mercator on an ellipsoid are complicated and beyond the scope of this report. We refer interested parties to equations 9-11 through 9-14 and 9-35 through 9-39 in (Snyder 1987). Projection can be easily conducted using the PROJ software library using the string +proj=omerc +gamma=-37.8845 +lonc=-73.04283 +lat_0=40.32766\n\n\n\n2.4.2 Results\nThe locations of UMCES-tagged striped bass rotated into migration north are shown below. Black points are receivers which detected striped bass, the red point is the point of tangency in the tangent PCA, and the red line is migration north (the first principal component).\n\n\n\n\n\nO’Brien, Michael H. P., and David H. Secor. 2021. “Influence of Thermal Stratification and Storms on Acoustic Telemetry Detection Efficiency: A Year-Long Test in the US Southern Mid-Atlantic Bight.” Animal Biotelemetry 9 (1): 8. https://doi.org/10.1186/s40317-021-00233-3.\n\n\nSecor, David H, Michael H P O’Brien, and Helen Bailey. 2025. “The Flyway Construct and Assessment of Offshore Wind Farm Impacts on Migratory Marine Fauna.” ICES Journal of Marine Science 82 (3): fsae138. https://doi.org/10.1093/icesjms/fsae138.\n\n\nSnyder, John P. 1987. Map Projections: A Working Manual. Professional Paper 1395. U.S. Government Printing Office.\n\n\nSnyder, John P. 1993. Flattening the Earth: Two Thousand Years of Map Projections. University of Chicago Press.",
     "crumbs": [
+      "Geographic projection",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Optimal Projections and Migration North</span>"
     ]
   },
@@ -66,6 +71,7 @@
     "section": "",
     "text": "3.1 Per-species locations\nThe purpose of this analysis is to evaluate location error introduced by different geospatial projections. The data used below are those stations where an animal of a given species was detected. Error will be evaluated by the deviation in calculated pairwise distances between stations along the geodesic (following the earth’s curvature, the “truth”) and in the plane of various projections. For this exercise, we compared the following projections:",
     "crumbs": [
+      "Geographic projection",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Projection Error</span>"
     ]
   },
@@ -76,6 +82,7 @@
     "section": "",
     "text": "3.1.1 Striped bass\nStriped bass have the smallest range of the three species we’re investigating, ranging from southern Maine to the mouth of the Chesapeake.\n\n\n\n\n\n\n\n\n3.1.2 Atlantic sturgeon\nAtlantic sturgeon have the largest range, with detections from northern Maine to southern Florida.\n\n\n\n\n\n\n\n\n3.1.3 Sand tiger shark\nSand tiger sharks are somewhere in the middle, ranging from central Florida to the tip of Long Island.",
     "crumbs": [
+      "Geographic projection",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Projection Error</span>"
     ]
   },
@@ -86,6 +93,7 @@
     "section": "3.2 Distances",
     "text": "3.2 Distances\nSites ranged up to 966.4 km apart for striped bass, to 1823.5 km apart for sand tiger sharks, and to 2287.9 km apart for Atlantic sturgeon. The median location for Atlantic sturgeon and sand tiger sharks were similar and located near the mouth of the Delaware River, likely reflecting the dense array deployed by Delaware State University in the early 2010s. The median location for striped bass was around the middle coast of New Jersey, likely reflective of the dense array of Hudson River receivers deployed during that time.\n\n\n\n\n\n\nProjected distances ranged up to 970 km, 1845 km for sand tiger sharks, and 2297 km for Atlantic sturgeon.",
     "crumbs": [
+      "Geographic projection",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Projection Error</span>"
     ]
   },
@@ -96,6 +104,7 @@
     "section": "3.3 Errors",
     "text": "3.3 Errors\n\n\n\n\n\n\nImportant\n\n\n\n\n\nErrors from the pointwise auto-UTM selecting algorithm were greater than the circumference of the Earth, indicating that the distance was calculated by going the wrong way around the world. We do not report on these.\n\n\n\nErrors in projection ranged from 0 to just under 24 km. The azimuthal equidistant projection had the smallest root mean squared error (RMSE) across all species, followed by the Cassini, then the various Mercators. Striped bass tended to have the smallest projecton error, followed by sand tiger sharks, then Atlantic sturgeon. This likely reflects the different ranges of the fish – projection error is often greater between distant locations.\n\n\n\n\n\n\n\n\nspecies\nmin\nmedian\nmean\nmax\nrmse\n\n\n\n\naeqd\n\n\nsb\n0\n4\n11\n133\n21\n\n\natl\n0\n4\n23\n2635\n88\n\n\nst\n0\n0\n7\n3159\n44\n\n\nutm17\n\n\nsb\n0\n1125\n1411\n4976\n1782\n\n\natl\n0\n705\n1644\n10812\n2482\n\n\nst\n0\n412\n480\n3302\n659\n\n\nutm18\n\n\nsb\n0\n134\n150\n521\n183\n\n\natl\n0\n211\n349\n2993\n506\n\n\nst\n0\n116\n178\n5803\n419\n\n\nutm19\n\n\nsb\n0\n417\n509\n2179\n654\n\n\natl\n0\n1248\n3235\n13853\n4786\n\n\nst\n0\n595\n1945\n23850\n3409\n\n\ntm\n\n\nsb\n0\n160\n180\n505\n219\n\n\natl\n0\n224\n317\n2710\n440\n\n\nst\n0\n113\n174\n5583\n403\n\n\nom\n\n\nsb\n0\n81\n92\n409\n117\n\n\natl\n0\n475\n663\n4267\n941\n\n\nst\n0\n7\n221\n6980\n578\n\n\ncass\n\n\nsb\n0\n34\n44\n381\n60\n\n\natl\n0\n283\n413\n2715\n594\n\n\nst\n0\n6\n149\n4108\n356\n\n\n\n\n\nDeviation from the geodesic distance\n\n\nA general rule of thumb in acoustic telemetry is a 500 meter range of detection. As we are unable to resolve differences in distance less than 500 meters, errors less than 500 meters are, for all intents and purposes, the same position.\nAcross all species, AEQD caused the fewest detectable errors. At regional scales (striped bass), the correct Mercator projection can also be sufficient, but at coastal scales (Atlantic sturgeon) Mercator often leads to large deviations.\n\n\n\n\n\nNumber of projection errors greater than 500 meters",
     "crumbs": [
+      "Geographic projection",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Projection Error</span>"
     ]
   },
@@ -106,6 +115,7 @@
     "section": "3.4 Conclusion",
     "text": "3.4 Conclusion\nThe choice of projection is not consequential for inference from acoustic telemetry data at regional scales (striped bass). When the scale of the species’ movement expands to the coastal scale or across UTM zones, however, Mercator-based projections can lead to mislocation of &gt;50% of acoustic telemetry positions. That the AEQD projection consistently performed well may be due to the coastal nature of the species investigated: while the animals are moving hundreds-to-thousands of kilometers along the coast, they are only moving, or we are only sampling, within tens of kilometers from shore. Further investigation should be done to see if the same results emerge when using technology that can record species with movement ecology that deviate from a dominant axis (PSAT-tagged tuna or sharks, for example). This, however, is beyond the scope of the current project.",
     "crumbs": [
+      "Geographic projection",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Projection Error</span>"
     ]
   },
@@ -152,11 +162,12 @@
   {
     "objectID": "dmsp.html",
     "href": "dmsp.html",
-    "title": "6  Data Management and Sharing Plan",
+    "title": "Appendix A — Data Management and Sharing Plan",
     "section": "",
     "text": "Our Data Management and Sharing Plan (DMSP) was created using the DMP Tool Atlantic Offshore Research (RWSC & ROSA) template produced by ROSA and the Regional Wildlife Science Collaborative.\nThe DMSP, referenced as Secor et al. (2026), can be viewed at the following URL: https://doi.org/10.48321/D10890EBF7.\n\n\n\n\nSecor, David H, Aaron B Carlisle, and Bradley M Wetherbee. 2026. Flyway Models and Metrics in the Assessment of OWF Impacts on Migratory Fishes. Data Management Plan. DMPTool. https://doi.org/10.48321/D10890EBF7.",
     "crumbs": [
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Data Management and Sharing Plan</span>"
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Data Management and Sharing Plan</span>"
     ]
   },
   {
@@ -166,6 +177,7 @@
     "section": "",
     "text": "O’Brien, Michael H. P., and David H. Secor. 2021. “Influence of\nThermal Stratification and Storms on Acoustic Telemetry Detection\nEfficiency: A Year-Long Test in the US Southern Mid-Atlantic\nBight.” Animal Biotelemetry 9 (1): 8. https://doi.org/10.1186/s40317-021-00233-3.\n\n\nR Core Team. 2026. R: A Language and Environment for Statistical\nComputing. R Foundation for Statistical Computing. https://www.R-project.org.\n\n\nSecor, David H, Aaron B Carlisle, and Bradley M Wetherbee. 2026.\nFlyway Models and Metrics in the Assessment of OWF Impacts on\nMigratory Fishes. Data Management Plan. DMPTool. https://doi.org/10.48321/D10890EBF7.\n\n\nSecor, David H., Michael H. P. O’Brien, Benjamin I. Gahagan, J. Carter\nWatterson, and Dewayne A. Fox. 2020. “Differential Migration in\nChesapeake Bay Striped Bass.” PLOS\nONE 15 (5): e0233103. https://doi.org/10.1371/journal.pone.0233103.\n\n\nSecor, David H, Michael H P O’Brien, and Helen Bailey. 2025. “The\nFlyway Construct and Assessment of Offshore Wind Farm Impacts on\nMigratory Marine Fauna.” ICES Journal of Marine Science\n82 (3): fsae138. https://doi.org/10.1093/icesjms/fsae138.\n\n\nSnyder, John P. 1987. Map Projections: A Working Manual.\nProfessional Paper 1395. U.S. Government Printing Office.\n\n\nSnyder, John P. 1993. Flattening the Earth: Two Thousand Years of\nMap Projections. University of Chicago Press.",
     "crumbs": [
+      "Appendices",
       "References"
     ]
   }
