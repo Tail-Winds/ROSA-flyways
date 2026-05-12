@@ -4,13 +4,17 @@ project:
 book:
   title: "Flyway Assessment of Offshore Wind Farm Impacts on Migratory Fishes"
   author: "Michael O'Brien, Matthew Breece, Aaron Carlise, Dewayne Fox, Bradley Wetherbee, and David Secor"
+  repo-url: https://github.com/Tail-Winds/ROSA-flyways/tree/main/notebooks
   chapters:
     - index.qmd
-    # - geodesic.qmd
-    - migration_north.qmd
-    - projection_error.qmd
+    - part: "Geographic projection"
+      chapters:
+        # - geodesic.qmd
+        - migration_north.qmd
+        - projection_error.qmd
     - data_cleaning.qmd
     - initial_gam.qmd
+  appendices:
     - dmsp.qmd
     - references.qmd
 
