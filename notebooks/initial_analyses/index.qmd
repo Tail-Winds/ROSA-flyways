@@ -1,0 +1,8 @@
+---
+title: Initial GAM exploration
+date: last-modified
+execute:
+  message: false
+  warning: false
+---
+@secor2025 provided a simple generalized additive model (GAM) evaluated in R [@r_2026] for the analysis of marine fauna flyways. In the manuscript, the average latitude per individual, per week of a Hudson River population of striped bass _Morone saxatilis_, possibly the entire population of North Atlantic right whale _Eubalaena glacialis_, and several populations of northern gannet _Morus bassanus_ were regressed against date. We reproduce that analysis here for an expanded data set of striped bass locations which includes Potomac and Delaware populations as well as for tagged sand tiger sharks _Carcharias taurus_. We do not report on _Atlantic sturgeon_ here as the data set has not been fully-compiled as of 2026-04-30.

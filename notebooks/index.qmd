@@ -21,8 +21,12 @@ This book is undergoing rapid development and is not peer reviewed. Everything y
 A special thanks to those who have agreed to share data in fulfillment of this project:
 
 - Matt Balazik (Virginia Commonwealth University)
+- Jessica Best (New York Department of Environmental Conservation)
 - Ben Gahagan (Massachusetts Division of Marine Fisheries)
 - Bill Hoffman (Massachusetts Division of Marine Fisheries)
 - Ashlee Horne (Maryland Department of Natural Resources)
+- Michael Loeffler (North Carolina Department of Environmental Quality)
 - Ian Park (Delaware Division of Fish and Wildlife)
+- Bill Post (South Carolina Department of Natural Resources)
 - Chuck Stence (Maryland Department of Natural Resources)
+- Ellen Waldrop (South Carolina Department of Natural Resources)

@@ -1,0 +1,60 @@
+
+```{r}
+library(matos)
+
+proj <- list_my_projects()
+proj_umces <- proj$collectioncode[grepl("UMCES|US Wind|MBON", proj$name)]
+```
+
+
+```{r}
+proj_files <- proj_umces |>
+  lapply(list_extract_files)
+```
+
+
+```{r}
+parq <- proj_files |>
+  do.call(rbind, args = _) |>
+  dplyr::filter(grepl("parquet", file_name))
+```
+
+
+```{r}
+for (i in seq_along(parq$url)) {
+  httr::GET(
+    parq$url[i],
+    httr::write_disk(path = file.path("all_matos_parquet", parq$file_name[i]))
+  )
+}
+```
+
+
+```{r}
+library(dbplyr)
+library(dplyr)
+
+
+all_dets <- open_dataset("all_matos_parquet")
+self_match <- open_dataset("all_matos_parquet/matched") |>
+  filter(contactPI == "David Secor (secor@umces.edu)")
+self_qual <- open_dataset("all_matos_parquet/qualified") |>
+  filter(contactPI == "David Secor (secor@umces.edu)")
+
+
+out_match <- open_dataset("all_matos_parquet/matched") |>
+  filter(contactPI != "David Secor (secor@umces.edu)")
+out_qual <- open_dataset("all_matos_parquet/qualified") |>
+  filter(contactPI != "David Secor (secor@umces.edu)")
+```
+
+
+```{r}
+pre_matos <- list.files(
+  "~/Desktop/Detections_as_of_20230308/Received/",
+  pattern = "csv$",
+  full.names = T
+) |>
+  lapply(data.table::fread) |>
+  data.table::rbindlist(fill = T)
+```

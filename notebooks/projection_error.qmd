@@ -20,6 +20,15 @@ The purpose of this analysis is to evaluate location error introduced by differe
  - oblique Mercator at the median location and the dominant aziumth calculated in the azimuthal equidistant projection
 
 ```{r}
+#| echo: false
+if (grepl("notebooks", getwd())) {
+  Sys.setenv(DATA_DIR = "../")
+} else {
+  Sys.setenv(DATA_DIR = "")
+}
+```
+
+```{r}
 #| label: load
 # remotes::install_github("hypertidy/geographiclib")
 library(geographiclib)
@@ -31,24 +40,30 @@ library(arrow)
 library(dplyr)
 library(gt)
 library(mapview)
-# sb <- qs2::qs_read("../data/RAW/hud_detects.qs2") |>
-#   as.data.table() |>
-#   unique(by = c("long", "lat")) |>
-#   _[, .(lon = long, lat = lat)]
-sb <- open_dataset("../data/RAW/combined_striped_bass.parquet") |>
+
+sb <- file.path(
+  Sys.getenv("DATA_DIR"),
+  "data/RAW/combined_striped_bass.parquet"
+) |>
+  open_dataset() |>
   filter(longitude != 0) |>
   mutate(latitude = abs(latitude)) |>
   distinct(longitude, latitude) |>
   rename(lon = longitude, lat = latitude) |>
   collect()
-atl <- open_dataset(
-  "../data/RAW/fixed_rounded_station_locations.csv",
-  format = "csv"
+atl <- file.path(
+  Sys.getenv("DATA_DIR"),
+  "data/RAW/fixed_rounded_station_locations.csv"
 ) |>
+  open_dataset(format = "csv") |>
   distinct(r.lon, r.lat) |>
   rename(lon = r.lon, lat = r.lat) |>
   collect()
-st <- open_dataset("../data/RAW/sandtigers.csv", format = "csv") |>
+st <- file.path(
+  Sys.getenv("DATA_DIR"),
+  "data/RAW/sandtigers.csv"
+) |>
+  open_dataset(format = "csv") |>
   distinct(Longitude, Latitude) |>
   rename(lon = Longitude, lat = Latitude) |>
   collect()
@@ -62,7 +77,7 @@ Striped bass have the smallest range of the three species we're investigating, r
 ```{r}
 #| label: striped-bass
 mapview::mapview(
-  st_as_sf(locations[[1]], coords = c("lon", "lat"), crs = 4326),
+  st_as_sf(sb, coords = c("lon", "lat"), crs = 4326),
   legend = F,
   popup = F
 )

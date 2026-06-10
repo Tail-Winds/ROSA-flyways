@@ -3,6 +3,13 @@ title: Geodesic Regression
 format: html
 ---
 
+::: {.callout-note collapse="true"}
+Pardon our dust: Narrative of this section is poor and mostly an outline to ourselves.
+
+- Updated on May 21, 2026 to include all available striped bass data.
+:::
+
+
 ## Geoid and Geodesics
   - Explain geoid
     - Imagine circle through the center of the Earth with the Earth's radius
@@ -28,6 +35,14 @@ format: html
 ### Comparisons
   - Compare this line against least-squares fit in common "projections": unprojected, Mercator, UTM (17-19), AEQD, gnomonic
 
+```{r}
+#| echo: false
+if (grepl("notebooks", getwd())) {
+  Sys.setenv(DATA_DIR = "../")
+} else {
+  Sys.setenv(DATA_DIR = "")
+}
+```
 
 # Try crossing R/python
 
@@ -40,15 +55,24 @@ py_require("geomstats")
 Import data
 
 ```{r}
-library(data.table)
+library(arrow)
+library(dplyr)
 library(sf)
 library(s2)
 library(ggplot2)
 
-sb <- fread(
-  "/run/media/obrien/OS/Users/darpa2/Analysis/OWF-flyways/data/joint_flyway_latitudes.csv"
-) |>
-  _[species == 'striped bass']
+sb_file <- file.path(
+  Sys.getenv("DATA_DIR"),
+  "data/derived/striped_bass.parquet"
+)
+sb <- open_dataset(sb_file) |>
+  group_by(transmitter, year, wk, group) |>
+  filter(latitude > 34) |> # detections almost definitely wrong and needs to be removed
+  summarize(
+    mean_lon = mean(longitude, na.rm = TRUE),
+    mean_lat = mean(latitude, na.rm = TRUE)
+  ) |>
+  collect()
 
 # Viz in orthographic (globe) projection
 sb |>
@@ -102,15 +126,25 @@ frechet_mean_coord <- s2_point(
   mean_estimate[3]
 ) |>
   as_s2_lnglat()
+
+frechet_mean_coord
 ```
 
-This is 4.5 km northwest of the point returned by averaging the lon/lat coodinates:
+Whereas averaging the lon/lat coordinates is:
 
 ```{r}
 raw_mean <- s2_lnglat(mean(sb$mean_lon), mean(sb$mean_lat))
 raw_mean
-s2_distance(frechet_mean_coord, raw_mean)
 ```
+
+How far close is this to the point returned by averaging the lon/lat coordinates?
+
+```{r}
+location_distance <- s2_distance(frechet_mean_coord, raw_mean)
+location_distance
+```
+
+About `r round(location_distance / 1000, 1)` kilometers away.
 
 Now we'll run a PCA on a tangent plane at this point.
 
@@ -125,15 +159,15 @@ tangent_sb <- tpca_mod$transform(sb_s2)
 plot(tangent_sb)
 ```
 
-The first principal component explains 88.2% of the variance.
+How much variation is explained by this PCA?
 
 ```{r}
 exp_var <- tpca_mod$explained_variance_ratio_
-```
-
-```{r}
 barplot(c(PC1 = exp_var[1], PC2 = exp_var[2]))
 ```
+The first principal component explains `r round(exp_var[1] * 100, 1)`% of the variance, with the second principal component explaining the remaining `r round(exp_var[2] * 100), 1)`%.
+
+Now some data manipulation to visualize the geodesic PCA:
 
 ```{r}
 geodesic_1 = sphere$metric$geodesic(
@@ -178,8 +212,13 @@ plot(g2_s2, add = T, type = 'l', col = 'orange')
 ```
 
 ```{r}
+aeqd_proj <- paste0(
+  '+proj=aeqd +lon_0=',
+  s2_x(frechet_mean_coord),
+  ' +lat_0=',
+  s2_y(frechet_mean_coord)
+)
 ggplot() +
-
   geom_sf(
     data = st_as_sf(sb, coords = c("mean_lon", "mean_lat"), crs = 4326),
     color = 'blue'
@@ -187,14 +226,9 @@ ggplot() +
   geom_sf(data = st_as_sf(g1_s2)) +
   geom_sf(data = st_as_sf(g2_s2)) +
   coord_sf(
-    xlim = c(-1e5, 1e5),
-    ylim = c(-1e5, 1e5),
-    crs = paste0(
-      '+proj=aeqd +lon_0=',
-      s2_x(frechet_mean_coord),
-      ' +lat_0=',
-      s2_y(frechet_mean_coord)
-    )
+    xlim = c(-4e5, 3.5e5),
+    ylim = c(-4e5, 3.5e5),
+    crs = aeqd_proj
     #OMERC
     # crs = paste0('+proj=omerc +gamma=-39 +lonc=',s2_x(frechet_mean_coord), ' +lat_0=', s2_y(frechet_mean_coord))
   )
@@ -203,14 +237,14 @@ ggplot() +
 
 # Try AEQD then PCA
 
-Project through the Frechet mean
+Project through the Frechet mean.
 ```{r}
 sb_sf <- st_as_sf(
   sb,
   coords = c("mean_lon", "mean_lat"),
   crs = 4326
 ) |>
-  st_transform("+proj=aeqd +lon_0=-73.04283 +lat_0=40.32766")
+  st_transform(aeqd_proj)
 
 pca <- prcomp(st_coordinates(sb_sf))
 rng <- predict(pca, st_coordinates(sb_sf))[2, ] |> range()
@@ -223,41 +257,62 @@ pca1_sf <- cbind(
   as.data.frame() |>
   st_as_sf(
     coords = c("X", "Y"),
-    crs = "+proj=aeqd +lon_0=-73.04283 +lat_0=40.32766"
+    crs = aeqd_proj
   ) |>
   st_combine() |>
   st_cast("LINESTRING")
 
-ggplot() +
+gamma <- do.call(atan2, c(1e3, 0) %*% t(pca$rotation) |> as.list()) * 180 / pi
+omerc_proj <- paste0(
+  '+proj=omerc +gamma=',
+  gamma,
+  ' +lonc=',
+  s2_x(frechet_mean_coord),
+  ' +lat_0=',
+  s2_y(frechet_mean_coord)
+)
+
+rot_plot <- ggplot() +
   geom_sf(data = pca1_sf) +
   geom_sf(data = sb_sf) +
   geom_sf(
     data = st_as_sf(g1_s2) |>
       st_combine() |>
       st_cast("LINESTRING") |>
-      st_transform("+proj=aeqd +lon_0=-73.04283 +lat_0=40.32766"),
+      st_transform(aeqd_proj),
     col = 'red'
   ) +
   geom_sf(
-    data = (c(-400e3, 0) %*%
+    data = (c(0, 0) %*%
       t(pca$rotation) |>
       st_point() |>
-      st_sfc(crs = "+proj=aeqd +lon_0=-73.04283 +lat_0=40.32766")),
+      st_sfc(crs = aeqd_proj)),
     col = 'blue',
     size = 5
   ) +
   coord_sf(
-    xlim = c(-7.7e5, 7.7e5),
-    ylim = c(-9.9e5, 9.9e5),
-    crs = '+proj=omerc +gamma=-37.8845 +lonc=-73.04283 +lat_0=40.32766'
+    xlim = c(-2.5e5, 1.5e5),
+    ylim = c(-5e5, 5e5),
+    crs = '+proj=omerc +gamma=-43.4061 +lonc=-73.04283 +lat_0=40.32766'
+  ) +
+  theme(
+    axis.text = element_text(size = 14, angle = 45),
+    axis.text.x = element_text(hjust = 1, angle = 0)
   )
-#-73.04283 40.32766 -> geomstats
-#-72.99675 40.30782 -> geosphere
-#-72.99653 40.30754 -> raw mean
+
+rot_plot
 ```
 
-c(1e3, 0) %*% t(pca$rotation)
-> atan2(614.0718, 789.2501)*180/pi
-[1] 37.88451
-> atan2(789.2501, 614.0718)*180/pi
-[1] 52.11549
+
+
+```{r}
+ragg::agg_png(
+  height = 6,
+  width = 3,
+  units = "in",
+  filename = "rotation_plot.png",
+  res = 300
+)
+rot_plot
+dev.off()
+```

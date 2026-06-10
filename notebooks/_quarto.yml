@@ -13,7 +13,10 @@ book:
         - migration_north.qmd
         - projection_error.qmd
     - data_cleaning.qmd
-    - initial_gam.qmd
+    - part: initial_analyses/index.qmd
+      chapters:
+        - initial_analyses/striped_bass_gam.qmd
+        - initial_analyses/sand_tiger_gam.qmd
   appendices:
     - dmsp.qmd
     - references.qmd
