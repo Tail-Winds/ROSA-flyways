@@ -1,6 +1,8 @@
 ---
-title: "Optimal Projections and Migration North"
-format: html
+title: "Migration North"
+format:
+  html:
+    code-fold: true
 date: 2026-01-27
 bibliography: references.bib
 ---
@@ -11,6 +13,88 @@ The first step of the flyway model is to rotate animal tracking data into a "mig
 2.  Project geodetic animal coordinates (lat/lon) into a Cartesian plane (X/Y) defined by a plane tangent to the Earth at the optimal point of tangency.
 3.  Find the synthetic axis of greatest variation, "Migration North" [@secor2025], via PCA.
 4.  Rotate the data such that they are in reference to migration north using the eigenvectors of the PCA.
+
+
+## Step 0: Import data
+Before we get started, we will import the striped bass data to be used in this project. We've hidden the code and some of the narrative for this section as most will want to get straight to the meat of this chapter. Click below if you're _different than most_, otherwise jump ahead to the next section.
+
+```{r}
+#| label: data-dir
+#| echo: false
+if (grepl("notebooks", getwd())) {
+  Sys.setenv(DATA_DIR = "../")
+} else {
+  Sys.setenv(DATA_DIR = ".")
+}
+```
+<details>
+<summary>
+  Click here if you'd like to read this section and see the associated code.
+</summary>
+
+Load necessary R and Python packages:
+```{r}
+#| label: imports
+#| message: false
+#| warning: false
+library(arrow)
+library(dplyr)
+library(sf)
+library(s2)
+library(ggplot2)
+library(reticulate)
+
+py_require("geomstats")
+```
+
+Load the striped bass data:
+```{r}
+#| label: sb-load
+sb_file <- file.path(
+  Sys.getenv("DATA_DIR"),
+  "data/derived/striped_bass.parquet"
+)
+sb <- open_dataset(sb_file) |>
+  group_by(transmitter, year, wk, group) |>
+  filter(latitude > 34) |> # detection's almost definitely wrong and needs to be removed
+  summarize(
+    mean_lon = mean(longitude, na.rm = TRUE),
+    mean_lat = mean(latitude, na.rm = TRUE)
+  ) |>
+  collect()
+
+# Viz in orthographic (globe) projection
+sb_sf <- st_as_sf(sb, coords = c("mean_lon", "mean_lat"), crs = 4326)
+```
+
+We'll be using the [Geomstats Hypersphere module](https://geomstats.github.io/api/geomstats.geometry.html#module-geomstats.geometry.hypersphere) in the next section, which prefers coordinates on the unit circle: X, Y, and Z values between -1 and 1. However, latitude and longitude coordinates are angles. So, we need to convert coordinates to the unit cirlce.
+
+The [s2 R package](https://r-spatial.github.io/s2/) interfaces with the [S2 C++ library](https://s2geometry.io/). One of the shortcuts this library takes is to approximate the Earth as a unit sphere, which means it has a nice built-in function to convert coordinates to the unit sphere. This allows it to avoid a bunch of computationally-intensive trigonometric functions. I'll convert the mean striped bass locations above to the unit sphere. 
+```{r}
+#| label: sb-s2
+sb_s2 <- s2_lnglat(sb$mean_lon, sb$mean_lat) |>
+  as_s2_point() |>
+  # Geomstats package works best with matrices/arrays
+  as.matrix()
+```
+
+Now, import the Hypersphere submodule, create a 2 dimensional sphere, then confirm that the points above lie on that sphere.
+```{r}
+#| label: geomstats-load
+gs <- import("geomstats.backend")
+hypersphere <- import("geomstats.geometry.hypersphere")$Hypersphere
+
+# need to use as.integer or reticulate will pass a float, which Hypersphere does not like
+sphere <- hypersphere(dim = as.integer(2))
+
+sb_s2 |>
+  sphere$belongs() |>
+  all()
+```
+
+We're good to go!
+
+</details>
 
 ## Step 1: Calculate an optimal point of tangency
 
@@ -38,13 +122,49 @@ $$
 arccos(X_0X_A + Y_0Y_A + Z_0Z_A)
 $$
 
--   Objective function: find the value of $(X_0, Y_0, Z_0)$ that minimizes the median geodesic distance to all other points.
+-   Objective function: find the value of $(X_0, Y_0, Z_0)$ that minimizes the mean geodesic distance to all other points.
+
+### Analysis
+
+We will leverage the [`geomstats` python package](https://geomstats.github.io/) to calculate the [Fréchet mean](https://en.wikipedia.org/wiki/Fr%C3%A9chet_mean), which was specified in the formulae above. The package authors have provided [an excellent walkthrough](https://geomstats.github.io/notebooks/06_practical_methods__riemannian_frechet_mean_and_tangent_pca.html) on how to do this; we have adapted this to use a combination of R and Python.
+
+Calculate the Fréchet mean:
+
+```{r}
+#| label: frechet-mean
+# Calculate Frechet mean
+frechet_mean <- import("geomstats.learning.frechet_mean")$FrechetMean
+
+mean_fun <- frechet_mean(sphere)
+mean_estimate <- mean_fun$fit(sb_s2)$estimate_
+
+# Convert to lat/lon
+frechet_latlon <- s2_point(
+  mean_estimate[1],
+  mean_estimate[2],
+  mean_estimate[3]
+) |>
+  as_s2_lnglat()
+```
+
+Calculate the raw mean and its distance from the Fréchet mean:
+
+```{r}
+#| label: raw-mean
+raw_mean <- s2_lnglat(mean(sb$mean_lon), mean(sb$mean_lat))
+location_distance <- s2_distance(frechet_latlon, raw_mean)
+```
 
 ### Result
 
-The Fréchet Mean, specified in the formulae above, of the UMCES-tagged striped bass data set (black points, below) used in [@secor2025] was -73.04283$^o$ E, 40.32766$^o$ N (red point, below). A raw mean of unprojected Latitude-Longitude coordinates, i.e. treating geodetic coordinates as if they were Cartesian, was slightly more than 4.5 kilometers to the southeast at -72.99653$^o$ E, 40.30754$^o$ N (blue point, below). Given that the minimal resolution provided by telemetry receivers in the Mid-Atlantic Bight is c. 500 meters [@obrien2021] and the spatial range of detections is roughly 900 kilometers, there is some evidence to suggest that a geodesic mean may be unnecessary. We will continue to trial different metrics, however, as we hope to make this method applicable to species with greater migratory range.
+The Fréchet Mean of the tagged striped bass data set (black points, below) was `r round(as.numeric(frechet_latlon), 5)` (red point, below). A raw mean of unprojected Latitude-Longitude coordinates, i.e. treating geodetic coordinates as if they were Cartesian, was about `r round(location_distance/1000, 1)` kilometers away at `r round(as.numeric(raw_mean), 5)` (blue point, below). Given that the minimal resolution provided by telemetry receivers in the Mid-Atlantic Bight is c. 500 meters [@obrien2021] and the spatial range of detections is roughly 900 kilometers, there is some evidence to suggest that a geodesic mean may be unnecessary. We will continue to trial different metrics, however, as we hope to make this method applicable to species with greater migratory range.
 
-![](images/paste-2.png)
+```{r}
+ggplot() +
+  geom_sf(data = sb_sf) +
+  geom_sf(data = st_as_sf(frechet_latlon), size = 5, color = "red") +
+  geom_sf(data = st_as_sf(raw_mean), size = 5, color = "blue", alpha = 0.7)
+```
 
 ## Step 2: Project geodetic coordinates
 
@@ -69,14 +189,66 @@ See next section.
 
 Principal Components Analysis is a dimensionality reduction technique which involves creating a set of synthetic, orthogonal axes in multidimensional space where each successive axis accounts for less and less variation. As the telemetry data are two-dimensional, we can have a maximum of two axes. In the flyway concept, we view the first axis, that which explains the most spatial variation, as a vector oriented according to "migration north". The second axis, then, represents deviation from migration north: the "migration front" [@secor2025].
 
+### Analysis
+```{r}
+tpca <- import("geomstats.learning.pca")$TangentPCA
+
+tpca_mod <- tpca(sphere, n_components = as.integer(2))
+tpca_mod$fit(sb_s2, base_point = mean_estimate)
+
+# transform data onto tangent plane
+# tangent_sb <- tpca_mod$transform(sb_s2)
+
+# explained variance
+exp_var <- tpca_mod$explained_variance_ratio_
+```
+
 ### Result
 
-The tangent PCA of UMCES-tagged striped bass at the point of tangency calculated in Step 1 are shown below. The first axis, shown in red, reflects the fitted migration vector (first principal component, 88.2% of variance). The second axis, shown in orange, reflects the axis of the migration front (second principal component, 11.8% of variance). Note that the lines are curved: this reflects the fact that the vectors are geodesics – great-circle paths along the curved surface of the earth – rather than lines in Euclidean space. \
-![](images/paste-3.png)
+The tangent PCA of tagged striped bass at the point of tangency calculated in Step 1 are shown below. The first axis, shown in red, reflects the fitted migration vector (first principal component, `r round(exp_var[1] * 100, 1)`% of variance). The second axis, shown in orange, reflects the axis of the migration front (second principal component, `r round(exp_var[2] * 100, 1)`% of variance). Note that the lines are curved: this reflects the fact that the vectors are geodesics – great-circle paths along the curved surface of the earth – rather than lines in Euclidean space.
+
+```{r}
+geodesic_1 = sphere$metric$geodesic(
+  initial_point = mean_estimate,
+  initial_tangent_vec = tpca_mod$components_[1, ] |> t()
+)
+geodesic_2 = sphere$metric$geodesic(
+  initial_point = mean_estimate,
+  initial_tangent_vec = tpca_mod$components_[2, ] |> t()
+)
+
+# for whatever reason I can't make this work with R's `seq`, so using the geomstats version
+geodesic_1_pts <- geodesic_1(gs$linspace(-0.5, 0.5, as.integer(100))) |>
+  # creates a 1*100*3 matrix that should be 100*3. Drop removes the empty dimension, giving 100*3
+  drop()
+g1_s2 <- s2_point(
+  geodesic_1_pts[, 1],
+  geodesic_1_pts[, 2],
+  geodesic_1_pts[, 3]
+) |>
+  as_s2_lnglat()
+geodesic_2_pts <- geodesic_2(gs$linspace(
+  as.integer(-1),
+  as.integer(1),
+  as.integer(100)
+)) |>
+  drop()
+g2_s2 <- s2_point(
+  geodesic_2_pts[, 1],
+  geodesic_2_pts[, 2],
+  geodesic_2_pts[, 3]
+) |>
+  as_s2_lnglat()
+
+# plot tPCA
+plot(s2_lnglat(sb$mean_lon, sb$mean_lat), col = "black")
+plot(g1_s2, add = T, type = 'l', col = 'red')
+plot(g2_s2, add = T, type = 'l', col = 'orange')
+```
 
 ## Step 4: Rotate to "Migration North"
 
-A property of the azimuthal equidistant projection (an exponential transformation onto a tangential plane) is that all distances and angles from the center of projection (point of tangency) are true. We need to calculate the angle between two vectors: a vector defined as connecting the center of projection and the north pole, and a vector defined as connecting the center of projection with any point on the first principal component. Given some distance $D$ along the first axis and the PCA eigenvectors $V$, we can calculate the angle of the first principal component from north. For visualization purposes, we will project the coordinates into an oblique Mercator [@snyder1987] using the same center of projection and value of $\gamma$.
+A property of the azimuthal equidistant projection (an exponential transformation onto a tangential plane) is that all distances and angles from the center of projection (point of tangency) are true. We need to calculate the angle between two vectors: a vector defined as connecting the center of projection and the north pole, and a vector defined as connecting the center of projection with any point on the first principal component. Given some distance $D$ along the first axis and the PCA eigenvectors $V$, we can calculate the angle of the first principal component from north. For visualization purposes, we will project the coordinates into an oblique Mercator [@snyder1987] using the same center of projection and value of $\gamma$. Note that this is not a critical piece of this method -- it is for visualization purposes only.
 
 ### Formulae
 
@@ -92,10 +264,69 @@ b &= aV^T \\
 
 #### Oblique Mercator
 
-The formulas for the oblique Mercator on an ellipsoid are complicated and beyond the scope of this report. We refer interested parties to equations 9-11 through 9-14 and 9-35 through 9-39 in [@snyder1987]. Projection can be easily conducted using the [PROJ software library](https://proj.org) using the string `+proj=omerc +gamma=-37.8845 +lonc=-73.04283 +lat_0=40.32766`
+The formulas for the oblique Mercator on an ellipsoid are complicated and beyond the scope of this report. We refer interested parties to equations 9-11 through 9-14 and 9-35 through 9-39 in [@snyder1987]. Projection can be easily conducted using the [PROJ software library](https://proj.org) using a string of the form `+proj=omerc +gamma={angle from north} +lonc={Lon of center} +lat_0={lat of center}`
+
+### Analysis
+
+```{r}
+aeqd_proj <- paste0(
+  '+proj=aeqd +lon_0=',
+  s2_x(frechet_latlon),
+  ' +lat_0=',
+  s2_y(frechet_latlon)
+)
+
+
+gs <- import("geomstats.backend")
+displaced_lonlat <- sphere$metric$exp(
+  tangent_vec = gs$array(0.01 * tpca_mod$components_[1, ]),
+  base_point = gs$array(tpca_mod$base_point_)
+) |>
+  (\(pt) c(atan2(pt[2], pt[1]), asin(pt[3])) * 180 / pi)()
+
+gamma <- as.numeric(frechet_latlon) |>
+  (\(p) p * pi / 180)() |>
+  (\(rad) {
+    rbind(
+      east = c(-sin(rad[1]), cos(rad[1]), 0),
+      north = c(
+        -sin(rad[2]) * cos(rad[1]),
+        -sin(rad[2]) * sin(rad[1]),
+        cos(rad[2])
+      )
+    )
+  })() |>
+  # Project 3D PC1 vector into 2D local plane
+  (\(R) R %*% tpca_mod$components_[1, ])() |>
+  # angle from North
+  (\(v2d) {
+    (do.call(atan2, as.list(v2d)) * 180 / pi + 180) * -1
+  })()
+
+omerc_proj <- paste0(
+  '+proj=omerc +gamma=',
+  gamma,
+  ' +lonc=',
+  s2_x(frechet_latlon),
+  ' +lat_0=',
+  s2_y(frechet_latlon)
+)
+```
 
 ### Results
 
 The locations of UMCES-tagged striped bass rotated into migration north are shown below. Black points are receivers which detected striped bass, the red point is the point of tangency in the tangent PCA, and the red line is migration north (the first principal component).
 
-![](images/paste-4.png)
+```{r}
+ggplot() +
+  geom_sf(data = sb_sf) +
+  geom_sf(
+    data = st_cast(st_combine(st_as_sf(g1_s2)), "LINESTRING"),
+    color = "red"
+  ) +
+  geom_sf(data = st_as_sf(frechet_latlon), size = 5, color = 'red') +
+  coord_sf(
+    crs = omerc_proj,
+    ylim = c(-5e5, 5e5)
+  )
+```

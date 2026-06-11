@@ -22,7 +22,7 @@ The purpose of this analysis is to evaluate location error introduced by differe
 ```{r}
 #| echo: false
 if (grepl("notebooks", getwd())) {
-  Sys.setenv(DATA_DIR = "../")
+  Sys.setenv(DATA_DIR = "..")
 } else {
   Sys.setenv(DATA_DIR = "")
 }
