@@ -215,7 +215,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../migration_north.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Optimal Projections and Migration North</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Migration North</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -266,7 +266,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../dmsp.html" class="sidebar-item-text sidebar-link">
+  <a href="../appendices/dmsp.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Data Management and Sharing Plan</span></span></a>
   </div>
 </li>
@@ -321,7 +321,7 @@ window.Quarto = {
 </header>
 
 
-<p>Let’s take a look at striped bass <em>Morone saxatilis</em> using the data prepared in [data_cleaning.qmd].</p>
+<p>Let’s take a look at striped bass <em>Morone saxatilis</em> using the data prepared in the <a href="../data_cleaning.html">data cleaning chapter</a>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(arrow) <span class="co"># Data import</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr) <span class="co"># Data manipulation</span></span>
@@ -348,7 +348,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>Following our projectiong selection procedure in the <a href="projection_error.qmd">Projection Error chapter</a>, we project the data into an azimuthal equidistant projection (AEQD) and rotate the data to “migration north”. To project into AEQD, we first need a projection center. This will be the median receiver location.</p>
+<p>Following our projectiong selection procedure in the <a href="../projection_error.html">Projection Error chapter</a>, we project the data into an azimuthal equidistant projection (AEQD) and rotate the data to “migration north”. To project into AEQD, we first need a projection center. This will be the median receiver location.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
@@ -503,18 +503,18 @@ x ~ s(wk, k = 27, bs = "cc") + s(yr_f, bs = "re") + s(group,
 
 Parametric coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)
-(Intercept)    17025      25041    0.68    0.497
+(Intercept)    17025      25040    0.68    0.497
 
 Approximate significance of smooth terms:
             edf Ref.df       F p-value    
-s(wk)    20.768     25 15255.1  &lt;2e-16 ***
+s(wk)    20.768     25 15255.0  &lt;2e-16 ***
 s(yr_f)   6.178      7   158.5  &lt;2e-16 ***
-s(group)  1.993      2  1481.9  &lt;2e-16 ***
+s(group)  1.993      2  1481.8  &lt;2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 R-sq.(adj) =  0.877   Deviance explained = 87.7%
--REML =  95557  Scale est. = 8.5288e+09  n = 7431</code></pre>
+-REML =  95557  Scale est. = 8.5289e+09  n = 7431</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">draw</span>(m1, <span class="at">select =</span> <span class="st">"s(wk)"</span>, <span class="at">residuals =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
@@ -550,17 +550,17 @@ x ~ grp + s(wk, by = grp, k = 27, bs = "cc") + s(yr_f, bs = "re")
 
 Parametric coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)    69080       6060    11.4   &lt;2e-16 ***
-grpPR         -84158       3061   -27.5   &lt;2e-16 ***
-grpDE         -60663       2190   -27.7   &lt;2e-16 ***
+(Intercept)    69079       6060   11.40   &lt;2e-16 ***
+grpPR         -84156       3061  -27.49   &lt;2e-16 ***
+grpDE         -60663       2190  -27.70   &lt;2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Approximate significance of smooth terms:
                edf Ref.df       F p-value    
-s(wk):grpHR 22.728     25 3029.36  &lt;2e-16 ***
-s(wk):grpPR 18.788     25  714.35  &lt;2e-16 ***
-s(wk):grpDE 19.868     25 1838.70  &lt;2e-16 ***
+s(wk):grpHR 22.729     25 3029.34  &lt;2e-16 ***
+s(wk):grpPR 18.788     25  714.34  &lt;2e-16 ***
+s(wk):grpDE 19.868     25 1838.69  &lt;2e-16 ***
 s(yr_f)      5.955      7   10.55  &lt;2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
@@ -741,9 +741,9 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Approximate significance of smooth terms:
             edf Ref.df       F p-value    
-s(wk)    33.092     51 453.845 &lt; 2e-16 ***
-s(yr_f)   4.196      7   8.518 0.00756 ** 
-s(group)  1.976      2 172.276 &lt; 2e-16 ***
+s(wk)    33.092     51 453.854 &lt; 2e-16 ***
+s(yr_f)   4.197      7   8.521 0.00755 ** 
+s(group)  1.975      2 172.261 &lt; 2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -782,16 +782,16 @@ y ~ grp + s(wk, by = grp, k = 53, bs = "cc") + s(yr_f, bs = "re")
 
 Parametric coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)   -57393       2554  -22.47   &lt;2e-16 ***
-grpPR         -24872       1626  -15.29   &lt;2e-16 ***
+(Intercept)   -57394       2554  -22.47   &lt;2e-16 ***
+grpPR         -24870       1626  -15.29   &lt;2e-16 ***
 grpDE         -18398       1176  -15.64   &lt;2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Approximate significance of smooth terms:
                edf Ref.df      F p-value    
-s(wk):grpHR 34.047     51 535.43  &lt;2e-16 ***
-s(wk):grpPR 19.893     51  49.60  &lt;2e-16 ***
+s(wk):grpHR 34.048     51 535.43  &lt;2e-16 ***
+s(wk):grpPR 19.894     51  49.60  &lt;2e-16 ***
 s(wk):grpDE 22.237     51 100.04  &lt;2e-16 ***
 s(yr_f)      5.518      7  13.63  &lt;2e-16 ***
 ---

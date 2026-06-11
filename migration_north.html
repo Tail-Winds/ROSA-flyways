@@ -8,7 +8,7 @@
 
 <meta name="dcterms.date" content="2026-01-27">
 
-<title>2&nbsp; Optimal Projections and Migration North – Flyway Assessment of Offshore Wind Farm Impacts on Migratory Fishes</title>
+<title>2&nbsp; Migration North – Flyway Assessment of Offshore Wind Farm Impacts on Migratory Fishes</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,6 +23,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 /* CSS for citations */
 div.csl-bib-body { }
@@ -134,7 +169,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./migration_north.html">Geographic projection</a></li><li class="breadcrumb-item"><a href="./migration_north.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Optimal Projections and Migration North</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./migration_north.html">Geographic projection</a></li><li class="breadcrumb-item"><a href="./migration_north.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Migration North</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -180,7 +215,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./migration_north.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Optimal Projections and Migration North</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Migration North</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -231,7 +266,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dmsp.html" class="sidebar-item-text sidebar-link">
+  <a href="./appendices/dmsp.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Data Management and Sharing Plan</span></span></a>
   </div>
 </li>
@@ -253,24 +288,28 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#step-1-calculate-an-optimal-point-of-tangency" id="toc-step-1-calculate-an-optimal-point-of-tangency" class="nav-link active" data-scroll-target="#step-1-calculate-an-optimal-point-of-tangency"><span class="header-section-number">2.1</span> Step 1: Calculate an optimal point of tangency</a>
+  <li><a href="#step-0-import-data" id="toc-step-0-import-data" class="nav-link active" data-scroll-target="#step-0-import-data"><span class="header-section-number">2.1</span> Step 0: Import data</a></li>
+  <li><a href="#step-1-calculate-an-optimal-point-of-tangency" id="toc-step-1-calculate-an-optimal-point-of-tangency" class="nav-link" data-scroll-target="#step-1-calculate-an-optimal-point-of-tangency"><span class="header-section-number">2.2</span> Step 1: Calculate an optimal point of tangency</a>
   <ul class="collapse">
-  <li><a href="#formulae" id="toc-formulae" class="nav-link" data-scroll-target="#formulae"><span class="header-section-number">2.1.1</span> Formulae</a></li>
-  <li><a href="#result" id="toc-result" class="nav-link" data-scroll-target="#result"><span class="header-section-number">2.1.2</span> Result</a></li>
+  <li><a href="#formulae" id="toc-formulae" class="nav-link" data-scroll-target="#formulae"><span class="header-section-number">2.2.1</span> Formulae</a></li>
+  <li><a href="#analysis" id="toc-analysis" class="nav-link" data-scroll-target="#analysis"><span class="header-section-number">2.2.2</span> Analysis</a></li>
+  <li><a href="#result" id="toc-result" class="nav-link" data-scroll-target="#result"><span class="header-section-number">2.2.3</span> Result</a></li>
   </ul></li>
-  <li><a href="#step-2-project-geodetic-coordinates" id="toc-step-2-project-geodetic-coordinates" class="nav-link" data-scroll-target="#step-2-project-geodetic-coordinates"><span class="header-section-number">2.2</span> Step 2: Project geodetic coordinates</a>
+  <li><a href="#step-2-project-geodetic-coordinates" id="toc-step-2-project-geodetic-coordinates" class="nav-link" data-scroll-target="#step-2-project-geodetic-coordinates"><span class="header-section-number">2.3</span> Step 2: Project geodetic coordinates</a>
   <ul class="collapse">
-  <li><a href="#formulae-1" id="toc-formulae-1" class="nav-link" data-scroll-target="#formulae-1"><span class="header-section-number">2.2.1</span> Formulae</a></li>
-  <li><a href="#result-1" id="toc-result-1" class="nav-link" data-scroll-target="#result-1"><span class="header-section-number">2.2.2</span> Result</a></li>
+  <li><a href="#formulae-1" id="toc-formulae-1" class="nav-link" data-scroll-target="#formulae-1"><span class="header-section-number">2.3.1</span> Formulae</a></li>
+  <li><a href="#result-1" id="toc-result-1" class="nav-link" data-scroll-target="#result-1"><span class="header-section-number">2.3.2</span> Result</a></li>
   </ul></li>
-  <li><a href="#step-3-conduct-pca-on-projected-coordinates" id="toc-step-3-conduct-pca-on-projected-coordinates" class="nav-link" data-scroll-target="#step-3-conduct-pca-on-projected-coordinates"><span class="header-section-number">2.3</span> Step 3: Conduct PCA on projected coordinates</a>
+  <li><a href="#step-3-conduct-pca-on-projected-coordinates" id="toc-step-3-conduct-pca-on-projected-coordinates" class="nav-link" data-scroll-target="#step-3-conduct-pca-on-projected-coordinates"><span class="header-section-number">2.4</span> Step 3: Conduct PCA on projected coordinates</a>
   <ul class="collapse">
-  <li><a href="#result-2" id="toc-result-2" class="nav-link" data-scroll-target="#result-2"><span class="header-section-number">2.3.1</span> Result</a></li>
+  <li><a href="#analysis-1" id="toc-analysis-1" class="nav-link" data-scroll-target="#analysis-1"><span class="header-section-number">2.4.1</span> Analysis</a></li>
+  <li><a href="#result-2" id="toc-result-2" class="nav-link" data-scroll-target="#result-2"><span class="header-section-number">2.4.2</span> Result</a></li>
   </ul></li>
-  <li><a href="#step-4-rotate-to-migration-north" id="toc-step-4-rotate-to-migration-north" class="nav-link" data-scroll-target="#step-4-rotate-to-migration-north"><span class="header-section-number">2.4</span> Step 4: Rotate to “Migration North”</a>
+  <li><a href="#step-4-rotate-to-migration-north" id="toc-step-4-rotate-to-migration-north" class="nav-link" data-scroll-target="#step-4-rotate-to-migration-north"><span class="header-section-number">2.5</span> Step 4: Rotate to “Migration North”</a>
   <ul class="collapse">
-  <li><a href="#formulae-2" id="toc-formulae-2" class="nav-link" data-scroll-target="#formulae-2"><span class="header-section-number">2.4.1</span> Formulae</a></li>
-  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">2.4.2</span> Results</a></li>
+  <li><a href="#formulae-2" id="toc-formulae-2" class="nav-link" data-scroll-target="#formulae-2"><span class="header-section-number">2.5.1</span> Formulae</a></li>
+  <li><a href="#analysis-2" id="toc-analysis-2" class="nav-link" data-scroll-target="#analysis-2"><span class="header-section-number">2.5.2</span> Analysis</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">2.5.3</span> Results</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -278,9 +317,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./migration_north.html">Geographic projection</a></li><li class="breadcrumb-item"><a href="./migration_north.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Optimal Projections and Migration North</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./migration_north.html">Geographic projection</a></li><li class="breadcrumb-item"><a href="./migration_north.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Migration North</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Optimal Projections and Migration North</span></h1>
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Migration North</span></h1>
 </div>
 
 
@@ -310,14 +349,88 @@ window.Quarto = {
 <li>Find the synthetic axis of greatest variation, “Migration North” <span class="citation" data-cites="secor2025">(<a href="references.html#ref-secor2025" role="doc-biblioref">Secor et al. 2025</a>)</span>, via PCA.</li>
 <li>Rotate the data such that they are in reference to migration north using the eigenvectors of the PCA.</li>
 </ol>
-<section id="step-1-calculate-an-optimal-point-of-tangency" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="step-1-calculate-an-optimal-point-of-tangency"><span class="header-section-number">2.1</span> Step 1: Calculate an optimal point of tangency</h2>
+<section id="step-0-import-data" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="step-0-import-data"><span class="header-section-number">2.1</span> Step 0: Import data</h2>
+<p>Before we get started, we will import the striped bass data to be used in this project. We’ve hidden the code and some of the narrative for this section as most will want to get straight to the meat of this chapter. Click below if you’re <em>different than most</em>, otherwise jump ahead to the next section.</p>
+<details>
+<summary>
+Click here if you’d like to read this section and see the associated code.
+</summary>
+<p>Load necessary R and Python packages:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(arrow)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(s2)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reticulate)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">py_require</span>(<span class="st">"geomstats"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>Load the striped bass data:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sb_file <span class="ot">&lt;-</span> <span class="fu">file.path</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Sys.getenv</span>(<span class="st">"DATA_DIR"</span>),</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"data/derived/striped_bass.parquet"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>sb <span class="ot">&lt;-</span> <span class="fu">open_dataset</span>(sb_file) <span class="sc">|&gt;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(transmitter, year, wk, group) <span class="sc">|&gt;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(latitude <span class="sc">&gt;</span> <span class="dv">34</span>) <span class="sc">|&gt;</span> <span class="co"># detection's almost definitely wrong and needs to be removed</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_lon =</span> <span class="fu">mean</span>(longitude, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_lat =</span> <span class="fu">mean</span>(latitude, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Viz in orthographic (globe) projection</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>sb_sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(sb, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"mean_lon"</span>, <span class="st">"mean_lat"</span>), <span class="at">crs =</span> <span class="dv">4326</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>We’ll be using the <a href="https://geomstats.github.io/api/geomstats.geometry.html#module-geomstats.geometry.hypersphere">Geomstats Hypersphere module</a> in the next section, which prefers coordinates on the unit circle: X, Y, and Z values between -1 and 1. However, latitude and longitude coordinates are angles. So, we need to convert coordinates to the unit cirlce.</p>
+<p>The <a href="https://r-spatial.github.io/s2/">s2 R package</a> interfaces with the <a href="https://s2geometry.io/">S2 C++ library</a>. One of the shortcuts this library takes is to approximate the Earth as a unit sphere, which means it has a nice built-in function to convert coordinates to the unit sphere. This allows it to avoid a bunch of computationally-intensive trigonometric functions. I’ll convert the mean striped bass locations above to the unit sphere.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>sb_s2 <span class="ot">&lt;-</span> <span class="fu">s2_lnglat</span>(sb<span class="sc">$</span>mean_lon, sb<span class="sc">$</span>mean_lat) <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_s2_point</span>() <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Geomstats package works best with matrices/arrays</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.matrix</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>Now, import the Hypersphere submodule, create a 2 dimensional sphere, then confirm that the points above lie on that sphere.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>gs <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"geomstats.backend"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>hypersphere <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"geomstats.geometry.hypersphere"</span>)<span class="sc">$</span>Hypersphere</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># need to use as.integer or reticulate will pass a float, which Hypersphere does not like</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>sphere <span class="ot">&lt;-</span> <span class="fu">hypersphere</span>(<span class="at">dim =</span> <span class="fu">as.integer</span>(<span class="dv">2</span>))</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>sb_s2 <span class="sc">|&gt;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  sphere<span class="sc">$</span><span class="fu">belongs</span>() <span class="sc">|&gt;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">all</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+<p>We’re good to go!</p>
+</details>
+</section>
+<section id="step-1-calculate-an-optimal-point-of-tangency" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="step-1-calculate-an-optimal-point-of-tangency"><span class="header-section-number">2.2</span> Step 1: Calculate an optimal point of tangency</h2>
 <p>Like all geometric manifolds, the Earth, being 3-dimensional and ellipsoid in shape, approximates 2-dimensional Euclidean space on small scales. This simplification can fall apart on the continental-to-hemispheric scale of migration, leading to a choice: treat location data as on an ellipsoidal manifold or project into lower-dimensional Euclidean space. As the math needed to calculate positions, directions, and areas on a manifold are far more complicated than that in Euclidean space, humans have historically chose the latter. Indeed, there are a multitude of map projections, the development of which has been an area of active research for millennia <span class="citation" data-cites="snyder1993">(<a href="references.html#ref-snyder1993" role="doc-biblioref">Snyder 1993</a>)</span>.</p>
 <p>Map projections can generally only maintain one of the following: distance, direction, or area. Some projections can maintain two, but only in reference to a single point. As such, this center of projection is critical – we use it to define the point at which we create our tangent plane.</p>
 <p>Usually, we could just find the point that minimizes the distance to all other points, perhaps as a mean or median. However the shortest path between two points on a manifold is not a straight line: a straight line will usually place the point within the manifold. The shortest path between two points on the Earth, the “great circle distance”, is a path along the surface: a geodesic.</p>
 <p>The geodesic mean or median takes into account the curvature of the Earth, and ensures that the location that minimizes the distance to other points is on the surface of the Earth. Even here, we treat the Earth as a sphere, which is untrue but closer to reality than a flat plane, and convert latitude and longitude (the angle between 0<span class="math inline">\(^\circ\)</span> and the location at the center of the Earth) to XYZ coordinates on a unit sphere.</p>
-<section id="formulae" class="level3" data-number="2.1.1">
-<h3 data-number="2.1.1" class="anchored" data-anchor-id="formulae"><span class="header-section-number">2.1.1</span> Formulae</h3>
+<section id="formulae" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="formulae"><span class="header-section-number">2.2.1</span> Formulae</h3>
 <ul>
 <li>Covert latitude and longitude (in radians) to spherical coordinates:</li>
 </ul>
@@ -333,20 +446,66 @@ z &amp;= sin(lat)
 arccos(X_0X_A + Y_0Y_A + Z_0Z_A)
 \]</span></p>
 <ul>
-<li>Objective function: find the value of <span class="math inline">\((X_0, Y_0, Z_0)\)</span> that minimizes the median geodesic distance to all other points.</li>
+<li>Objective function: find the value of <span class="math inline">\((X_0, Y_0, Z_0)\)</span> that minimizes the mean geodesic distance to all other points.</li>
 </ul>
 </section>
-<section id="result" class="level3" data-number="2.1.2">
-<h3 data-number="2.1.2" class="anchored" data-anchor-id="result"><span class="header-section-number">2.1.2</span> Result</h3>
-<p>The Fréchet Mean, specified in the formulae above, of the UMCES-tagged striped bass data set (black points, below) used in <span class="citation" data-cites="secor2025">(<a href="references.html#ref-secor2025" role="doc-biblioref">Secor et al. 2025</a>)</span> was -73.04283<span class="math inline">\(^o\)</span> E, 40.32766<span class="math inline">\(^o\)</span> N (red point, below). A raw mean of unprojected Latitude-Longitude coordinates, i.e.&nbsp;treating geodetic coordinates as if they were Cartesian, was slightly more than 4.5 kilometers to the southeast at -72.99653<span class="math inline">\(^o\)</span> E, 40.30754<span class="math inline">\(^o\)</span> N (blue point, below). Given that the minimal resolution provided by telemetry receivers in the Mid-Atlantic Bight is c.&nbsp;500 meters <span class="citation" data-cites="obrien2021">(<a href="references.html#ref-obrien2021" role="doc-biblioref">O’Brien and Secor 2021</a>)</span> and the spatial range of detections is roughly 900 kilometers, there is some evidence to suggest that a geodesic mean may be unnecessary. We will continue to trial different metrics, however, as we hope to make this method applicable to species with greater migratory range.</p>
-<p><img src="images/paste-2.png" class="img-fluid"></p>
+<section id="analysis" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="analysis"><span class="header-section-number">2.2.2</span> Analysis</h3>
+<p>We will leverage the <a href="https://geomstats.github.io/"><code>geomstats</code> python package</a> to calculate the <a href="https://en.wikipedia.org/wiki/Fr%C3%A9chet_mean">Fréchet mean</a>, which was specified in the formulae above. The package authors have provided <a href="https://geomstats.github.io/notebooks/06_practical_methods__riemannian_frechet_mean_and_tangent_pca.html">an excellent walkthrough</a> on how to do this; we have adapted this to use a combination of R and Python.</p>
+<p>Calculate the Fréchet mean:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate Frechet mean</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>frechet_mean <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"geomstats.learning.frechet_mean"</span>)<span class="sc">$</span>FrechetMean</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>mean_fun <span class="ot">&lt;-</span> <span class="fu">frechet_mean</span>(sphere)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>mean_estimate <span class="ot">&lt;-</span> mean_fun<span class="sc">$</span><span class="fu">fit</span>(sb_s2)<span class="sc">$</span>estimate_</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to lat/lon</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>frechet_latlon <span class="ot">&lt;-</span> <span class="fu">s2_point</span>(</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  mean_estimate[<span class="dv">1</span>],</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  mean_estimate[<span class="dv">2</span>],</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  mean_estimate[<span class="dv">3</span>]</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_s2_lnglat</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>Calculate the raw mean and its distance from the Fréchet mean:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>raw_mean <span class="ot">&lt;-</span> <span class="fu">s2_lnglat</span>(<span class="fu">mean</span>(sb<span class="sc">$</span>mean_lon), <span class="fu">mean</span>(sb<span class="sc">$</span>mean_lat))</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>location_distance <span class="ot">&lt;-</span> <span class="fu">s2_distance</span>(frechet_latlon, raw_mean)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="result" class="level3" data-number="2.2.3">
+<h3 data-number="2.2.3" class="anchored" data-anchor-id="result"><span class="header-section-number">2.2.3</span> Result</h3>
+<p>The Fréchet Mean of the tagged striped bass data set (black points, below) was -72.98979, 40.39643 (red point, below). A raw mean of unprojected Latitude-Longitude coordinates, i.e.&nbsp;treating geodetic coordinates as if they were Cartesian, was about 4.8 kilometers away at -72.94155, 40.37402 (blue point, below). Given that the minimal resolution provided by telemetry receivers in the Mid-Atlantic Bight is c.&nbsp;500 meters <span class="citation" data-cites="obrien2021">(<a href="references.html#ref-obrien2021" role="doc-biblioref">O’Brien and Secor 2021</a>)</span> and the spatial range of detections is roughly 900 kilometers, there is some evidence to suggest that a geodesic mean may be unnecessary. We will continue to trial different metrics, however, as we hope to make this method applicable to species with greater migratory range.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> sb_sf) <span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> <span class="fu">st_as_sf</span>(frechet_latlon), <span class="at">size =</span> <span class="dv">5</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> <span class="fu">st_as_sf</span>(raw_mean), <span class="at">size =</span> <span class="dv">5</span>, <span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="migration_north_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 </section>
-<section id="step-2-project-geodetic-coordinates" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="step-2-project-geodetic-coordinates"><span class="header-section-number">2.2</span> Step 2: Project geodetic coordinates</h2>
+<section id="step-2-project-geodetic-coordinates" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="step-2-project-geodetic-coordinates"><span class="header-section-number">2.3</span> Step 2: Project geodetic coordinates</h2>
 <p>After finding the projection center, we need to project the coordinates onto the tangent plane. There are many ways to do this, including the whole (very active!) field of manifold learning. Luckily, the millennia of map projections comes in handy here – all projections categorized as “azimuthal” are projections of coordinates onto a tangent plane. The orthographic projection projects points from the Earth to the tangent plane orthogonally (straight line); stereographic maps points along a line connecting the plane, the point, and the point opposite the center of projection; the gnomic (or gnomonic) does the same, but uses a line connecting the plane, the point, and the center of the Earth. There are many more, but the azimuthal equidistant projection, which we will use for the rest of this report, “unwraps” the Earth onto the tangent plane, such that angles and distances are maintained from the projection center <span class="citation" data-cites="snyder1987">(<a href="references.html#ref-snyder1987" role="doc-biblioref">Snyder 1987</a>)</span>. Note that angles and distances are only maintained <em>from the center of projection</em>, meaning that, in this sense, distances <em>along</em> the migration vector will be correct, but distance <em>from</em> the migration vector will not. This suggests that we should further investigate other methods of projection to confirm that this is the most applicable to the task of flyway modeling.</p>
-<section id="formulae-1" class="level3" data-number="2.2.1">
-<h3 data-number="2.2.1" class="anchored" data-anchor-id="formulae-1"><span class="header-section-number">2.2.1</span> Formulae</h3>
+<section id="formulae-1" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="formulae-1"><span class="header-section-number">2.3.1</span> Formulae</h3>
 <p>To project an animal’s latitude and longitude coordinate in radians (<span class="math inline">\(\phi\)</span>, <span class="math inline">\(\lambda\)</span>) from a given center of projection (<span class="math inline">\(\phi_1\)</span>, <span class="math inline">\(\lambda_0\)</span>), where <span class="math inline">\(c\)</span> is the angular distance from center and <span class="math inline">\(k'\)</span> is the scale factor<span class="citation" data-cites="snyder1987">(<a href="references.html#ref-snyder1987" role="doc-biblioref">Snyder 1987</a>)</span>:</p>
 <p><span class="math display">\[\begin{align}
 x &amp;= k'cos(\phi)sin(\lambda-\lambda_0) \\
@@ -355,42 +514,185 @@ k' &amp;= c/sin(c) \\
 c &amp;= arccos(sin(\phi_1)sin(\phi) + cos(\phi_1)cos(\phi)cos(\lambda-\lambda_0))
 \end{align}\]</span></p>
 </section>
-<section id="result-1" class="level3" data-number="2.2.2">
-<h3 data-number="2.2.2" class="anchored" data-anchor-id="result-1"><span class="header-section-number">2.2.2</span> Result</h3>
+<section id="result-1" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="result-1"><span class="header-section-number">2.3.2</span> Result</h3>
 <p>See next section.</p>
 </section>
 </section>
-<section id="step-3-conduct-pca-on-projected-coordinates" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="step-3-conduct-pca-on-projected-coordinates"><span class="header-section-number">2.3</span> Step 3: Conduct PCA on projected coordinates</h2>
+<section id="step-3-conduct-pca-on-projected-coordinates" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="step-3-conduct-pca-on-projected-coordinates"><span class="header-section-number">2.4</span> Step 3: Conduct PCA on projected coordinates</h2>
 <p>Principal Components Analysis is a dimensionality reduction technique which involves creating a set of synthetic, orthogonal axes in multidimensional space where each successive axis accounts for less and less variation. As the telemetry data are two-dimensional, we can have a maximum of two axes. In the flyway concept, we view the first axis, that which explains the most spatial variation, as a vector oriented according to “migration north”. The second axis, then, represents deviation from migration north: the “migration front” <span class="citation" data-cites="secor2025">(<a href="references.html#ref-secor2025" role="doc-biblioref">Secor et al. 2025</a>)</span>.</p>
-<section id="result-2" class="level3" data-number="2.3.1">
-<h3 data-number="2.3.1" class="anchored" data-anchor-id="result-2"><span class="header-section-number">2.3.1</span> Result</h3>
-<p>The tangent PCA of UMCES-tagged striped bass at the point of tangency calculated in Step 1 are shown below. The first axis, shown in red, reflects the fitted migration vector (first principal component, 88.2% of variance). The second axis, shown in orange, reflects the axis of the migration front (second principal component, 11.8% of variance). Note that the lines are curved: this reflects the fact that the vectors are geodesics – great-circle paths along the curved surface of the earth – rather than lines in Euclidean space.<br>
-<img src="images/paste-3.png" class="img-fluid"></p>
+<section id="analysis-1" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="analysis-1"><span class="header-section-number">2.4.1</span> Analysis</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>tpca <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"geomstats.learning.pca"</span>)<span class="sc">$</span>TangentPCA</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>tpca_mod <span class="ot">&lt;-</span> <span class="fu">tpca</span>(sphere, <span class="at">n_components =</span> <span class="fu">as.integer</span>(<span class="dv">2</span>))</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>tpca_mod<span class="sc">$</span><span class="fu">fit</span>(sb_s2, <span class="at">base_point =</span> mean_estimate)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>TangentPCA(n_components=2,
+           space=&lt;geomstats.geometry.hypersphere.Hypersphere object at 0x7efdafd0bda0&gt;)</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># transform data onto tangent plane</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># tangent_sb &lt;- tpca_mod$transform(sb_s2)</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># explained variance</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>exp_var <span class="ot">&lt;-</span> tpca_mod<span class="sc">$</span>explained_variance_ratio_</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="result-2" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="result-2"><span class="header-section-number">2.4.2</span> Result</h3>
+<p>The tangent PCA of tagged striped bass at the point of tangency calculated in Step 1 are shown below. The first axis, shown in red, reflects the fitted migration vector (first principal component, 90.1% of variance). The second axis, shown in orange, reflects the axis of the migration front (second principal component, 9.9% of variance). Note that the lines are curved: this reflects the fact that the vectors are geodesics – great-circle paths along the curved surface of the earth – rather than lines in Euclidean space.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>geodesic_1 <span class="ot">=</span> sphere<span class="sc">$</span>metric<span class="sc">$</span><span class="fu">geodesic</span>(</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">initial_point =</span> mean_estimate,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">initial_tangent_vec =</span> tpca_mod<span class="sc">$</span>components_[<span class="dv">1</span>, ] <span class="sc">|&gt;</span> <span class="fu">t</span>()</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>geodesic_2 <span class="ot">=</span> sphere<span class="sc">$</span>metric<span class="sc">$</span><span class="fu">geodesic</span>(</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">initial_point =</span> mean_estimate,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">initial_tangent_vec =</span> tpca_mod<span class="sc">$</span>components_[<span class="dv">2</span>, ] <span class="sc">|&gt;</span> <span class="fu">t</span>()</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co"># for whatever reason I can't make this work with R's `seq`, so using the geomstats version</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>geodesic_1_pts <span class="ot">&lt;-</span> <span class="fu">geodesic_1</span>(gs<span class="sc">$</span><span class="fu">linspace</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fu">as.integer</span>(<span class="dv">100</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># creates a 1*100*3 matrix that should be 100*3. Drop removes the empty dimension, giving 100*3</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop</span>()</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>g1_s2 <span class="ot">&lt;-</span> <span class="fu">s2_point</span>(</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  geodesic_1_pts[, <span class="dv">1</span>],</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>  geodesic_1_pts[, <span class="dv">2</span>],</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  geodesic_1_pts[, <span class="dv">3</span>]</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_s2_lnglat</span>()</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>geodesic_2_pts <span class="ot">&lt;-</span> <span class="fu">geodesic_2</span>(gs<span class="sc">$</span><span class="fu">linspace</span>(</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.integer</span>(<span class="sc">-</span><span class="dv">1</span>),</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.integer</span>(<span class="dv">1</span>),</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.integer</span>(<span class="dv">100</span>)</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>)) <span class="sc">|&gt;</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop</span>()</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>g2_s2 <span class="ot">&lt;-</span> <span class="fu">s2_point</span>(</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>  geodesic_2_pts[, <span class="dv">1</span>],</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>  geodesic_2_pts[, <span class="dv">2</span>],</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>  geodesic_2_pts[, <span class="dv">3</span>]</span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_s2_lnglat</span>()</span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a><span class="co"># plot tPCA</span></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">s2_lnglat</span>(sb<span class="sc">$</span>mean_lon, sb<span class="sc">$</span>mean_lat), <span class="at">col =</span> <span class="st">"black"</span>)</span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(g1_s2, <span class="at">add =</span> T, <span class="at">type =</span> <span class="st">'l'</span>, <span class="at">col =</span> <span class="st">'red'</span>)</span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(g2_s2, <span class="at">add =</span> T, <span class="at">type =</span> <span class="st">'l'</span>, <span class="at">col =</span> <span class="st">'orange'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="migration_north_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 </section>
-<section id="step-4-rotate-to-migration-north" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="step-4-rotate-to-migration-north"><span class="header-section-number">2.4</span> Step 4: Rotate to “Migration North”</h2>
-<p>A property of the azimuthal equidistant projection (an exponential transformation onto a tangential plane) is that all distances and angles from the center of projection (point of tangency) are true. We need to calculate the angle between two vectors: a vector defined as connecting the center of projection and the north pole, and a vector defined as connecting the center of projection with any point on the first principal component. Given some distance <span class="math inline">\(D\)</span> along the first axis and the PCA eigenvectors <span class="math inline">\(V\)</span>, we can calculate the angle of the first principal component from north. For visualization purposes, we will project the coordinates into an oblique Mercator <span class="citation" data-cites="snyder1987">(<a href="references.html#ref-snyder1987" role="doc-biblioref">Snyder 1987</a>)</span> using the same center of projection and value of <span class="math inline">\(\gamma\)</span>.</p>
-<section id="formulae-2" class="level3" data-number="2.4.1">
-<h3 data-number="2.4.1" class="anchored" data-anchor-id="formulae-2"><span class="header-section-number">2.4.1</span> Formulae</h3>
-<section id="angle-of-rotation" class="level4" data-number="2.4.1.1">
-<h4 data-number="2.4.1.1" class="anchored" data-anchor-id="angle-of-rotation"><span class="header-section-number">2.4.1.1</span> Angle of Rotation</h4>
+<section id="step-4-rotate-to-migration-north" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="step-4-rotate-to-migration-north"><span class="header-section-number">2.5</span> Step 4: Rotate to “Migration North”</h2>
+<p>A property of the azimuthal equidistant projection (an exponential transformation onto a tangential plane) is that all distances and angles from the center of projection (point of tangency) are true. We need to calculate the angle between two vectors: a vector defined as connecting the center of projection and the north pole, and a vector defined as connecting the center of projection with any point on the first principal component. Given some distance <span class="math inline">\(D\)</span> along the first axis and the PCA eigenvectors <span class="math inline">\(V\)</span>, we can calculate the angle of the first principal component from north. For visualization purposes, we will project the coordinates into an oblique Mercator <span class="citation" data-cites="snyder1987">(<a href="references.html#ref-snyder1987" role="doc-biblioref">Snyder 1987</a>)</span> using the same center of projection and value of <span class="math inline">\(\gamma\)</span>. Note that this is not a critical piece of this method – it is for visualization purposes only.</p>
+<section id="formulae-2" class="level3" data-number="2.5.1">
+<h3 data-number="2.5.1" class="anchored" data-anchor-id="formulae-2"><span class="header-section-number">2.5.1</span> Formulae</h3>
+<section id="angle-of-rotation" class="level4" data-number="2.5.1.1">
+<h4 data-number="2.5.1.1" class="anchored" data-anchor-id="angle-of-rotation"><span class="header-section-number">2.5.1.1</span> Angle of Rotation</h4>
 <p><span class="math display">\[\begin{align}
 a &amp;= \begin{bmatrix} D &amp; 0 \end{bmatrix} \\
 b &amp;= aV^T \\
 \gamma &amp;= arctan(b_1 / b_2)
 \end{align}\]</span></p>
 </section>
-<section id="oblique-mercator" class="level4" data-number="2.4.1.2">
-<h4 data-number="2.4.1.2" class="anchored" data-anchor-id="oblique-mercator"><span class="header-section-number">2.4.1.2</span> Oblique Mercator</h4>
-<p>The formulas for the oblique Mercator on an ellipsoid are complicated and beyond the scope of this report. We refer interested parties to equations 9-11 through 9-14 and 9-35 through 9-39 in <span class="citation" data-cites="snyder1987">(<a href="references.html#ref-snyder1987" role="doc-biblioref">Snyder 1987</a>)</span>. Projection can be easily conducted using the <a href="https://proj.org">PROJ software library</a> using the string <code>+proj=omerc +gamma=-37.8845 +lonc=-73.04283 +lat_0=40.32766</code></p>
+<section id="oblique-mercator" class="level4" data-number="2.5.1.2">
+<h4 data-number="2.5.1.2" class="anchored" data-anchor-id="oblique-mercator"><span class="header-section-number">2.5.1.2</span> Oblique Mercator</h4>
+<p>The formulas for the oblique Mercator on an ellipsoid are complicated and beyond the scope of this report. We refer interested parties to equations 9-11 through 9-14 and 9-35 through 9-39 in <span class="citation" data-cites="snyder1987">(<a href="references.html#ref-snyder1987" role="doc-biblioref">Snyder 1987</a>)</span>. Projection can be easily conducted using the <a href="https://proj.org">PROJ software library</a> using a string of the form <code>+proj=omerc +gamma={angle from north} +lonc={Lon of center} +lat_0={lat of center}</code></p>
 </section>
 </section>
-<section id="results" class="level3" data-number="2.4.2">
-<h3 data-number="2.4.2" class="anchored" data-anchor-id="results"><span class="header-section-number">2.4.2</span> Results</h3>
+<section id="analysis-2" class="level3" data-number="2.5.2">
+<h3 data-number="2.5.2" class="anchored" data-anchor-id="analysis-2"><span class="header-section-number">2.5.2</span> Analysis</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>aeqd_proj <span class="ot">&lt;-</span> <span class="fu">paste0</span>(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">'+proj=aeqd +lon_0='</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">s2_x</span>(frechet_latlon),</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">' +lat_0='</span>,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">s2_y</span>(frechet_latlon)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>gs <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"geomstats.backend"</span>)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>displaced_lonlat <span class="ot">&lt;-</span> sphere<span class="sc">$</span>metric<span class="sc">$</span><span class="fu">exp</span>(</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">tangent_vec =</span> gs<span class="sc">$</span><span class="fu">array</span>(<span class="fl">0.01</span> <span class="sc">*</span> tpca_mod<span class="sc">$</span>components_[<span class="dv">1</span>, ]),</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_point =</span> gs<span class="sc">$</span><span class="fu">array</span>(tpca_mod<span class="sc">$</span>base_point_)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  (\(pt) <span class="fu">c</span>(<span class="fu">atan2</span>(pt[<span class="dv">2</span>], pt[<span class="dv">1</span>]), <span class="fu">asin</span>(pt[<span class="dv">3</span>])) <span class="sc">*</span> <span class="dv">180</span> <span class="sc">/</span> pi)()</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>gamma <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(frechet_latlon) <span class="sc">|&gt;</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  (\(p) p <span class="sc">*</span> pi <span class="sc">/</span> <span class="dv">180</span>)() <span class="sc">|&gt;</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>  (\(rad) {</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rbind</span>(</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>      <span class="at">east =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fu">sin</span>(rad[<span class="dv">1</span>]), <span class="fu">cos</span>(rad[<span class="dv">1</span>]), <span class="dv">0</span>),</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>      <span class="at">north =</span> <span class="fu">c</span>(</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>        <span class="sc">-</span><span class="fu">sin</span>(rad[<span class="dv">2</span>]) <span class="sc">*</span> <span class="fu">cos</span>(rad[<span class="dv">1</span>]),</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>        <span class="sc">-</span><span class="fu">sin</span>(rad[<span class="dv">2</span>]) <span class="sc">*</span> <span class="fu">sin</span>(rad[<span class="dv">1</span>]),</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cos</span>(rad[<span class="dv">2</span>])</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>  })() <span class="sc">|&gt;</span></span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Project 3D PC1 vector into 2D local plane</span></span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>  (\(R) R <span class="sc">%*%</span> tpca_mod<span class="sc">$</span>components_[<span class="dv">1</span>, ])() <span class="sc">|&gt;</span></span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>  <span class="co"># angle from North</span></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>  (\(v2d) {</span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>    (<span class="fu">do.call</span>(atan2, <span class="fu">as.list</span>(v2d)) <span class="sc">*</span> <span class="dv">180</span> <span class="sc">/</span> pi <span class="sc">+</span> <span class="dv">180</span>) <span class="sc">*</span> <span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>  })()</span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>omerc_proj <span class="ot">&lt;-</span> <span class="fu">paste0</span>(</span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>  <span class="st">'+proj=omerc +gamma='</span>,</span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>  gamma,</span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>  <span class="st">' +lonc='</span>,</span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">s2_x</span>(frechet_latlon),</span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a>  <span class="st">' +lat_0='</span>,</span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">s2_y</span>(frechet_latlon)</span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="results" class="level3" data-number="2.5.3">
+<h3 data-number="2.5.3" class="anchored" data-anchor-id="results"><span class="header-section-number">2.5.3</span> Results</h3>
 <p>The locations of UMCES-tagged striped bass rotated into migration north are shown below. Black points are receivers which detected striped bass, the red point is the point of tangency in the tangent PCA, and the red line is migration north (the first principal component).</p>
-<p><img src="images/paste-4.png" class="img-fluid"></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> sb_sf) <span class="sc">+</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">st_cast</span>(<span class="fu">st_combine</span>(<span class="fu">st_as_sf</span>(g1_s2)), <span class="st">"LINESTRING"</span>),</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"red"</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> <span class="fu">st_as_sf</span>(frechet_latlon), <span class="at">size =</span> <span class="dv">5</span>, <span class="at">color =</span> <span class="st">'red'</span>) <span class="sc">+</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">crs =</span> omerc_proj,</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">5e5</span>, <span class="fl">5e5</span>)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="migration_north_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
