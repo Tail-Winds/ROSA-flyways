@@ -31,6 +31,9 @@ if (grepl("notebooks", getwd())) {
 <summary>
   Click here if you'd like to read this section and see the associated code.
 </summary>
+```{python}
+import geomstats
+```
 
 Load necessary R and Python packages:
 ```{r}
@@ -208,11 +211,11 @@ exp_var <- tpca_mod$explained_variance_ratio_
 The tangent PCA of tagged striped bass at the point of tangency calculated in Step 1 are shown below. The first axis, shown in red, reflects the fitted migration vector (first principal component, `r round(exp_var[1] * 100, 1)`% of variance). The second axis, shown in orange, reflects the axis of the migration front (second principal component, `r round(exp_var[2] * 100, 1)`% of variance). Note that the lines are curved: this reflects the fact that the vectors are geodesics – great-circle paths along the curved surface of the earth – rather than lines in Euclidean space.
 
 ```{r}
-geodesic_1 = sphere$metric$geodesic(
+geodesic_1 <- sphere$metric$geodesic(
   initial_point = mean_estimate,
   initial_tangent_vec = tpca_mod$components_[1, ] |> t()
 )
-geodesic_2 = sphere$metric$geodesic(
+geodesic_2 <- sphere$metric$geodesic(
   initial_point = mean_estimate,
   initial_tangent_vec = tpca_mod$components_[2, ] |> t()
 )

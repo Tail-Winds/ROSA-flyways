@@ -1,0 +1,121 @@
+---
+title: Functional Data Regression
+date: last-modified
+format:
+  html:
+    code-fold: true
+execute:
+  message: false
+  warning: false
+---
+
+```{r}
+#| echo: false
+if (grepl("notebooks", getwd())) {
+  Sys.setenv(DATA_DIR = "../..")
+} else {
+  Sys.setenv(DATA_DIR = ".")
+}
+```
+
+```{r}
+#| label: init
+library(arrow) # Data import
+library(dplyr) # Data manipulation
+library(ggplot2) # Data visualization
+library(mgcv) # GAM fitting
+library(gratia) # GAM visualization
+library(refund) # FDA
+
+theme_set(theme_minimal())
+
+sb <- file.path(
+  Sys.getenv("DATA_DIR"),
+  "data/derived/sb_rotated.parquet"
+) |>
+  read_parquet()
+```
+
+Flyway models can viewed as a form of functional data analysis (FDA, see @gertheiss2024 for a current review), where the observation unit is a "function" rather than a single point. The field of FDA encompasses sets of descriptive statistics, dimensionality reduction, regression techniques and more. Unfortunately, as FDA often assumes equally-spaced observations, the temporally-sparse nature of telemetry data limits us in what FDA methods we can use; analysts are often left imputing missing time steps which can sometimes make up most of the fitted data (see @secor2020a, for instance).
+
+Luckily, functional data regression, also called functional regression modeling (FRM), uses basis function methods extensively to smooth across missing observations [@morris2015; @greven2017]. Penalized splines are often the semiparametric method of choice due to their ability to algorthmically select an optimal set of knots according to the provided data. Hierarchical GAMs as described in @pedersen2019 are a form of function-on-scalar FRM as the shape or "wiggliness" of a response (the "functional data") is differentially fit across groups (the "scalar"). In our previous analyses, we used a "by-variable smooth" in the mgcv R package [@wood2017] to allow the response curve to vary according to species or populations; this is the same method, with the same software, promoted for use in FRM by @crainiceanu2024.
+
+In @secor2025 and analyses up to this point, our observation unit has been a location of an animal, at a time, in a set of given conditions at that time. To aid in conceptualization of this, imagine an Excel spreadsheet: each data point (observation) could fit on a row with columns of time, location, and individual. If analyzing a flyway in the functional data framework, the observation unit transforms to an individual's whole migration track across a year or period of tagging -- all of the times and location of an individual get folded together into a given "row".
+
+Visually, what we are doing with regular regression is working with data like this, where we have a point for location in a given week according to population, individual, etc.
+
+$$lat_{it} \sim pop_{it} + \epsilon_{it}$$
+
+```{r}
+ggplot(sb) +
+  geom_point(aes(x = wk, y = med_lat, color = pop), alpha = 0.4) +
+  labs(x = "Week of year", y = "Weekly median latitude") +
+  theme(axis.title = element_text(size = 12))
+```
+
+If we view this using the functional regression paradigm, our underlying data look like this, where the response is latitude as a function of time and the predictor is population.
+
+$$ 
+lat_i(t) \sim pop_i + \epsilon_i 
+$$
+
+```{r}
+ggplot(sb) +
+  geom_line(
+    aes(
+      x = wk,
+      y = med_lat,
+      color = pop,
+      group = interaction(transmitter, year)
+    ),
+    alpha = 0.4
+  ) +
+  labs(x = "Week of year", y = "Weekly median latitude") +
+  theme(axis.title = element_text(size = 12))
+```
+
+### FRM
+
+```{r}
+library(refund)
+library(dplyr)
+
+model_data <- sb |>
+  mutate(
+    yr_f = factor(year),
+    id = factor(transmitter)
+  )
+
+covar <- model_data |>
+  ungroup() |>
+  group_by(id, yr_f) |>
+  mutate(.obs_id = cur_group_id()) |>
+  ungroup() |>
+  distinct(.obs_id, id, yr_f, pop) |>
+  arrange(.obs_id) |>
+  as.data.frame()
+# rownames(covar) <- as.character(covar$.obs_id)
+
+yda <- model_data |>
+  as.data.frame() |>
+  group_by(id, yr_f) |>
+  mutate(
+    .obs = cur_group_id(),
+    .index = wk,
+    .value = x
+  ) |>
+  ungroup() |>
+  select(.obs, .index, .value) |>
+  arrange(.obs, .index)
+
+
+j <- pffr(
+  formula = Y ~ c(pop) + s(id, bs = "re"),
+  ydata = yda,
+  data = covar,
+  bs.yindex = list(bs = "cc", k = 27),
+  knots = list(.index = c(1, 53)),
+  algorithm = "bam",
+  sandwich = "none"
+)
+```

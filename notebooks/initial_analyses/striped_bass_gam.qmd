@@ -6,14 +6,14 @@ execute:
   warning: false
 ---
 
-Let's take a look at striped bass _Morone saxatilis_ using the data prepared in the [data cleaning chapter](../data_cleaning.qmd).
+Let's take a look at striped bass *Morone saxatilis* using the data prepared in the [data cleaning chapter](../data_cleaning.qmd).
 
 ```{r}
 #| echo: false
 if (grepl("notebooks", getwd())) {
   Sys.setenv(DATA_DIR = "../..")
 } else {
-  Sys.setenv(DATA_DIR = "")
+  Sys.setenv(DATA_DIR = ".")
 }
 ```
 
@@ -40,6 +40,7 @@ sb_file <- file.path(
 sb <- open_dataset(sb_file) |>
   filter(latitude > 34) |> # detections almost definitely wrong and needs to be removed
   group_by(transmitter, year, wk, group) |>
+  rename(pop = group) |>
   summarize(
     med_lon = median(longitude, na.rm = TRUE),
     med_lat = median(latitude, na.rm = TRUE)
@@ -53,7 +54,7 @@ We first visualize the distribution of the median per-individual latitudes throu
 #| label: sb-plot
 #| fig-cap: "Weekly median latitude of striped bass. Colors represent putative populations; DE: Delaware, HR: Hudson River, PR: Potomac River."
 ggplot(sb) +
-  geom_point(aes(x = wk, y = med_lat, color = group), alpha = 0.4) +
+  geom_point(aes(x = wk, y = med_lat, color = pop), alpha = 0.4) +
   facet_wrap(~year) +
   labs(x = "Week of year", y = "Weekly median latitude") +
   theme(axis.title = element_text(size = 12))
@@ -78,6 +79,7 @@ projection_center
 ```
 
 Create the [PROJ](https://proj.org/en/stable/index.html) string...
+
 ```{r}
 #| label: sb-proj-string
 proj_string <- paste0(
@@ -89,6 +91,7 @@ proj_string <- paste0(
 
 proj_string
 ```
+
 ...and project the fish locations:
 
 ```{r}
@@ -105,7 +108,7 @@ sb_sf |>
   coord_sf(datum = proj_string)
 ```
 
-We now conduct principle components analysis (PCA) on the major migration vector to find its angle from true north: the _migration azimuth_. 
+We now conduct principle components analysis (PCA) on the major migration vector to find its angle from true north: the *migration azimuth*.
 
 ```{r}
 #| label: sb-azimuth
@@ -144,6 +147,10 @@ sb_migration_north <- sb_sf |>
   # extract coordinates for modeling purposes
   mutate(x = st_coordinates(geometry)[, 1], y = st_coordinates(geometry)[, 2])
 
+# sb_migration_north |>
+#   as.data.frame() |>
+#   select(-geometry) |>
+#   write_parquet(sink = "data/derived/sb_rotated.parquet")
 
 ggplot(sb_migration_north) +
   geom_sf() +
@@ -155,7 +162,7 @@ We can now visualize migration synchrony, the variance in the migration vector o
 ```{r}
 #| label: sb-synchrony
 ggplot(sb_migration_north) +
-  geom_point(aes(x = wk, y = x, color = group), alpha = 0.4) +
+  geom_point(aes(x = wk, y = x, color = pop), alpha = 0.4) +
   facet_wrap(~year) +
   labs(
     title = "Migration synchrony",
@@ -168,7 +175,7 @@ ggplot(sb_migration_north) +
 ```{r}
 #| label: sb-front
 ggplot(sb_migration_north) +
-  geom_point(aes(x = wk, y = y, color = group), alpha = 0.4) +
+  geom_point(aes(x = wk, y = y, color = pop), alpha = 0.4) +
   facet_wrap(~year) +
   labs(
     title = "Migration front",
@@ -178,19 +185,23 @@ ggplot(sb_migration_north) +
   theme(axis.title = element_text(size = 12))
 ```
 
-### Initial GAM
-#### Migration vector
+## Initial GAM
+
+### Migration vector
 
 For the initial GAM, we'll treat both year and population as a random effect. We see a general trend of low values on the migration vector through the beginning of the year, a rapid increase after the 10th week, a slight reduction in rate in week 15-20, then another rapid increase through week 25. Posiiton then levels off through week 40, where it rapidly drops.
 
 ```{r}
 #| label: sb-gam-all-re
 model_data <- sb_migration_north |>
-  mutate(group = factor(group), yr_f = factor(year))
+  mutate(pop = factor(pop), yr_f = factor(year), id = factor(transmitter))
 
 m1 <- model_data |>
   gam(
-    x ~ s(wk, k = 27, bs = "cc") + s(yr_f, bs = "re") + s(group, bs = "re"),
+    x ~ s(wk, k = 27, bs = "cc") +
+      s(yr_f, bs = "re") +
+      s(pop, bs = "re") +
+      s(id, bs = "re"),
     knots = list(wk = c(1, 53)),
     data = _,
     method = "REML"
@@ -200,48 +211,33 @@ summary(m1)
 draw(m1, select = "s(wk)", residuals = TRUE)
 ```
 
-Next we'll pull the populations apart and treat them as "by-variable smooths" (i.e. one form of a GAM interaction) in the model. We see that the leveling-off of movement up the migration vector in weeks 15-20 is likely due to spawning. The Potomac River has a leveling-off earlier and lower on the vector, followed by Delaware a little higher and later, then Hudson higher and greater still. **These _destination habitats_ are one of the migration metrics we wish to quantify.**
+Next we'll pull the populations apart and treat them as "by-variable smooths" (i.e. one form of a GAM interaction) in the model.
 
 ```{r}
-#| label: sb-gam-re-yr
-m2 <- model_data |>
-  # rename "group" variable; we'll use the marginaleffects library soon and
-  #   "group" makes the program confused
-  mutate(grp = group) |>
-  gam(
-    x ~ grp + s(wk, by = grp, k = 27, bs = "cc") + s(yr_f, bs = "re"),
-    knots = list(wk = c(1, 53)),
-    data = _,
-    method = "REML"
-  )
-
+#| label: sb-m2
+m2 <- bam(
+  x ~
+    pop +
+    s(wk, by = pop, k = 27, bs = "cc") +
+    s(yr_f, bs = "re") +
+    s(id, bs = "re"),
+  knots = list(wk = c(1, 53)),
+  method = "fREML",
+  data = model_data
+)
 
 summary(m2)
-draw(m2, select = c("s(wk)"), partial_match = TRUE, residuals = TRUE)
-```
-It's a bit more interesting if these curves are overplotted. We'll use the marginaleffects package to marginalize out random effects.
-```{r}
-library(marginaleffects)
-m2_preds <- predictions(
+draw(
   m2,
-  newdata = datagrid(wk = 1:53, grp = c("HR", "PR", "DE")),
-  condition = c("wk", "grp"),
-  exclude = "yr_f"
-) |>
-  mutate(
-    system = case_when(
-      grepl("HR", grp) ~ "Hudson",
-      grepl("PR", grp) ~ "Potomac",
-      grepl("DE", grp) ~ "Delaware"
-    )
-  )
+  select = c("s(wk)"),
+  partial_match = TRUE,
+  residuals = TRUE,
+  scales = 'fixed'
+)
 
-ggplot(m2_preds) +
-  geom_ribbon(
-    aes(x = wk, ymin = conf.low / 1000, ymax = conf.high / 1000, fill = system),
-    alpha = 0.5
-  ) +
-  geom_line(aes(x = wk, y = estimate / 1000, color = system)) +
+conditional_values(m2, c("wk", "pop"), exclude = c("yr_fac", "id")) |>
+  draw() +
+  scale_y_continuous(labels = scales::label_number(scale = 1 / 1000)) +
   labs(
     x = "Week",
     y = "Kilometers along migration vector",
@@ -257,11 +253,48 @@ ggplot(m2_preds) +
   )
 ```
 
+We see that the leveling-off of movement up the migration vector in weeks 15-20 is likely due to spawning. The Potomac River has a leveling-off earlier and lower on the vector, followed by Delaware a little higher and later, then Hudson higher and greater still. **These *destination habitats* are one of the migration metrics we wish to quantify.**
 
-##### Derivatives
+What about modeling the shared trend here? One of our underlying hypotheses is that flyways are responding to the same thing: the tilt of the earth's axis. This would correspond to model GI in @pedersen2019.
 
 ```{r}
-m2_d <- derivatives(m2, select = "s(wk)", partial_match = T, n = 52) |>
+#| label: sb-gam-re-yr
+m2_gi <- bam(
+  x ~
+    s(wk, bs = "cc", k = 27) +
+    pop +
+    s(wk, by = pop, k = 27, bs = "cc") +
+    s(yr_f, bs = "re") +
+    s(id, bs = "re"),
+  knots = list(wk = c(1, 53)),
+  method = "fREML",
+  data = model_data
+)
+
+draw(
+  m2_gi,
+  select = c("s(wk)"),
+  partial_match = TRUE,
+  residuals = TRUE,
+  scales = 'fixed'
+)
+```
+
+Counter-intuitively, it doesn't seem like there's a "significant" trend in week as the 95% CI contains zero throughout the model domain. This may be due to the curves for each population being horizontally shifted with respect to each other and thus "out of phase", resulting in a mean value near 0 [@wu2024]. In any case, there is no support in modeling the effect of week separately.
+
+#### Difference smooths
+
+Comparing between populations confirms that which we have already seen -- Hudson River fish are much higher along the migration vector during spawning periods as compared to Delaware or Potomac fish. Interestingly, there is some evidence that Potomac River fish are ranging farther north than the other two populations.
+
+```{r}
+difference_smooths(m2, select = "s(wk)") |>
+  draw(scales = "fixed")
+```
+
+#### Derivatives
+
+```{r}
+m2_d <- derivatives(m2, select = "s(wk):", partial_match = T, n = 52) |>
   mutate(
     system = case_when(
       grepl("HR", .smooth) ~ "Hudson",
@@ -306,17 +339,17 @@ What might a migration metric look like? If we define a "destination habitat" as
 
 ```{r}
 hr_dest_hab <- m2_d |>
-  group_by(grp) |>
+  group_by(pop) |>
   mutate(
     zero = (.lower_ci <= 0 & .upper_ci >= 0),
     id = consecutive_id(zero)
   ) |>
-  filter(id != 1, grp == "HR") |>
+  filter(id != 1, pop == "HR") |>
   distinct(zero, id, .keep_all = TRUE) |>
   mutate(id = rep(1:(n() / 2), each = 2)) |>
   tidyr::pivot_wider(id_cols = id, names_from = zero, values_from = wk)
 
-draw(m2_d, select = "s(wk):grpHR") +
+draw(m2_d, select = "s(wk):popHR") +
   annotate(
     "rect",
     xmin = hr_dest_hab$`TRUE`,
@@ -337,7 +370,7 @@ m1_mf <- model_data |>
   gam(
     y ~ s(wk, k = 53, bs = "cc") +
       s(yr_f, bs = "re") +
-      s(group, bs = "re"),
+      s(pop, bs = "re"),
     knots = list(wk = c(1, 53)),
     data = _,
     method = "REML"
@@ -350,10 +383,9 @@ draw(m1_mf, select = "s(wk)", residuals = TRUE)
 ```{r}
 #| label: sb-gam-front-re-yr
 m2_mf <- model_data |>
-  mutate(grp = group) |>
   gam(
-    y ~ grp +
-      s(wk, by = grp, k = 53, bs = "cc") +
+    y ~ pop +
+      s(wk, by = pop, k = 53, bs = "cc") +
       s(yr_f, bs = "re"),
     knots = list(wk = c(1, 53)),
     data = _,
@@ -368,17 +400,17 @@ draw(m2_mf, select = "s(wk)", partial_match = TRUE, residuals = TRUE)
 library(marginaleffects)
 j <- predictions(
   m2_mf,
-  newdata = datagrid(wk = 1:53, grp = c("HR", "PR", "DE")),
-  condition = c("wk", "grp"),
+  newdata = datagrid(wk = 1:53, pop = c("HR", "PR", "DE")),
+  condition = c("wk", "pop"),
   exclude = "yr_f"
 )
 
 j |>
   mutate(
     system = case_when(
-      grepl("HR", grp) ~ "Hudson",
-      grepl("PR", grp) ~ "Potomac",
-      grepl("DE", grp) ~ "Delaware"
+      grepl("HR", pop) ~ "Hudson",
+      grepl("PR", pop) ~ "Potomac",
+      grepl("DE", pop) ~ "Delaware"
     )
   ) |>
 
@@ -413,8 +445,8 @@ m2f_d |>
   labs(x = "Week", y = "Migration front velocity (km/week)")
 ```
 
-
 ### Model evaluation
+
 It should be noted, however, that the initial models are not performing well on the edges of the domain of the migration vector and migration front. This suggests that we need to refine the model to further to characterize these areas.
 
 ```{r}
