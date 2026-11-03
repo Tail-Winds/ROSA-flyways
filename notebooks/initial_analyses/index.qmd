@@ -1,8 +1,15 @@
 ---
-title: Initial GAM exploration
+title: Initial model exploration
 date: last-modified
 execute:
   message: false
   warning: false
 ---
-@secor2025 provided a simple generalized additive model (GAM) evaluated in R [@r_2026] for the analysis of marine fauna flyways. In the manuscript, the average latitude per individual, per week of a Hudson River population of striped bass _Morone saxatilis_, possibly the entire population of North Atlantic right whale _Eubalaena glacialis_, and several populations of northern gannet _Morus bassanus_ were regressed against date. We reproduce that analysis here for an expanded data set of striped bass locations which includes Potomac and Delaware populations as well as for tagged sand tiger sharks _Carcharias taurus_. We do not report on _Atlantic sturgeon_ here as the data set has not been fully-compiled as of 2026-04-30.
+
+## Generalize additive models
+
+@secor2025 provided a simple generalized additive model (GAM) evaluated in R [@r_2026] for the analysis of marine fauna flyways. In the manuscript, the average latitude per individual, per week of a Hudson River population of striped bass _Morone saxatilis_, possibly the entire population of North Atlantic right whale _Eubalaena glacialis_, and several populations of northern gannet _Morus bassanus_ were regressed against date. We reproduce that analysis here for an expanded data set of striped bass locations which includes Potomac and Delaware populations (["Initial striped bass GAM exploration"](initial_analyses/striped_bass_gam.qmd)) as well as for tagged sand tiger sharks _Carcharias taurus_ (["Initial striped bass GAM exploration"](initial_analyses/sand_tiger_gam.qmd)). An initial analysis of Atlantic sturgeon _Acipenser oxyrinchus_ is ongoing.
+
+## Functional data analysis
+
+Flyway models can viewed as a form of functional data analysis (FDA, see @gertheiss2024 for a current review), where the observation unit is a "function" rather than a single point. In many ways, FDA can be viewed as a further generalization of generalized additive models. While we do not plan to pursue this further, an initial exploration is provided in [the Functional Data Regression chapter](initial_analyses/fda.qmd).

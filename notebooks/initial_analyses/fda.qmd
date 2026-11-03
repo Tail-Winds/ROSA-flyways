@@ -17,6 +17,9 @@ if (grepl("notebooks", getwd())) {
   Sys.setenv(DATA_DIR = ".")
 }
 ```
+::: {.callout-warning collapse="true"}
+The analysis and narrative on this page are incomplete and speculative.
+:::
 
 ```{r}
 #| label: init
