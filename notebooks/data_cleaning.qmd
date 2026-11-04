@@ -82,3 +82,40 @@ open_dataset("data/RAW/combined_striped_bass.parquet") |>
   mutate(latitude = abs(latitude), wk = week(datetime)) |>
   write_parquet("data/derived/striped_bass.parquet")
 ```
+
+# Atlantic sturgeon
+
+
+```{r}
+ats <- "../data/derived/sturgeon.parquet" |>
+  open_dataset() |>
+  mutate(wk = week(det_Date), yr = year(det_Date)) |>
+  group_by(Transmitter, yr, wk) |>
+  summarize(
+    med_lat = median(r.lat, na.rm = T),
+    med_lon = median(r.lon, na.rm = T)
+  ) |>
+  collect()
+```
+
+```{r}
+#| label: ats-plot
+#| fig-cap: "Weekly median latitude of Atlantic sturgeon."
+ggplot(ats) +
+  geom_point(aes(x = wk, y = med_lat), alpha = 0.4) +
+  facet_wrap(~yr) +
+  labs(x = "Week of year", y = "Weekly median latitude") +
+  theme(axis.title = element_text(size = 12))
+```
+
+
+```{r}
+"../data/derived/sturgeon.parquet" |>
+  open_dataset() |>
+  mutate(yr = lubridate::year(det_Date)) |>
+  # group_by(Transmitter, yr) |>
+  # filter("Atlantic Ocean" %in% Waterbody) |>
+  collect()
+```
+
+pick the sturgeon or sturgeon-by-year that existed in the atlantic ocean at some point

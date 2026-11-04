@@ -16,6 +16,11 @@ book:
       chapters:
         - initial_analyses/striped_bass_gam.qmd
         - initial_analyses/sand_tiger_gam.qmd
+        - initial_analyses/fda.qmd
+    - part: "Flyway covariates"
+      chapters:
+        - flyway_covariates/env_data_access.qmd
+        - flyway_covariates/covariates.qmd
   appendices:
     - appendices/dmsp.qmd
     - references.qmd

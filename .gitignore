@@ -10,3 +10,5 @@ Permissions/
 
 # Ad hoc figures
 misc_figures/
+/.quarto/
+**/*.quarto_ipynb

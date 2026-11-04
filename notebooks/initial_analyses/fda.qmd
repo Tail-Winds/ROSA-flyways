@@ -80,9 +80,6 @@ ggplot(sb) +
 ### FRM
 
 ```{r}
-library(refund)
-library(dplyr)
-
 model_data <- sb |>
   mutate(
     yr_f = factor(year),
@@ -111,14 +108,13 @@ yda <- model_data |>
   select(.obs, .index, .value) |>
   arrange(.obs, .index)
 
-
-j <- pffr(
-  formula = Y ~ c(pop) + s(id, bs = "re"),
-  ydata = yda,
-  data = covar,
-  bs.yindex = list(bs = "cc", k = 27),
-  knots = list(.index = c(1, 53)),
-  algorithm = "bam",
-  sandwich = "none"
-)
+# j <- pffr(
+#   formula = Y ~ c(pop) + s(id, bs = "re"),
+#   ydata = yda,
+#   data = covar,
+#   bs.yindex = list(bs = "cc", k = 27),
+#   knots = list(.index = c(1, 53)),
+#   algorithm = "bam",
+#   sandwich = "none"
+# )
 ```

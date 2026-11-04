@@ -1,0 +1,302 @@
+---
+title: Accessing Environmental Covariates
+date: last-modified
+format:
+  html:
+    code-fold: true
+execute:
+  message: false
+  warning: false
+---
+
+This chapter tracks the provenance of, and access to, environmental covariates. Depth, sea surface temperature, and chlorophyll _a_ data are location specific and thus specific to the location dataset that is being used. We will use weekly median positions of striped bass as an example location dataset in those instances, but data for other species will be processed similarly.
+
+```{r}
+#| echo: false
+if (grepl("notebooks", getwd())) {
+  Sys.setenv(DATA_DIR = "../..")
+} else {
+  Sys.setenv(DATA_DIR = ".")
+}
+```
+
+```{r}
+#| label: libs
+library(arrow)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(sf)
+library(terra)
+
+set_theme(theme_minimal())
+```
+
+```{r}
+#| label: sb-import
+sb_file <- file.path(
+  Sys.getenv("DATA_DIR"),
+  "data/derived/striped_bass.parquet"
+)
+
+sb <- open_dataset(sb_file) |>
+  filter(latitude > 34) |> # detections almost definitely wrong and needs to be removed
+  group_by(transmitter, year, wk) |>
+  summarize(
+    med_lon = median(longitude, na.rm = TRUE),
+    med_lat = median(latitude, na.rm = TRUE)
+  ) |>
+  ungroup() |>
+  distinct(med_lon, med_lat, year, wk) |>
+  collect()
+```
+
+
+# Direct download
+
+## North Atlantic Oscillation (NAO)
+
+The NAO index can be accessed at the [National Weather Service's Climate Prediction Center](https://www.cpc.ncep.noaa.gov/products/precip/CWlink/pna/nao.shtml).
+
+```{r}
+#| label: nao-dl
+#| eval: false
+
+nao <- "https://ftp.cpc.ncep.noaa.gov/cwlinks/norm.daily.nao.cdas.z500.19500101_current.csv" |>
+  read.csv()
+write.csv(nao, "data/RAW/nao.csv", row.names = FALSE)
+```
+
+```{r}
+#| label: nao-plot
+nao <- read.csv(
+  file.path(
+    Sys.getenv("DATA_DIR"),
+    "data/RAW/nao.csv"
+  )
+)
+summary(nao)
+ggplot(nao) +
+  geom_line(
+    aes(
+      x = as.Date(sprintf("%d-%02d-%02d", year, month, day)),
+      y = nao_index_cdas
+    )
+  ) +
+  labs(x = NULL, y = "NAO Index")
+```
+
+## Gulf Stream Index
+
+Gulf Stream Indices are available through the `ecodata` package [@beltz2026], "R data package developed by the Ecosystems Dynamics and Assessment Branch of the Northeast Fisheries Science Center for use in State of the Ecosystem (SOE) reporting". The whole package can be installed, but we'll just grab the source data directly.
+
+```{r}
+#| label: gsi-dl
+#| eval: false
+download.file(
+  "https://github.com/NOAA-EDAB/ecodata/raw/refs/heads/main/data/gsi.rda",
+  "data/RAW/gsi.rda"
+)
+```
+
+```{r}
+#| label: gsi-load
+load(file.path(
+  Sys.getenv("DATA_DIR"),
+  "data/RAW/gsi.rda"
+))
+```
+
+### Gulf Stream Index
+
+```{r}
+#| label: gsi-plot
+gsi |>
+  filter(Var == "gulf stream index") |>
+  ggplot() +
+  geom_line(
+    aes(
+      x = as.Date(paste0(Time, ".01"), format = "%Y.%m.%d"),
+      y = Value
+    )
+  ) +
+  labs(x = NULL, y = "Gulf Stream Index")
+```
+
+### Western Gulf Stream Index
+
+```{r}
+#| label: wgsi-plot
+gsi |>
+  filter(Var == "western gulf stream index") |>
+  ggplot() +
+  geom_line(
+    aes(
+      x = as.Date(paste0(Time, ".01"), format = "%Y.%m.%d"),
+      y = Value
+    )
+  ) +
+  labs(x = NULL, y = "Western Gulf Stream Index")
+```
+
+## Depth
+
+We accessed depth data from the [coastal relief model provided by the NOAA National Centers for Environmental Information](https://data.noaa.gov/metaview/page?xml=NOAA/NESDIS/NGDC/MGG/DEM/iso/xml/999901.xml&view=getDataView) [@coastal]. Data are at roughly 30$m^2$ resolutions and split across three volumes: one for the northeast US, one for the southeast US, and one for Florida and the Gulf of Mexico.
+
+```{r}
+#| label: depth-url
+base_url <- "NETCDF:https://www.ngdc.noaa.gov/thredds/dodsC/crm/cudem/crm_vol%i_2023.nc"
+```
+
+### Northeast Atlantic
+
+```{r}
+#| label: depth-ne
+depth_ne <- rast(sprintf(base_url, 1))
+depth_ne
+plot(depth_ne, maxcell = 2000, col = terrain.colors(100))
+```
+
+### Southeast Atlantic
+
+```{r}
+#| label: depth-se
+depth_se <- rast(sprintf(base_url, 2))
+depth_se
+plot(depth_se, maxcell = 2000, col = terrain.colors(100))
+```
+
+### Florida and Gulf of Mexico
+
+```{r}
+#| label: depth-fl
+depth_fl <- rast(sprintf(base_url, 3))
+depth_fl
+plot(depth_fl, maxcell = 2000, col = terrain.colors(100))
+```
+
+## Sea surface temperature {#sec-sst}
+
+### Ocean temperature
+[@ghrsstl2015]
+
+Query needs date, latitude, and longitude. Right now we are using median position per week. Rather than just picking one day in the given week, we'll take the mean SST at each position for the week.
+```{r}
+#| eval: false
+sb_wk <- sb |>
+  filter(!is.na(year)) |>
+  mutate(
+    start_date = as.Date(paste(year, 1, 1, sep = "-")) + (wk - 1) * 7
+  ) |>
+  uncount(7, .id = 'day') |>
+  mutate(date = start_date + day - 1, date = as.POSIXct(date)) |>
+  filter(year == 2014) |> #!!!
+  select(med_lon, med_lat, date) |>
+  arrange(date)
+```
+
+<details>
+<summary>Code</summary>
+```{.python filename="extract_ghrsst.py"}
+{{< include ../../data/extract_ghrsst.py >}}
+```
+</details>
+
+```{r}
+sb_sst <- read.csv(
+  file.path(
+    Sys.getenv("DATA_DIR"),
+    "data/derived/sb_sst.csv"
+  )
+)
+head(sb_sst)
+```
+
+### Estuary temperature
+Atlantic sturgeon and striped bass are anadromous species and so spend 1-2 months per year in estuaries. Unfortunately, observing system products do not usually resolve to the small spatial scales characteristic of spawning estuaries. We plan to use NOAA CO-OPs station data from within each estuary, with the assumption that these temperatures will represent the entire system. 
+
+## Chlorophyll *a* {#sec-chla}
+
+# Derived data
+
+## Distance from shore
+
+We derived distance from shore by calculating the Euclidean distance between weekly median locations in the rotated plane and the similarly-rotated [Natural Earth 1:110m land polygon](https://www.naturalearthdata.com/downloads/110m-physical-vectors/110m-land/). We used the [sf::st_distance](https://r-spatial.github.io/sf/reference/geos_measures.html) for these calculations.
+
+```{r}
+#| label: ne-dl
+#| eval: false
+#| code-fold: true
+download.file(
+  "https://naciscdn.org/naturalearth/110m/physical/ne_110m_land.zip",
+  "data/RAW/ne_110.zip"
+)
+```
+
+```{r}
+#| label: ne-plot
+land <- st_read(file.path(
+  "/vsizip",
+  Sys.getenv("DATA_DIR"),
+  "data/RAW/ne_110.zip"
+))
+ggplot(land) +
+  geom_sf()
+```
+
+```{r}
+#| label: sb-rotate
+#| code-fold: true
+rotated_projection <- open_dataset(sb_file) |>
+  filter(longitude != 0) |> # Idiosyncrasy of this data, will be changed.
+  mutate(latitude = abs(latitude)) |> # Idiosyncrasy of this data, will be changed.
+  distinct(latitude, longitude) |>
+  summarize(
+    lon0 = median(longitude, na.rm = TRUE),
+    lat0 = median(latitude, na.rm = TRUE)
+  ) |>
+  collect() |>
+  (\(.) {
+    paste0(
+      "+proj=aeqd +lon_0=",
+      round(.$lon0, 3),
+      " +lat_0=",
+      round(.$lat0, 3)
+    )
+  })()
+
+sb_positions <- open_dataset(sb_file) |>
+  filter(latitude > 34) |> # detections almost definitely wrong and needs to be removed
+  group_by(transmitter, year, wk, group) |>
+  summarize(
+    med_lon = median(longitude, na.rm = TRUE),
+    med_lat = median(latitude, na.rm = TRUE)
+  ) |>
+  ungroup() |>
+  distinct(med_lon, med_lat) |>
+  collect() |>
+  st_as_sf(coords = c("med_lon", "med_lat"), crs = 4326) |>
+  st_transform(rotated_projection)
+```
+
+```{r}
+#| label: land-rotate
+land <- land |>
+  st_transform(rotated_projection)
+
+ggplot(land) +
+  geom_sf()
+
+dists <- st_distance(sb_positions, st_combine(land))
+
+ggplot(data.frame(dist = as.numeric(dists))) +
+  geom_histogram(aes(x = dist))
+```
+
+## Change in chloropyll *a*
+
+We derived change in chlorophyll *a* from the data downloaded in @sec-chla.
+
+## Change in sea surfance temperature
+
+We derived change in sea surface temperature from the data downloaded in @sec-sst.

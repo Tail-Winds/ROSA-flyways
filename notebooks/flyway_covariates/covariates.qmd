@@ -1,0 +1,12 @@
+---
+title: Flyway Covariates
+author: Mike O'Brien
+date: last-modified
+execute:
+  message: false
+  warning: false
+---
+
+Now that we have a GAM which creates a flyway smooth and a means to extract flyway metrics.
+
+Proceed with posterior simulation...
