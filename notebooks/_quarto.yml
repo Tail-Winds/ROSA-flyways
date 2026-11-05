@@ -23,6 +23,7 @@ book:
         - flyway_covariates/covariates.qmd
   appendices:
     - appendices/dmsp.qmd
+    - appendices/presentations.qmd
     - references.qmd
 
 bibliography: references.bib

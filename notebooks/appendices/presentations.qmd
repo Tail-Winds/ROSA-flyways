@@ -1,0 +1,47 @@
+---
+title: Presentations
+date: last-modified
+---
+
+## ACT Network Annual Meeting, 30-31 March, 2026 {#act26}
+### Panel: Receiver Array Design; Katz, J moderator. {#act26-panel}
+Bowers, ME, Grouthes, T, and O’Brien M. 2026. Receiver Array Design. Panel, Katz, J moderator. Atlantic Cooperative Telemetry Network Annual Meeting. 30-31 March. New Brunswick, New Jersey.
+
+{{< video  https://youtu.be/bUBgI-nKcWE start="2934" >}}
+
+#### Panel presentation {#act26-presentation}
+O’Brien, M and Secor, DH. 2026. Flyway Models and Metrics in the Assessment of OWF Impacts on Migratory Fishes. Atlantic Cooperative Telemetry Network Annual Meeting. 30-31 March. New Brunswick, New Jersey.
+
+<iframe src="O'Brien_Flyways_ACT_20260330.pdf" width="100%" height="600px"></iframe>
+
+##### Recording
+{{< video  https://youtu.be/bUBgI-nKcWE start="703" >}}
+
+
+## NYSERDA State of the Science, 8-11 June, 2026 {#nyserda26}
+### Poster Session {#nyserda26-poster}
+
+Secor D, Breece M, Carlisle A, Fox D, Wetherbee B, O’Brien MHP. 2026. Modeling Marine Flyways for Offshore Impact Assessment. NYSERDA State of the Science Meeting. 8-11 June. Stony Brook University, Long Island, NY.
+
+<iframe src="Secor Flyway Assessment Poster 2026June2.pdf" width="100%" height="600px"></iframe>
+
+### Panel: Improving Marine Life and Habitat Data Supply Chains; Schumchenia, E moderator. {#nyserda26-panel}
+
+Allen-Jacobson L, DeLand S, O’Brien M, and Secor, D. 2026. Improving Marine Life and Habitat Data Supply Chain. Panel, Schumchenia, E moderator. NYSERDA State of the Science Meeting. 8-11 June. Stony Brook University, Long Island, NY.
+
+{{< video  src="https://youtu.be/ieV4GIsAs7c?t=2838" >}}
+
+#### Panel presentation {#nyserda26-presentation}
+
+Secor D and O’Brien M. 2026. Regional telemetry at a crossroads: Leveraging data sharing and telemetry networks for improved stewardship of migratory marine fauna. NYSERDA State of the Science Meeting. 8-11 June. Stony Brook University, Long Island, NY.
+
+<iframe src="Secor2026_telemetry_data_supply_chains.pdf" width="100%" height="600px"></iframe>
+
+##### Recording (starts at 31:25)
+{{< video  src="https://youtu.be/ieV4GIsAs7c?t=1882" >}}
+
+## ICES ASC 14-18 September, 2026 {#ices26}
+
+Secor, DH and O’Brien, MHP, 2026. The flyway construct and assessment of offshore wind farm impacts on migratory marine fauna. ICES Annual Science Conference, 14-18 September. Brest, France.
+
+<iframe src="Secor Flyway Construct ICES ASC 2026.pdf" width="100%" height="600px"></iframe>
