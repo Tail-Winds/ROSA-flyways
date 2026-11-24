@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-06-15">
+<meta name="dcterms.date" content="2026-11-24">
 
 <title>5&nbsp; Initial striped bass GAM exploration – Flyway Assessment of Offshore Wind Farm Impacts on Migratory Fishes</title>
 <style>
@@ -342,7 +342,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">June 15, 2026</p>
+      <p class="date">November 24, 2026</p>
     </div>
   </div>
   
@@ -401,7 +401,7 @@ window.Quarto = {
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>proj_string</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "+proj=aeqd +lon_0=-73.9 +lat_0=40.601"</code></pre>
+<pre><code>[1] "+proj=aeqd +lon_0=-73.899 +lat_0=40.596"</code></pre>
 </div>
 </div>
 <p>…and project the fish locations:</p>
@@ -410,11 +410,18 @@ window.Quarto = {
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"med_lon"</span>, <span class="st">"med_lat"</span>), <span class="at">crs =</span> <span class="dv">4326</span>, <span class="at">remove =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(proj_string)</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>sb_sf <span class="sc">|&gt;</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(med_lon, med_lat, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>() <span class="sc">+</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">datum =</span> proj_string)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>sb_plot <span class="ot">&lt;-</span> sb_sf <span class="sc">|&gt;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(med_lon, med_lat, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>sb_lims <span class="ot">&lt;-</span> <span class="fu">st_bbox</span>(sb_plot)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> ne) <span class="sc">+</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> sb_plot) <span class="sc">+</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">datum =</span> proj_string,</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlim =</span> sb_lims[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)],</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylim =</span> sb_lims[<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>)]</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -457,15 +464,24 @@ window.Quarto = {
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(proj_rotated) <span class="sc">|&gt;</span></span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># extract coordinates for modeling purposes</span></span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">x =</span> <span class="fu">st_coordinates</span>(geometry)[, <span class="dv">1</span>], <span class="at">y =</span> <span class="fu">st_coordinates</span>(geometry)[, <span class="dv">2</span>])</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co"># sb_migration_north |&gt;</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   as.data.frame() |&gt;</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   select(-geometry) |&gt;</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">#   write_parquet(sink = "data/derived/sb_rotated.parquet")</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sb_migration_north) <span class="sc">+</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>() <span class="sc">+</span></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">datum =</span> proj_rotated)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(ne) <span class="ot">&lt;-</span> <span class="st">"+proj=aeqd +lat_0=90 +lon_0=0"</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>ne <span class="ot">&lt;-</span> ne <span class="sc">|&gt;</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(proj_rotated)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>sb_lims <span class="ot">&lt;-</span> <span class="fu">st_bbox</span>(sb_migration_north)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co"># sb_migration_north |&gt;</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">#   as.data.frame() |&gt;</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">#   select(-geometry) |&gt;</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co">#   write_parquet(sink = "data/derived/sb_rotated.parquet")</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> ne) <span class="sc">+</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> sb_migration_north) <span class="sc">+</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">datum =</span> proj_rotated,</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlim =</span> sb_lims[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)],</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylim =</span> sb_lims[<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>)]</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -543,19 +559,19 @@ x ~ s(wk, k = 27, bs = "cc") + s(yr_f, bs = "re") + s(pop, bs = "re") +
 
 Parametric coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)
-(Intercept)     8360      31860   0.262    0.793
+(Intercept)     8673      31860   0.272    0.785
 
 Approximate significance of smooth terms:
             edf Ref.df        F p-value    
-s(wk)    20.698     25 18798.59 &lt; 2e-16 ***
-s(yr_f)   5.999      7    92.27 0.00116 ** 
-s(pop)    1.975      2 12761.75 &lt; 2e-16 ***
+s(wk)    20.697     25 18798.58 &lt; 2e-16 ***
+s(yr_f)   5.999      7    92.28 0.00116 ** 
+s(pop)    1.975      2 12761.41 &lt; 2e-16 ***
 s(id)   194.523    253    30.36 &lt; 2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 R-sq.(adj) =  0.894   Deviance explained = 89.7%
--REML =  95217  Scale est. = 7.3384e+09  n = 7431</code></pre>
+-REML =  95217  Scale est. = 7.3385e+09  n = 7431</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">draw</span>(m1, <span class="at">select =</span> <span class="st">"s(wk)"</span>, <span class="at">residuals =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
@@ -591,7 +607,7 @@ x ~ pop + s(wk, by = pop, k = 27, bs = "cc") + s(yr_f, bs = "re") +
 
 Parametric coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)    69565       5454   12.76   &lt;2e-16 ***
+(Intercept)    69878       5454   12.81   &lt;2e-16 ***
 popPR         -98870       8198  -12.06   &lt;2e-16 ***
 popDE         -69773       5555  -12.56   &lt;2e-16 ***
 ---
@@ -599,16 +615,16 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Approximate significance of smooth terms:
                edf Ref.df        F p-value    
-s(wk):popHR  22.53     25 5977.928  &lt;2e-16 ***
-s(wk):popPR  19.13     25 1357.840  &lt;2e-16 ***
-s(wk):popDE  19.87     25 3103.613  &lt;2e-16 ***
-s(yr_f)       5.11      7   36.789  &lt;2e-16 ***
+s(wk):popHR  22.53     25 5977.773  &lt;2e-16 ***
+s(wk):popPR  19.13     25 1357.807  &lt;2e-16 ***
+s(wk):popDE  19.87     25 3103.539  &lt;2e-16 ***
+s(yr_f)       5.11      7   36.795  &lt;2e-16 ***
 s(id)       199.08    251    6.329  &lt;2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 R-sq.(adj) =  0.926   Deviance explained = 92.9%
-fREML =  93949  Scale est. = 5.1113e+09  n = 7431</code></pre>
+fREML =  93949  Scale est. = 5.1114e+09  n = 7431</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">draw</span>(</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  m2,</span>
@@ -806,15 +822,15 @@ y ~ s(wk, k = 53, bs = "cc") + s(yr_f, bs = "re") + s(pop, bs = "re")
 
 Parametric coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)   -72156       6320  -11.42   &lt;2e-16 ***
+(Intercept)   -71691       6319  -11.35   &lt;2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Approximate significance of smooth terms:
-           edf Ref.df       F p-value    
-s(wk)   33.093     51 453.851 &lt; 2e-16 ***
-s(yr_f)  4.196      7   8.518 0.00756 ** 
-s(pop)   1.975      2 172.271 &lt; 2e-16 ***
+           edf Ref.df      F p-value    
+s(wk)   33.092     51 453.82 &lt; 2e-16 ***
+s(yr_f)  4.197      7   8.52 0.00755 ** 
+s(pop)   1.975      2 172.23 &lt; 2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -852,23 +868,23 @@ y ~ pop + s(wk, by = pop, k = 53, bs = "cc") + s(yr_f, bs = "re")
 
 Parametric coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)   -57393       2554  -22.47   &lt;2e-16 ***
-popPR         -24872       1626  -15.29   &lt;2e-16 ***
-popDE         -18398       1176  -15.64   &lt;2e-16 ***
+(Intercept)   -56930       2554  -22.29   &lt;2e-16 ***
+popPR         -24868       1626  -15.29   &lt;2e-16 ***
+popDE         -18397       1176  -15.64   &lt;2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Approximate significance of smooth terms:
                edf Ref.df      F p-value    
-s(wk):popHR 34.048     51 535.44  &lt;2e-16 ***
-s(wk):popPR 19.893     51  49.60  &lt;2e-16 ***
-s(wk):popDE 22.237     51 100.04  &lt;2e-16 ***
+s(wk):popHR 34.046     51 535.38  &lt;2e-16 ***
+s(wk):popPR 19.894     51  49.60  &lt;2e-16 ***
+s(wk):popDE 22.237     51 100.03  &lt;2e-16 ***
 s(yr_f)      5.518      7  13.63  &lt;2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 R-sq.(adj) =  0.783   Deviance explained = 78.6%
--REML =  89740  Scale est. = 1.75e+09  n = 7431</code></pre>
+-REML =  89740  Scale est. = 1.7501e+09  n = 7431</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">draw</span>(m2_mf, <span class="at">select =</span> <span class="st">"s(wk)"</span>, <span class="at">partial_match =</span> <span class="cn">TRUE</span>, <span class="at">residuals =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">

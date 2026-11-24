@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-11-04">
+<meta name="dcterms.date" content="2026-11-24">
 
 <title>8&nbsp; Accessing Environmental Covariates – Flyway Assessment of Offshore Wind Farm Impacts on Migratory Fishes</title>
 <style>
@@ -328,8 +328,8 @@ window.Quarto = {
   </ul></li>
   <li><a href="#depth" id="toc-depth" class="nav-link" data-scroll-target="#depth"><span class="header-section-number">9.3</span> Depth</a>
   <ul class="collapse">
-  <li><a href="#northeast-atlantic" id="toc-northeast-atlantic" class="nav-link" data-scroll-target="#northeast-atlantic"><span class="header-section-number">9.3.1</span> Northeast Atlantic</a></li>
-  <li><a href="#southeast-atlantic" id="toc-southeast-atlantic" class="nav-link" data-scroll-target="#southeast-atlantic"><span class="header-section-number">9.3.2</span> Southeast Atlantic</a></li>
+  <li><a href="#northeast-us-atlantic" id="toc-northeast-us-atlantic" class="nav-link" data-scroll-target="#northeast-us-atlantic"><span class="header-section-number">9.3.1</span> Northeast US Atlantic</a></li>
+  <li><a href="#southeast-us-atlantic" id="toc-southeast-us-atlantic" class="nav-link" data-scroll-target="#southeast-us-atlantic"><span class="header-section-number">9.3.2</span> Southeast US Atlantic</a></li>
   <li><a href="#florida-and-gulf-of-mexico" id="toc-florida-and-gulf-of-mexico" class="nav-link" data-scroll-target="#florida-and-gulf-of-mexico"><span class="header-section-number">9.3.3</span> Florida and Gulf of Mexico</a></li>
   </ul></li>
   <li><a href="#sec-sst" id="toc-sec-sst" class="nav-link" data-scroll-target="#sec-sst"><span class="header-section-number">9.4</span> Sea surface temperature</a>
@@ -364,7 +364,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 4, 2026</p>
+      <p class="date">November 24, 2026</p>
     </div>
   </div>
   
@@ -456,9 +456,10 @@ window.Quarto = {
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"NAO Index"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div>
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="env_data_access_files/figure-html/nao-plot-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Daily NAO index from 1950 to present.</figcaption>
 </figure>
 </div>
 </div>
@@ -502,9 +503,10 @@ window.Quarto = {
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Gulf Stream Index"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div>
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="env_data_access_files/figure-html/gsi-plot-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Monthly Gulf Stream Index from 1954 to present.</figcaption>
 </figure>
 </div>
 </div>
@@ -527,9 +529,10 @@ window.Quarto = {
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Western Gulf Stream Index"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div>
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="env_data_access_files/figure-html/wgsi-plot-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Monthly Western Gulf Stream Index from 1954 to present.</figcaption>
 </figure>
 </div>
 </div>
@@ -545,8 +548,8 @@ window.Quarto = {
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>base_url <span class="ot">&lt;-</span> <span class="st">"NETCDF:https://www.ngdc.noaa.gov/thredds/dodsC/crm/cudem/crm_vol%i_2023.nc"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<section id="northeast-atlantic" class="level3" data-number="9.3.1">
-<h3 data-number="9.3.1" class="anchored" data-anchor-id="northeast-atlantic"><span class="header-section-number">9.3.1</span> Northeast Atlantic</h3>
+<section id="northeast-us-atlantic" class="level3" data-number="9.3.1">
+<h3 data-number="9.3.1" class="anchored" data-anchor-id="northeast-us-atlantic"><span class="header-section-number">9.3.1</span> Northeast US Atlantic</h3>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -570,16 +573,17 @@ unit        : meters</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(depth_ne, <span class="at">maxcell =</span> <span class="dv">2000</span>, <span class="at">col =</span> <span class="fu">terrain.colors</span>(<span class="dv">100</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div>
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="env_data_access_files/figure-html/depth-ne-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Downsampled bathymetry of the Northeast US Atlantic.</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="southeast-atlantic" class="level3" data-number="9.3.2">
-<h3 data-number="9.3.2" class="anchored" data-anchor-id="southeast-atlantic"><span class="header-section-number">9.3.2</span> Southeast Atlantic</h3>
+<section id="southeast-us-atlantic" class="level3" data-number="9.3.2">
+<h3 data-number="9.3.2" class="anchored" data-anchor-id="southeast-us-atlantic"><span class="header-section-number">9.3.2</span> Southeast US Atlantic</h3>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -603,9 +607,10 @@ unit        : meters</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(depth_se, <span class="at">maxcell =</span> <span class="dv">2000</span>, <span class="at">col =</span> <span class="fu">terrain.colors</span>(<span class="dv">100</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div>
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="env_data_access_files/figure-html/depth-se-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Downsampled bathymetry of the Southeast US Atlantic.</figcaption>
 </figure>
 </div>
 </div>
@@ -636,9 +641,10 @@ unit        : meters</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(depth_fl, <span class="at">maxcell =</span> <span class="dv">2000</span>, <span class="at">col =</span> <span class="fu">terrain.colors</span>(<span class="dv">100</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div>
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="env_data_access_files/figure-html/depth-fl-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Downsampled bathymetry of the Florida coast and Gulf of Mexico.</figcaption>
 </figure>
 </div>
 </div>
@@ -649,8 +655,7 @@ unit        : meters</code></pre>
 <h2 data-number="9.4" class="anchored" data-anchor-id="sec-sst"><span class="header-section-number">9.4</span> Sea surface temperature</h2>
 <section id="ocean-temperature" class="level3" data-number="9.4.1">
 <h3 data-number="9.4.1" class="anchored" data-anchor-id="ocean-temperature"><span class="header-section-number">9.4.1</span> Ocean temperature</h3>
-<p><span class="citation" data-cites="ghrsstl2015">(<a href="../references.html#ref-ghrsstl2015" role="doc-biblioref"><em>GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (V4.1)</em> 2015</a>)</span></p>
-<p>Query needs date, latitude, and longitude. Right now we are using median position per week. Rather than just picking one day in the given week, we’ll take the mean SST at each position for the week.</p>
+<p>Data were extracted from the GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (v4.1) <span class="citation" data-cites="ghrsstl2015">(<a href="../references.html#ref-ghrsstl2015" role="doc-biblioref"><em>GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (V4.1)</em> 2015</a>)</span>, which provides global SST in a 1km <span class="math inline">\(^2\)</span> grid. We have created a python script to extract temperatures at each time-location combination from the S3 bucket. As we are using weekly estimates of position, a week’s recorded SST at a given location was averaged to produce the resulting value.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -668,7 +673,7 @@ unit        : meters</code></pre>
 </div>
 <details>
 <summary>
-Code
+Python data extraction script
 </summary>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -789,43 +794,149 @@ Code
 </section>
 <section id="sec-chla" class="level2" data-number="9.5">
 <h2 data-number="9.5" class="anchored" data-anchor-id="sec-chla"><span class="header-section-number">9.5</span> Chlorophyll <em>a</em></h2>
+<p>We used the <a href="https://erddap.maracoos.org/erddap/info/MODIS_AQUA_8_day/index.html">MODIS-AQUA 1km <span class="math inline">\(^2\)</span>, 8-day resolution dataset hosted by MARACOOS</a> as our source of chlorophyll <em>a</em> data. As an 8-day composite, the data are more replete, however an 8-day week does not match up with the 7-day week used to aggregate animal positions. We thus used a weighted averaging approach, with each chlorophyll <em>a</em> value weighted by the proportion of overlapping days.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rerddap)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>modis <span class="ot">&lt;-</span> <span class="fu">info</span>(<span class="st">"MODIS_AQUA_8_day"</span>, <span class="st">"https://erddap.maracoos.org/erddap/"</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>modis_weeks <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="dv">2014</span><span class="sc">:</span><span class="dv">2021</span>, <span class="cf">function</span>(.) {</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  hold <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">start_date =</span> <span class="fu">seq</span>(</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.Date</span>(<span class="fu">paste0</span>(., <span class="st">"-01-01"</span>)),</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.Date</span>(<span class="fu">paste0</span>(., <span class="st">"-12-31"</span>)),</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">by =</span> <span class="st">"8 days"</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">end_date =</span> start_date <span class="sc">+</span> <span class="dv">7</span>)</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  hold<span class="sc">$</span>end_date[<span class="dv">46</span>] <span class="ot">&lt;-</span> <span class="fu">paste0</span>(., <span class="st">"-12-31"</span>)</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>  hold</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>}) <span class="sc">|&gt;</span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>()</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>sb_wk <span class="ot">&lt;-</span> sb <span class="sc">|&gt;</span></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(year)) <span class="sc">|&gt;</span></span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">start_date =</span> <span class="fu">as.Date</span>(<span class="fu">paste</span>(year, <span class="dv">1</span>, <span class="dv">1</span>, <span class="at">sep =</span> <span class="st">"-"</span>)) <span class="sc">+</span> (wk <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> <span class="dv">7</span>,</span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">end_date =</span> start_date <span class="sc">+</span> <span class="dv">6</span></span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>    modis_weeks,</span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="fu">join_by</span>(</span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>      <span class="fu">overlaps</span>(start_date, end_date, start_date, end_date)</span>
+<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">|&gt;</span></span>
+<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">overlap =</span> <span class="fu">min</span>(end_date.x, end_date.y) <span class="sc">-</span> <span class="fu">max</span>(start_date.x, start_date.y) <span class="sc">+</span> <span class="dv">1</span>,</span>
+<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">weight =</span> <span class="fu">as.numeric</span>(overlap) <span class="sc">/</span> <span class="dv">7</span></span>
+<span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(year, wk)</span>
+<span id="cb25-36"><a href="#cb25-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-37"><a href="#cb25-37" aria-hidden="true" tabindex="-1"></a><span class="co"># for (yr in 2015:2021) {</span></span>
+<span id="cb25-38"><a href="#cb25-38" aria-hidden="true" tabindex="-1"></a><span class="co"># griddap(</span></span>
+<span id="cb25-39"><a href="#cb25-39" aria-hidden="true" tabindex="-1"></a><span class="co"># modis,</span></span>
+<span id="cb25-40"><a href="#cb25-40" aria-hidden="true" tabindex="-1"></a><span class="co"># time = as.character(range(sb_wk[sb_wk$year == yr, ]$start_date.y)),</span></span>
+<span id="cb25-41"><a href="#cb25-41" aria-hidden="true" tabindex="-1"></a><span class="co"># latitude = range(sb_wk[sb_wk$year == yr, ]$med_lat) + c(-0.02, 0.02),</span></span>
+<span id="cb25-42"><a href="#cb25-42" aria-hidden="true" tabindex="-1"></a><span class="co"># longitude = range(sb_wk[sb_wk$year == yr, ]$med_lon) + c(-0.02, 0.02),</span></span>
+<span id="cb25-43"><a href="#cb25-43" aria-hidden="true" tabindex="-1"></a><span class="co"># fields = c("chl_oc3", "sst"),</span></span>
+<span id="cb25-44"><a href="#cb25-44" aria-hidden="true" tabindex="-1"></a><span class="co"># fmt = "nc",</span></span>
+<span id="cb25-45"><a href="#cb25-45" aria-hidden="true" tabindex="-1"></a><span class="co"># store = disk("."),</span></span>
+<span id="cb25-46"><a href="#cb25-46" aria-hidden="true" tabindex="-1"></a><span class="co"># read = FALSE</span></span>
+<span id="cb25-47"><a href="#cb25-47" aria-hidden="true" tabindex="-1"></a><span class="co"># )</span></span>
+<span id="cb25-48"><a href="#cb25-48" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span>
+<span id="cb25-49"><a href="#cb25-49" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb25-50"><a href="#cb25-50" aria-hidden="true" tabindex="-1"></a><span class="co"># sds(list.files(pattern = "\\.nc")[1])["chl_oc3"]</span></span>
+<span id="cb25-51"><a href="#cb25-51" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb25-52"><a href="#cb25-52" aria-hidden="true" tabindex="-1"></a>final_modis_data <span class="ot">&lt;-</span> sb_wk[sb_wk<span class="sc">$</span>year <span class="sc">==</span> <span class="dv">2017</span>, ] <span class="sc">|&gt;</span></span>
+<span id="cb25-53"><a href="#cb25-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">as.Date</span>(start_date.y), <span class="at">chunk =</span> <span class="fu">format</span>(date, <span class="st">"%Y-%m"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb25-54"><a href="#cb25-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">split</span>(<span class="sc">~</span>chunk) <span class="sc">|&gt;</span></span>
+<span id="cb25-55"><a href="#cb25-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(<span class="cf">function</span>(df) {</span>
+<span id="cb25-56"><a href="#cb25-56" aria-hidden="true" tabindex="-1"></a>    res <span class="ot">&lt;-</span> <span class="fu">griddap</span>(</span>
+<span id="cb25-57"><a href="#cb25-57" aria-hidden="true" tabindex="-1"></a>      <span class="st">"MODIS_AQUA_8_day"</span>,</span>
+<span id="cb25-58"><a href="#cb25-58" aria-hidden="true" tabindex="-1"></a>      <span class="at">url =</span> <span class="st">"https://erddap.maracoos.org/erddap/"</span>,</span>
+<span id="cb25-59"><a href="#cb25-59" aria-hidden="true" tabindex="-1"></a>      <span class="at">time =</span> <span class="fu">as.character</span>(<span class="fu">c</span>(<span class="fu">min</span>(df<span class="sc">$</span>date), <span class="fu">max</span>(df<span class="sc">$</span>date))),</span>
+<span id="cb25-60"><a href="#cb25-60" aria-hidden="true" tabindex="-1"></a>      <span class="at">latitude =</span> <span class="fu">c</span>(<span class="fu">min</span>(df<span class="sc">$</span>med_lat), <span class="fu">max</span>(df<span class="sc">$</span>med_lat)),</span>
+<span id="cb25-61"><a href="#cb25-61" aria-hidden="true" tabindex="-1"></a>      <span class="at">longitude =</span> <span class="fu">c</span>(<span class="fu">min</span>(df<span class="sc">$</span>med_lon), <span class="fu">max</span>(df<span class="sc">$</span>med_lon)),</span>
+<span id="cb25-62"><a href="#cb25-62" aria-hidden="true" tabindex="-1"></a>      <span class="at">fields =</span> <span class="fu">c</span>(<span class="st">"sst"</span>, <span class="st">"chl_oc3"</span>)</span>
+<span id="cb25-63"><a href="#cb25-63" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb25-64"><a href="#cb25-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-65"><a href="#cb25-65" aria-hidden="true" tabindex="-1"></a>    nc <span class="ot">&lt;-</span> <span class="fu">nc_open</span>(res<span class="sc">$</span>summary<span class="sc">$</span>filename)</span>
+<span id="cb25-66"><a href="#cb25-66" aria-hidden="true" tabindex="-1"></a>    lons <span class="ot">&lt;-</span> <span class="fu">ncvar_get</span>(nc, <span class="st">"longitude"</span>)</span>
+<span id="cb25-67"><a href="#cb25-67" aria-hidden="true" tabindex="-1"></a>    lats <span class="ot">&lt;-</span> <span class="fu">ncvar_get</span>(nc, <span class="st">"latitude"</span>)</span>
+<span id="cb25-68"><a href="#cb25-68" aria-hidden="true" tabindex="-1"></a>    times <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="fu">as.POSIXct</span>(</span>
+<span id="cb25-69"><a href="#cb25-69" aria-hidden="true" tabindex="-1"></a>      <span class="fu">ncvar_get</span>(nc, <span class="st">"time"</span>),</span>
+<span id="cb25-70"><a href="#cb25-70" aria-hidden="true" tabindex="-1"></a>      <span class="at">origin =</span> <span class="st">"1970-01-01"</span>,</span>
+<span id="cb25-71"><a href="#cb25-71" aria-hidden="true" tabindex="-1"></a>      <span class="at">tz =</span> <span class="st">"UTC"</span></span>
+<span id="cb25-72"><a href="#cb25-72" aria-hidden="true" tabindex="-1"></a>    ))</span>
+<span id="cb25-73"><a href="#cb25-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-74"><a href="#cb25-74" aria-hidden="true" tabindex="-1"></a>    df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb25-75"><a href="#cb25-75" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(</span>
+<span id="cb25-76"><a href="#cb25-76" aria-hidden="true" tabindex="-1"></a>        <span class="at">lon_idx =</span> <span class="fu">sapply</span>(med_lon, \(x) <span class="fu">which.min</span>(<span class="fu">abs</span>(lons <span class="sc">-</span> x))),</span>
+<span id="cb25-77"><a href="#cb25-77" aria-hidden="true" tabindex="-1"></a>        <span class="at">lat_idx =</span> <span class="fu">sapply</span>(med_lat, \(y) <span class="fu">which.min</span>(<span class="fu">abs</span>(lats <span class="sc">-</span> y))),</span>
+<span id="cb25-78"><a href="#cb25-78" aria-hidden="true" tabindex="-1"></a>        <span class="at">time_idx =</span> <span class="fu">sapply</span>(date, \(d) <span class="fu">which.min</span>(<span class="fu">abs</span>(times <span class="sc">-</span> d))),</span>
+<span id="cb25-79"><a href="#cb25-79" aria-hidden="true" tabindex="-1"></a>        <span class="at">sst =</span> <span class="fu">ncvar_get</span>(nc, <span class="st">"sst"</span>, <span class="at">collapse_degen =</span> <span class="cn">FALSE</span>)[<span class="fu">cbind</span>(</span>
+<span id="cb25-80"><a href="#cb25-80" aria-hidden="true" tabindex="-1"></a>          lon_idx,</span>
+<span id="cb25-81"><a href="#cb25-81" aria-hidden="true" tabindex="-1"></a>          lat_idx,</span>
+<span id="cb25-82"><a href="#cb25-82" aria-hidden="true" tabindex="-1"></a>          time_idx</span>
+<span id="cb25-83"><a href="#cb25-83" aria-hidden="true" tabindex="-1"></a>        )],</span>
+<span id="cb25-84"><a href="#cb25-84" aria-hidden="true" tabindex="-1"></a>        <span class="at">chl_oc3 =</span> <span class="fu">ncvar_get</span>(nc, <span class="st">"chl_oc3"</span>, <span class="at">collapse_degen =</span> <span class="cn">FALSE</span>)[<span class="fu">cbind</span>(</span>
+<span id="cb25-85"><a href="#cb25-85" aria-hidden="true" tabindex="-1"></a>          lon_idx,</span>
+<span id="cb25-86"><a href="#cb25-86" aria-hidden="true" tabindex="-1"></a>          lat_idx,</span>
+<span id="cb25-87"><a href="#cb25-87" aria-hidden="true" tabindex="-1"></a>          time_idx</span>
+<span id="cb25-88"><a href="#cb25-88" aria-hidden="true" tabindex="-1"></a>        )]</span>
+<span id="cb25-89"><a href="#cb25-89" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb25-90"><a href="#cb25-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-91"><a href="#cb25-91" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nc_close</span>(nc)</span>
+<span id="cb25-92"><a href="#cb25-92" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(df)</span>
+<span id="cb25-93"><a href="#cb25-93" aria-hidden="true" tabindex="-1"></a>  }) <span class="sc">|&gt;</span></span>
+<span id="cb25-94"><a href="#cb25-94" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>() <span class="sc">|&gt;</span></span>
+<span id="cb25-95"><a href="#cb25-95" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(med_lon, med_lat, year, wk) <span class="sc">|&gt;</span></span>
+<span id="cb25-96"><a href="#cb25-96" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb25-97"><a href="#cb25-97" aria-hidden="true" tabindex="-1"></a>    <span class="at">weighted_sst =</span> <span class="fu">weighted.mean</span>(sst, weight, <span class="at">na.rm =</span> T),</span>
+<span id="cb25-98"><a href="#cb25-98" aria-hidden="true" tabindex="-1"></a>    <span class="at">weighted_chl_oc3 =</span> <span class="fu">weighted.mean</span>(chl_oc3, weight, <span class="at">na.rm =</span> T),</span>
+<span id="cb25-99"><a href="#cb25-99" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb25-100"><a href="#cb25-100" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
 </section>
 </section>
 <section id="derived-data" class="level1" data-number="10">
 <h1 data-number="10"><span class="header-section-number">10</span> Derived data</h1>
 <section id="distance-from-shore" class="level2" data-number="10.1">
 <h2 data-number="10.1" class="anchored" data-anchor-id="distance-from-shore"><span class="header-section-number">10.1</span> Distance from shore</h2>
-<p>We derived distance from shore by calculating the Euclidean distance between weekly median locations in the rotated plane and the similarly-rotated <a href="https://www.naturalearthdata.com/downloads/110m-physical-vectors/110m-land/">Natural Earth 1:110m land polygon</a>. We used the <a href="https://r-spatial.github.io/sf/reference/geos_measures.html">sf::st_distance</a> for these calculations.</p>
+<p>We derived distance from shore by calculating the Euclidean distance between weekly median locations in the rotated plane and the similarly-rotated <a href="https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-land/">Natural Earth 1:10m land polygon</a>. We used the <a href="https://r-spatial.github.io/sf/reference/geos_measures.html">sf::st_distance</a> for these calculations.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"https://naciscdn.org/naturalearth/110m/physical/ne_110m_land.zip"</span>,</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"data/RAW/ne_110.zip"</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"https://naciscdn.org/naturalearth/10m/physical/ne_10m_land.zip"</span>,</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"data/RAW/ne_10.zip"</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>land <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="fu">file.path</span>(</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"/vsizip"</span>,</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Sys.getenv</span>(<span class="st">"DATA_DIR"</span>),</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"data/RAW/ne_110.zip"</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>land <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="fu">file.path</span>(</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"/vsizip"</span>,</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Sys.getenv</span>(<span class="st">"DATA_DIR"</span>),</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"data/RAW/ne_10.zip"</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Reading layer `ne_110m_land' from data source `/vsizip/../../data/RAW/ne_110.zip' using driver `ESRI Shapefile'
-Simple feature collection with 127 features and 3 fields
-Geometry type: POLYGON
+<pre><code>Reading layer `ne_10m_land' from data source `/vsizip/../../data/RAW/ne_10.zip' using driver `ESRI Shapefile'
+Simple feature collection with 11 features and 3 fields
+Geometry type: MULTIPOLYGON
 Dimension:     XY
-Bounding box:  xmin: -180 ymin: -90 xmax: 180 ymax: 83.64513
+Bounding box:  xmin: -180 ymin: -90 xmax: 180 ymax: 83.6341
 Geodetic CRS:  WGS 84</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(land) <span class="sc">+</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(land) <span class="sc">+</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -838,46 +949,47 @@ Geodetic CRS:  WGS 84</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>rotated_projection <span class="ot">&lt;-</span> <span class="fu">open_dataset</span>(sb_file) <span class="sc">|&gt;</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(longitude <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">|&gt;</span> <span class="co"># Idiosyncrasy of this data, will be changed.</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">latitude =</span> <span class="fu">abs</span>(latitude)) <span class="sc">|&gt;</span> <span class="co"># Idiosyncrasy of this data, will be changed.</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(latitude, longitude) <span class="sc">|&gt;</span></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">lon0 =</span> <span class="fu">median</span>(longitude, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">lat0 =</span> <span class="fu">median</span>(latitude, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>() <span class="sc">|&gt;</span></span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  (\(.) {</span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste0</span>(</span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>      <span class="st">"+proj=aeqd +lon_0="</span>,</span>
-<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">round</span>(.<span class="sc">$</span>lon0, <span class="dv">3</span>),</span>
-<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>      <span class="st">" +lat_0="</span>,</span>
-<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>      <span class="fu">round</span>(.<span class="sc">$</span>lat0, <span class="dv">3</span>)</span>
-<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>  })()</span>
-<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>sb_positions <span class="ot">&lt;-</span> <span class="fu">open_dataset</span>(sb_file) <span class="sc">|&gt;</span></span>
-<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(latitude <span class="sc">&gt;</span> <span class="dv">34</span>) <span class="sc">|&gt;</span> <span class="co"># detections almost definitely wrong and needs to be removed</span></span>
-<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(transmitter, year, wk, group) <span class="sc">|&gt;</span></span>
-<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">med_lon =</span> <span class="fu">median</span>(longitude, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">med_lat =</span> <span class="fu">median</span>(latitude, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
-<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(med_lon, med_lat) <span class="sc">|&gt;</span></span>
-<span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>() <span class="sc">|&gt;</span></span>
-<span id="cb29-29"><a href="#cb29-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"med_lon"</span>, <span class="st">"med_lat"</span>), <span class="at">crs =</span> <span class="dv">4326</span>) <span class="sc">|&gt;</span></span>
-<span id="cb29-30"><a href="#cb29-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(rotated_projection)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>rotated_projection <span class="ot">&lt;-</span> <span class="fu">open_dataset</span>(sb_file) <span class="sc">|&gt;</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(longitude <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">|&gt;</span> <span class="co"># Idiosyncrasy of this data, will be changed.</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">latitude =</span> <span class="fu">abs</span>(latitude)) <span class="sc">|&gt;</span> <span class="co"># Idiosyncrasy of this data, will be changed.</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(latitude, longitude) <span class="sc">|&gt;</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">lon0 =</span> <span class="fu">median</span>(longitude, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">lat0 =</span> <span class="fu">median</span>(latitude, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>() <span class="sc">|&gt;</span></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>  (\(.) {</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste0</span>(</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>      <span class="st">"+proj=aeqd +lon_0="</span>,</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">round</span>(.<span class="sc">$</span>lon0, <span class="dv">3</span>),</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>      <span class="st">" +lat_0="</span>,</span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>      <span class="fu">round</span>(.<span class="sc">$</span>lat0, <span class="dv">3</span>)</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>  })()</span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>sb_positions <span class="ot">&lt;-</span> <span class="fu">open_dataset</span>(sb_file) <span class="sc">|&gt;</span></span>
+<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(latitude <span class="sc">&gt;</span> <span class="dv">34</span>) <span class="sc">|&gt;</span> <span class="co"># detections almost definitely wrong and needs to be removed</span></span>
+<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(transmitter, year, wk, group) <span class="sc">|&gt;</span></span>
+<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">med_lon =</span> <span class="fu">median</span>(longitude, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb30-24"><a href="#cb30-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">med_lat =</span> <span class="fu">median</span>(latitude, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb30-25"><a href="#cb30-25" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb30-26"><a href="#cb30-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
+<span id="cb30-27"><a href="#cb30-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(med_lon, med_lat) <span class="sc">|&gt;</span></span>
+<span id="cb30-28"><a href="#cb30-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>() <span class="sc">|&gt;</span></span>
+<span id="cb30-29"><a href="#cb30-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"med_lon"</span>, <span class="st">"med_lat"</span>), <span class="at">crs =</span> <span class="dv">4326</span>) <span class="sc">|&gt;</span></span>
+<span id="cb30-30"><a href="#cb30-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(rotated_projection)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
+<p>Note that most “distances” for striped bass here are 0. This is a function of the resolution of the polygon – fish in a river will be marked as <em>on land</em> and therefore have a distance from shore of 0.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>land <span class="ot">&lt;-</span> land <span class="sc">|&gt;</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(rotated_projection)</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(land) <span class="sc">+</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>land <span class="ot">&lt;-</span> land <span class="sc">|&gt;</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(rotated_projection)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(land) <span class="sc">+</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -888,10 +1000,10 @@ Geodetic CRS:  WGS 84</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>dists <span class="ot">&lt;-</span> <span class="fu">st_distance</span>(sb_positions, <span class="fu">st_combine</span>(land))</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">dist =</span> <span class="fu">as.numeric</span>(dists))) <span class="sc">+</span></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> dist))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>dists <span class="ot">&lt;-</span> <span class="fu">st_distance</span>(sb_positions, <span class="fu">st_combine</span>(land))</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">dist =</span> <span class="fu">as.numeric</span>(dists))) <span class="sc">+</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> dist))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -908,7 +1020,7 @@ Geodetic CRS:  WGS 84</code></pre>
 </section>
 <section id="change-in-sea-surfance-temperature" class="level2" data-number="10.3">
 <h2 data-number="10.3" class="anchored" data-anchor-id="change-in-sea-surfance-temperature"><span class="header-section-number">10.3</span> Change in sea surfance temperature</h2>
-<p>We derived change in sea surface temperature from the data downloaded in <a href="#sec-sst" class="quarto-xref"><span>Section 9.4</span></a>.</p>
+<p>We will derive change in sea surface temperature from the data downloaded in <a href="#sec-sst" class="quarto-xref"><span>Section 9.4</span></a> depending on the time period investigated.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
